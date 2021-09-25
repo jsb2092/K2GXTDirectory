@@ -1,0 +1,45 @@
+@page "/repeaterDetails/{id}"
+
+@using K2GXT_Directory_2.Data
+
+@inject RepeaterDirectoryService RepeaterService
+
+<a href="/getRepeaters"> <img width="16" src="/images/back.png"/> Back</a>
+
+@if (repeater == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <div><p>Repeater Details for: @repeater.CallSign</p></div>
+    <table id="repeaterDetails">
+        <tr><td style="width:150px">Callsign: </td><td>@repeater.CallSign</td></tr>
+        <tr><td>Tx Frequency: </td><td>@repeater.TFreq</td></tr>
+        <tr><td>Rx Frequency: </td> <td>@repeater.RFreq</td></tr>
+        <tr><td>Offset: </td><td>@repeater.Offset</td></tr>
+        
+        <tr><td>Tx Tone: </td><td>@repeater.CTCSS</td></tr>  
+        @if (repeater.RxCTCSS != null && repeater.Tone == "T SQL") {
+            <tr><td>Rx Tone: </td><td>@repeater.RxCTCSS</td></tr>
+        }
+        <tr><td>Tone: </td><td>@repeater.Tone</td></tr>
+        <tr><td>Location: </td><td>@repeater.Location</td></tr>
+    </table>
+}
+
+@code {
+    [Parameter]
+    public string id { get; set; }
+    
+    private Repeater repeater;
+
+
+   protected override async Task OnInitializedAsync()
+    {
+       
+       repeater = await RepeaterService.GetRepeaterAsync(id);
+    }
+
+
+}

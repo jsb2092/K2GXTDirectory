@@ -1,0 +1,92 @@
+﻿@page "/getRepeaters"
+
+@using K2GXT_Directory_2.Data
+@using System.Linq.Dynamic.Core
+
+@inject RepeaterDirectoryService RepeaterService
+
+
+<h1>Repeater Directory</h1>
+
+
+@if (repeaters == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th><span @onclick="@(async () => await sortAsync("CallSign"))">
+                    <img width="12" src="@imageSortName"/>
+                    Callsign
+                </span> </th>
+                <th><span @onclick="@(async () => await sortAsync("TFreq"))">
+                            <img width="12" src="@imageSortName"/>
+                            Transmit Frequency
+                        </span> </th>
+                <th><span @onclick="@(async () => await sortAsync("RFreq"))">
+                    <img width="12" src="@imageSortName"/>
+                    Receive Frequency
+                </span> </th>
+        
+                <th><span @onclick="@(async () => await sortAsync("CTCSS"))">
+                    <img width="12" src="@imageSortName"/>
+                    CTCSS
+                </span> </th>
+                 <th><span @onclick="@(async () => await sortAsync("County"))">
+                     <img width="12" src="@imageSortName"/>
+                    County
+                </span> </th>
+                <th><span @onclick="@(async () => await sortAsync("Location"))">
+                     <img width="12" src="@imageSortName"/>
+                    Location
+                </span> </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var repeater in repeaters)
+            {
+                <tr>
+                    <td><a href="/repeaterDetails/@repeater._id">@repeater.CallSign</a></td>
+                    <td>@repeater.TFreq</td>
+                    <td>@repeater.RFreq</td>
+
+                    <td>@repeater.CTCSS</td>
+                    <td>@repeater.County</td>
+                    <td>@repeater.Location</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private Repeater[] repeaters;
+    private string currentSort;
+    private string currentOrder;
+    private string imageSortName;
+
+    protected override async Task OnInitializedAsync()
+    {
+        currentSort = "RFreq";
+        currentOrder = "asc";
+        imageSortName = "images/sort-asc.png";
+        repeaters = await RepeaterService.GetRepeaterListAsync();
+    }
+
+    private async Task sortAsync(string sortData)
+    {
+        if (currentSort == sortData)
+        {
+            currentOrder = currentOrder == "asc" ? "desc" : "asc";
+            imageSortName = "images/sort-" + currentOrder + ".png";
+        }
+        currentSort = sortData;
+        repeaters = repeaters.AsQueryable().OrderBy(sortData + " "+ currentOrder).ToArray();
+
+    }
+
+}
+
