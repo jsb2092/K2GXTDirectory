@@ -14,9 +14,9 @@ namespace K2GXT_Directory_2.Data
     public class RepeaterDirectoryService
     {
         private Repeater[] repeaters;
-        private MongoClient dbClient;
+        //private MongoClient dbClient;
         private IMongoDatabase database;
-        private IMongoCollection<BsonDocument> collection;
+        private IMongoCollection<Repeater> collection;
 
         public RepeaterDirectoryService()
         {
@@ -24,16 +24,16 @@ namespace K2GXT_Directory_2.Data
                 new MongoClient(
                     "mongodb+srv://k2gxt:XrpAJULNNHICwQIs@cluster0.fv2i8.mongodb.net/test?authSource=admin&replicaSet=atlas-zytw02-shard-0&readPreference=primary&appname=MongoDB%20Compass&ssl=true");
             database = dbClient.GetDatabase("directory");
-            collection = database.GetCollection<BsonDocument>("repeater");
+            collection = database.GetCollection<Repeater>("repeater");
         }
 
         public Task<Repeater[]> GetRepeaterListAsync()
         {
         
-            var filter = Builders<BsonDocument>.Filter.Empty;
-            var sort = Builders<BsonDocument>.Sort.Ascending("Receive Frequency");
-            IAsyncCursor<Repeater> repeatersAsDocs = collection.FindSync<Repeater>(filter,
-                new FindOptions<BsonDocument, Repeater>()
+            var filter = Builders<Repeater>.Filter.Empty;
+            var sort = Builders<Repeater>.Sort.Ascending("Receive Frequency");
+            IAsyncCursor<Repeater> repeatersAsDocs = collection.FindSync(filter,
+                new FindOptions<Repeater, Repeater>()
                 {
                     Sort = sort
                 });
@@ -52,10 +52,21 @@ namespace K2GXT_Directory_2.Data
             {
                 var filter = new BsonDocument()
                     .Add("_id", ObjectId.Parse(id));
-                //var sort = Builders<BsonDocument>.Sort.Ascending("Receive Frequency");
-                var document = await collection.Find(filter).Limit(1).FirstAsync();
+                 return  await collection.Find(filter).Limit(1).FirstAsync();
+                 
+            }
+        }
 
-                return BsonSerializer.Deserialize<Repeater>(document);
+        public async Task<bool> SaveRepeater(Repeater repeater)
+        {
+            try
+            {
+                await collection.ReplaceOneAsync(r => r._id == repeater._id, repeater);
+                return true;
+            }
+            catch
+            {
+                return false;
             }
         }
 

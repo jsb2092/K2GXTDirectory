@@ -17,45 +17,54 @@ else
 {
     <table class="table">
         <thead>
-            <tr>
-                <th><span @onclick="@(async () => await sortAsync("CallSign"))">
-                    <img width="12" src="@imageSortName"/>
-                    Callsign
+        <tr>
+            <th></th>
+            <th>
+                <span @onclick="@(async () => await sortAsync("CallSign"))"><img width="12" src="@imageSortName"/>Callsign
                 </span> </th>
-                <th><span @onclick="@(async () => await sortAsync("TFreq"))">
-                            <img width="12" src="@imageSortName"/>
-                            Transmit Frequency
-                        </span> </th>
-                <th><span @onclick="@(async () => await sortAsync("RFreq"))">
-                    <img width="12" src="@imageSortName"/>
-                    Receive Frequency
+            <th>
+                <span @onclick="@(async () => await sortAsync("RxFreq"))"><img width="12" src="@imageSortName"/>Rx Freq
                 </span> </th>
-        
-                <th><span @onclick="@(async () => await sortAsync("CTCSS"))">
+            <th>
+                <span @onclick="@(async () => await sortAsync("TxFreq"))">
+                    <img width="12" src="@imageSortName"/>
+                    Tx Freq
+                </span> </th>
+
+
+            <th>
+                <span @onclick="@(async () => await sortAsync("CTCSS"))">
                     <img width="12" src="@imageSortName"/>
                     CTCSS
                 </span> </th>
-                 <th><span @onclick="@(async () => await sortAsync("County"))">
-                     <img width="12" src="@imageSortName"/>
+            <th>
+                <span @onclick="@(async () => await sortAsync("County"))">
+                    <img width="12" src="@imageSortName"/>
                     County
                 </span> </th>
-                <th><span @onclick="@(async () => await sortAsync("Location"))">
-                     <img width="12" src="@imageSortName"/>
+            <th>
+                <span @onclick="@(async () => await sortAsync("Location"))">
+                    <img width="12" src="@imageSortName"/>
                     Location
                 </span> </th>
-            </tr>
+
+        </tr>
         </thead>
         <tbody>
             @foreach (var repeater in repeaters)
             {
-                <tr>
+                <tr>      
+                    <td><a href="/editRepeater/@repeater._id"> <img width="12" src="@imageEditName"/></a></td>
                     <td><a href="/repeaterDetails/@repeater._id">@repeater.CallSign</a></td>
-                    <td>@repeater.TFreq</td>
-                    <td>@repeater.RFreq</td>
+                    <td>@repeater.RxFreq</td>
+                    <td>@repeater.TxFreq</td>
+             
 
                     <td>@repeater.CTCSS</td>
                     <td>@repeater.County</td>
                     <td>@repeater.Location</td>
+              
+                                     
                 </tr>
             }
         </tbody>
@@ -67,12 +76,14 @@ else
     private string currentSort;
     private string currentOrder;
     private string imageSortName;
+    private string imageEditName;
 
     protected override async Task OnInitializedAsync()
     {
         currentSort = "RFreq";
         currentOrder = "asc";
         imageSortName = "images/sort-asc.png";
+        imageEditName = "images/edit.png";
         repeaters = await RepeaterService.GetRepeaterListAsync();
     }
 

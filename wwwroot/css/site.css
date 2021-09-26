@@ -30,6 +30,9 @@ a, .btn-link {
     color: red;
 }
 
+th {
+    white-space: nowrap;
+}
 #repeaterDetails tr td {
     padding-bottom: 10px;
 }

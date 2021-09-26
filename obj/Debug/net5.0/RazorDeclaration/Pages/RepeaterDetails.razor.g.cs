@@ -13,77 +13,77 @@ namespace K2GXT_Directory_2.Pages
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Components;
 #nullable restore
-#line 1 "C:\Users\jsb\Dropbox\src\K2GXT Directory 2\_Imports.razor"
+#line 1 "/Users/jsb/Dropbox/src/K2GXT Directory 2/_Imports.razor"
 using System.Net.Http;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 2 "C:\Users\jsb\Dropbox\src\K2GXT Directory 2\_Imports.razor"
+#line 2 "/Users/jsb/Dropbox/src/K2GXT Directory 2/_Imports.razor"
 using Microsoft.AspNetCore.Authorization;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 3 "C:\Users\jsb\Dropbox\src\K2GXT Directory 2\_Imports.razor"
+#line 3 "/Users/jsb/Dropbox/src/K2GXT Directory 2/_Imports.razor"
 using Microsoft.AspNetCore.Components.Authorization;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 4 "C:\Users\jsb\Dropbox\src\K2GXT Directory 2\_Imports.razor"
+#line 4 "/Users/jsb/Dropbox/src/K2GXT Directory 2/_Imports.razor"
 using Microsoft.AspNetCore.Components.Forms;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 5 "C:\Users\jsb\Dropbox\src\K2GXT Directory 2\_Imports.razor"
+#line 5 "/Users/jsb/Dropbox/src/K2GXT Directory 2/_Imports.razor"
 using Microsoft.AspNetCore.Components.Routing;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 6 "C:\Users\jsb\Dropbox\src\K2GXT Directory 2\_Imports.razor"
+#line 6 "/Users/jsb/Dropbox/src/K2GXT Directory 2/_Imports.razor"
 using Microsoft.AspNetCore.Components.Web;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 7 "C:\Users\jsb\Dropbox\src\K2GXT Directory 2\_Imports.razor"
+#line 7 "/Users/jsb/Dropbox/src/K2GXT Directory 2/_Imports.razor"
 using Microsoft.AspNetCore.Components.Web.Virtualization;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 8 "C:\Users\jsb\Dropbox\src\K2GXT Directory 2\_Imports.razor"
+#line 8 "/Users/jsb/Dropbox/src/K2GXT Directory 2/_Imports.razor"
 using Microsoft.JSInterop;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 9 "C:\Users\jsb\Dropbox\src\K2GXT Directory 2\_Imports.razor"
+#line 9 "/Users/jsb/Dropbox/src/K2GXT Directory 2/_Imports.razor"
 using K2GXT_Directory_2;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 10 "C:\Users\jsb\Dropbox\src\K2GXT Directory 2\_Imports.razor"
+#line 10 "/Users/jsb/Dropbox/src/K2GXT Directory 2/_Imports.razor"
 using K2GXT_Directory_2.Shared;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 3 "C:\Users\jsb\Dropbox\src\K2GXT Directory 2\Pages\RepeaterDetails.razor"
+#line 3 "/Users/jsb/Dropbox/src/K2GXT Directory 2/Pages/RepeaterDetails.razor"
 using K2GXT_Directory_2.Data;
 
 #line default
@@ -98,7 +98,7 @@ using K2GXT_Directory_2.Data;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 31 "C:\Users\jsb\Dropbox\src\K2GXT Directory 2\Pages\RepeaterDetails.razor"
+#line 32 "/Users/jsb/Dropbox/src/K2GXT Directory 2/Pages/RepeaterDetails.razor"
        
     [Parameter]
     public string id { get; set; }

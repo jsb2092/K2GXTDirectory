@@ -1,0 +1,67 @@
+@page "/editRepeater/{id}"
+
+@using K2GXT_Directory_2.Data
+
+@inject RepeaterDirectoryService RepeaterService
+@inject NavigationManager NavManager
+
+<a href="/getRepeaters"> <img width="16" src="/images/back.png"/> Back</a>
+
+@if (repeater == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <div><p>Editting Repeater: @repeater.CallSign (@repeater.RxFreq)</p></div>
+    <EditForm Model="@repeater" OnSubmit="@HandleSubmit">
+           <DataAnnotationsValidator />
+            <ValidationSummary />
+
+        <table id="repeaterDetails">
+            <tr><td style="width:150px">Callsign: </td><td><input @bind=@repeater.CallSign/></td></tr>
+            <tr><td>Rx Frequency: </td> <td><input @bind=@repeater.RxFreq/></td></tr>
+            <tr><td>Tx Frequency: </td><td><input @bind=@repeater.TxFreq/></td></tr>
+
+            <tr><td>Offset: </td><td>@repeater.Offset</td></tr>
+
+            <tr><td>Tx Tone: </td><td><input @bind=@repeater.CTCSS/></td></tr>
+            <tr><td>Rx Tone: </td><td><input @bind=@repeater.RxCTCSS/></td></tr>
+            <tr><td>Tone: </td><td>@repeater.Tone</td></tr>
+            <tr><td>County: </td><td><input @bind=@repeater.County/></td></tr>
+            <tr><td>Location: </td><td><input @bind=@repeater.Location/></td></tr>
+        </table>
+           <button type="submit">Save</button><button type="submit" @onclick="@(async () => ResetForm())">Cancel</button>
+    </EditForm>
+}
+
+@code {
+    [Parameter]
+    public string id { get; set; }
+    
+    private Repeater repeater;
+    private Repeater previousState;
+
+
+   protected override async Task OnInitializedAsync()
+    {
+       
+       repeater = await RepeaterService.GetRepeaterAsync(id);
+       previousState = (Repeater)repeater.Clone();
+    }
+
+    private async Task HandleSubmit()
+    {
+        if (await RepeaterService.SaveRepeater(repeater))
+        {
+            NavManager.NavigateTo("/getRepeaters");
+        }
+    }
+    
+    public void ResetForm()
+    {
+        repeater = previousState;
+        NavManager.NavigateTo("/getRepeaters");
+        
+    }
+}
