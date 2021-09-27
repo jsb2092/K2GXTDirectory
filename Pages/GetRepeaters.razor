@@ -42,8 +42,13 @@ else
                     <img width="12" src="@imageSortName"/>
                     County
                 </span> </th>
+                        <th>
+                            <span @onclick="@(async () => await sortAsync("GridSquare"))">
+                                <img width="12" src="@imageSortName"/>
+                                Grid Square
+                            </span> </th>
             <th>
-                <span @onclick="@(async () => await sortAsync("Location"))">
+                <span @onclick="@(async () => await sortAsync("Description"))">
                     <img width="12" src="@imageSortName"/>
                     Location
                 </span> </th>
@@ -62,7 +67,9 @@ else
 
                     <td>@repeater.CTCSS</td>
                     <td>@repeater.County</td>
-                    <td>@repeater.Location</td>
+                    <td>@repeater.GridSquare</td>
+                    <td>@repeater.Description</td>
+                    
               
                                      
                 </tr>
@@ -87,7 +94,7 @@ else
         repeaters = await RepeaterService.GetRepeaterListAsync();
     }
 
-    private async Task sortAsync(string sortData)
+    private Task sortAsync(string sortData)
     {
         if (currentSort == sortData)
         {
@@ -96,7 +103,7 @@ else
         }
         currentSort = sortData;
         repeaters = repeaters.AsQueryable().OrderBy(sortData + " "+ currentOrder).ToArray();
-
+        return Task.FromResult(true);
     }
 
 }

@@ -14,22 +14,55 @@ namespace K2GXT_Directory_2.Data
     public class RepeaterDirectoryService
     {
         private Repeater[] repeaters;
-        //private MongoClient dbClient;
+
+        public List<double> Tones = new()
+        {
+            67, 97.4, 141.3, 177.3, 213.8,
+            69.3, 100, 146.2, 179.9, 218.1,
+            71.9, 103.5, 150, 183.5, 221.3,
+            74.4, 107.2, 151.4, 186.2, 225.7,
+            77, 110.9, 156.7, 189.9, 229.1,
+            79.7, 114.8, 159.8, 192.8, 233.6,
+            82.5, 118.8, 162.2, 196.6, 237.1,
+            85.4, 123, 165.5, 199.5, 241.8,
+            88.5, 127.3, 167.9, 203.5, 245.5,
+            91.5, 131.8, 171.3, 206.5, 250.3,
+            94.8, 136.5, 173.8, 210.7, 254.1
+        };
+      
+
         private IMongoDatabase database;
         private IMongoCollection<Repeater> collection;
+        private IMongoCollection<Counties> countiesCollection;
 
         public RepeaterDirectoryService()
         {
+            if (!BsonClassMap.IsClassMapRegistered(typeof(Repeater)))
+            {
+                // Initialize Mongo Mappings
+                BsonClassMap.RegisterClassMap<Repeater>(cm =>
+                {
+                    cm.AutoMap();
+                    cm.MapMember(x => x.Tone).SetDefaultValue("CSQ");
+                    // this doesn't work, as all the objects get the same damn object, this would work for 
+                    // primatives though.
+                    // cm.GetMemberMap(x => x).SetDefaultValue(new LocationInfo());
+                });
+
+            }
             MongoClient dbClient =
                 new MongoClient(
                     "mongodb+srv://k2gxt:XrpAJULNNHICwQIs@cluster0.fv2i8.mongodb.net/test?authSource=admin&replicaSet=atlas-zytw02-shard-0&readPreference=primary&appname=MongoDB%20Compass&ssl=true");
             database = dbClient.GetDatabase("directory");
             collection = database.GetCollection<Repeater>("repeater");
+            countiesCollection = database.GetCollection<Counties>("usa_counties");
+
+
         }
 
         public Task<Repeater[]> GetRepeaterListAsync()
         {
-        
+ 
             var filter = Builders<Repeater>.Filter.Empty;
             var sort = Builders<Repeater>.Sort.Ascending("Receive Frequency");
             IAsyncCursor<Repeater> repeatersAsDocs = collection.FindSync(filter,
@@ -38,6 +71,10 @@ namespace K2GXT_Directory_2.Data
                     Sort = sort
                 });
             repeaters = repeatersAsDocs.ToEnumerable().ToArray();
+            foreach (var r in repeaters)
+            {
+                r.Location ??= new LocationInfo();
+            }
             return Task.FromResult(repeaters);
         }
         
@@ -53,10 +90,27 @@ namespace K2GXT_Directory_2.Data
                 var filter = new BsonDocument()
                     .Add("_id", ObjectId.Parse(id));
                  return  await collection.Find(filter).Limit(1).FirstAsync();
-                 
             }
         }
 
+        public Task<Counties[]> getCounties()
+        {
+            Counties[] counties;
+            var filter = Builders<Counties>.Filter.Empty;
+            var sort = Builders<Counties>.Sort.Ascending("state_name");
+            IAsyncCursor<Counties> countiesAsDocs = countiesCollection.FindSync(filter,
+                new FindOptions<Counties, Counties>()
+                {
+                    Sort = sort
+                });
+            counties = countiesAsDocs.ToEnumerable().ToArray();
+            foreach (var r in repeaters)
+            {
+                r.Location ??= new LocationInfo();
+            }
+            return Task.FromResult(counties);
+        }
+        
         public async Task<bool> SaveRepeater(Repeater repeater)
         {
             try

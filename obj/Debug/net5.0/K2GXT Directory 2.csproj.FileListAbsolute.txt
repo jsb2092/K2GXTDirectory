@@ -1,155 +1,79 @@
-C:/Users/jsb/Dropbox/src/K2GXT Directory 2/obj/Debug/net5.0/K2GXT Directory 2.csproj.AssemblyReference.cache
-C:/Users/jsb/Dropbox/src/K2GXT Directory 2/obj/Debug/net5.0/K2GXT Directory 2.GeneratedMSBuildEditorConfig.editorconfig
-C:/Users/jsb/Dropbox/src/K2GXT Directory 2/obj/Debug/net5.0/K2GXT Directory 2.AssemblyInfoInputs.cache
-C:/Users/jsb/Dropbox/src/K2GXT Directory 2/obj/Debug/net5.0/K2GXT Directory 2.AssemblyInfo.cs
-C:/Users/jsb/Dropbox/src/K2GXT Directory 2/obj/Debug/net5.0/K2GXT Directory 2.csproj.CoreCompileInputs.cache
-C:/Users/jsb/Dropbox/src/K2GXT Directory 2/obj/Debug/net5.0/K2GXT Directory 2.MvcApplicationPartsAssemblyInfo.cache
-C:/Users/jsb/Dropbox/src/K2GXT Directory 2/obj/Debug/net5.0/K2GXT Directory 2.RazorComponent.input.cache
-C:/Users/jsb/Dropbox/src/K2GXT Directory 2/obj/Debug/net5.0/RazorDeclaration/App.razor.g.cs
-C:/Users/jsb/Dropbox/src/K2GXT Directory 2/obj/Debug/net5.0/RazorDeclaration/Pages/Counter.razor.g.cs
-C:/Users/jsb/Dropbox/src/K2GXT Directory 2/obj/Debug/net5.0/RazorDeclaration/Pages/FetchData.razor.g.cs
-C:/Users/jsb/Dropbox/src/K2GXT Directory 2/obj/Debug/net5.0/RazorDeclaration/Pages/GetRepeaters.razor.g.cs
-C:/Users/jsb/Dropbox/src/K2GXT Directory 2/obj/Debug/net5.0/RazorDeclaration/Pages/Index.razor.g.cs
-C:/Users/jsb/Dropbox/src/K2GXT Directory 2/obj/Debug/net5.0/RazorDeclaration/Pages/RepeaterDetails.razor.g.cs
-C:/Users/jsb/Dropbox/src/K2GXT Directory 2/obj/Debug/net5.0/RazorDeclaration/Shared/SurveyPrompt.razor.g.cs
-C:/Users/jsb/Dropbox/src/K2GXT Directory 2/obj/Debug/net5.0/RazorDeclaration/_Imports.razor.g.cs
-C:/Users/jsb/Dropbox/src/K2GXT Directory 2/obj/Debug/net5.0/RazorDeclaration/Shared/MainLayout.razor.g.cs
-C:/Users/jsb/Dropbox/src/K2GXT Directory 2/obj/Debug/net5.0/RazorDeclaration/Shared/NavMenu.razor.g.cs
-C:/Users/jsb/Dropbox/src/K2GXT Directory 2/obj/Debug/net5.0/K2GXT Directory 2.RazorComponent.output.cache
-C:/Users/jsb/Dropbox/src/K2GXT Directory 2/obj/Debug/net5.0/RazorDeclaration/K2GXT Directory 2.dll
-C:/Users/jsb/Dropbox/src/K2GXT Directory 2/obj/Debug/net5.0/K2GXT Directory 2.TagHelpers.input.cache
-C:/Users/jsb/Dropbox/src/K2GXT Directory 2/obj/Debug/net5.0/K2GXT Directory 2.TagHelpers.output.cache
-C:/Users/jsb/Dropbox/src/K2GXT Directory 2/obj/Debug/net5.0/K2GXT Directory 2.RazorCoreGenerate.cache
-C:/Users/jsb/Dropbox/src/K2GXT Directory 2/obj/Debug/net5.0/K2GXT Directory 2.dll
-C:/Users/jsb/Dropbox/src/K2GXT Directory 2/obj/Debug/net5.0/ref/K2GXT Directory 2.dll
-C:/Users/jsb/Dropbox/src/K2GXT Directory 2/obj/Debug/net5.0/K2GXT Directory 2.pdb
-C:/Users/jsb/Dropbox/src/K2GXT Directory 2/bin/Debug/net5.0/appsettings.Development.json
-C:/Users/jsb/Dropbox/src/K2GXT Directory 2/bin/Debug/net5.0/appsettings.json
-C:/Users/jsb/Dropbox/src/K2GXT Directory 2/bin/Debug/net5.0/K2GXT Directory 2.StaticWebAssets.xml
-C:/Users/jsb/Dropbox/src/K2GXT Directory 2/bin/Debug/net5.0/K2GXT Directory 2.exe
-C:/Users/jsb/Dropbox/src/K2GXT Directory 2/bin/Debug/net5.0/K2GXT Directory 2.deps.json
-C:/Users/jsb/Dropbox/src/K2GXT Directory 2/bin/Debug/net5.0/K2GXT Directory 2.runtimeconfig.json
-C:/Users/jsb/Dropbox/src/K2GXT Directory 2/bin/Debug/net5.0/K2GXT Directory 2.runtimeconfig.dev.json
-C:/Users/jsb/Dropbox/src/K2GXT Directory 2/bin/Debug/net5.0/K2GXT Directory 2.dll
-C:/Users/jsb/Dropbox/src/K2GXT Directory 2/bin/Debug/net5.0/ref/K2GXT Directory 2.dll
-C:/Users/jsb/Dropbox/src/K2GXT Directory 2/bin/Debug/net5.0/K2GXT Directory 2.pdb
-C:/Users/jsb/Dropbox/src/K2GXT Directory 2/bin/Debug/net5.0/K2GXT Directory 2.Views.dll
-C:/Users/jsb/Dropbox/src/K2GXT Directory 2/bin/Debug/net5.0/K2GXT Directory 2.Views.pdb
-C:/Users/jsb/Dropbox/src/K2GXT Directory 2/bin/Debug/net5.0/DnsClient.dll
-C:/Users/jsb/Dropbox/src/K2GXT Directory 2/bin/Debug/net5.0/MongoDB.Bson.dll
-C:/Users/jsb/Dropbox/src/K2GXT Directory 2/bin/Debug/net5.0/MongoDB.Driver.dll
-C:/Users/jsb/Dropbox/src/K2GXT Directory 2/bin/Debug/net5.0/MongoDB.Driver.Core.dll
-C:/Users/jsb/Dropbox/src/K2GXT Directory 2/bin/Debug/net5.0/MongoDB.Libmongocrypt.dll
-C:/Users/jsb/Dropbox/src/K2GXT Directory 2/bin/Debug/net5.0/Newtonsoft.Json.dll
-C:/Users/jsb/Dropbox/src/K2GXT Directory 2/bin/Debug/net5.0/Newtonsoft.Json.Bson.dll
-C:/Users/jsb/Dropbox/src/K2GXT Directory 2/bin/Debug/net5.0/SharpCompress.dll
-C:/Users/jsb/Dropbox/src/K2GXT Directory 2/bin/Debug/net5.0/System.Linq.Dynamic.Core.dll
-C:/Users/jsb/Dropbox/src/K2GXT Directory 2/bin/Debug/net5.0/runtimes/win/native/libzstd.dll
-C:/Users/jsb/Dropbox/src/K2GXT Directory 2/bin/Debug/net5.0/runtimes/win/native/snappy32.dll
-C:/Users/jsb/Dropbox/src/K2GXT Directory 2/bin/Debug/net5.0/runtimes/win/native/snappy64.dll
-C:/Users/jsb/Dropbox/src/K2GXT Directory 2/bin/Debug/net5.0/runtimes/linux/native/libmongocrypt.so
-C:/Users/jsb/Dropbox/src/K2GXT Directory 2/bin/Debug/net5.0/runtimes/osx/native/libmongocrypt.dylib
-C:/Users/jsb/Dropbox/src/K2GXT Directory 2/bin/Debug/net5.0/runtimes/win/native/mongocrypt.dll
-C:/Users/jsb/Dropbox/src/K2GXT Directory 2/obj/Debug/net5.0/Razor/App.razor.g.cs
-C:/Users/jsb/Dropbox/src/K2GXT Directory 2/obj/Debug/net5.0/Razor/Pages/Counter.razor.g.cs
-C:/Users/jsb/Dropbox/src/K2GXT Directory 2/obj/Debug/net5.0/Razor/Pages/FetchData.razor.g.cs
-C:/Users/jsb/Dropbox/src/K2GXT Directory 2/obj/Debug/net5.0/Razor/Pages/GetRepeaters.razor.g.cs
-C:/Users/jsb/Dropbox/src/K2GXT Directory 2/obj/Debug/net5.0/Razor/Pages/Index.razor.g.cs
-C:/Users/jsb/Dropbox/src/K2GXT Directory 2/obj/Debug/net5.0/Razor/Pages/RepeaterDetails.razor.g.cs
-C:/Users/jsb/Dropbox/src/K2GXT Directory 2/obj/Debug/net5.0/Razor/Shared/SurveyPrompt.razor.g.cs
-C:/Users/jsb/Dropbox/src/K2GXT Directory 2/obj/Debug/net5.0/Razor/_Imports.razor.g.cs
-C:/Users/jsb/Dropbox/src/K2GXT Directory 2/obj/Debug/net5.0/Razor/Shared/MainLayout.razor.g.cs
-C:/Users/jsb/Dropbox/src/K2GXT Directory 2/obj/Debug/net5.0/Razor/Shared/NavMenu.razor.g.cs
-C:/Users/jsb/Dropbox/src/K2GXT Directory 2/obj/Debug/net5.0/Razor/Pages/Error.cshtml.g.cs
-C:/Users/jsb/Dropbox/src/K2GXT Directory 2/obj/Debug/net5.0/Razor/Pages/_Host.cshtml.g.cs
-C:/Users/jsb/Dropbox/src/K2GXT Directory 2/obj/Debug/net5.0/K2GXT Directory 2.RazorAssemblyInfo.cache
-C:/Users/jsb/Dropbox/src/K2GXT Directory 2/obj/Debug/net5.0/K2GXT Directory 2.RazorAssemblyInfo.cs
-C:/Users/jsb/Dropbox/src/K2GXT Directory 2/obj/Debug/net5.0/staticwebassets/K2GXT Directory 2.StaticWebAssets.Manifest.cache
-C:/Users/jsb/Dropbox/src/K2GXT Directory 2/obj/Debug/net5.0/staticwebassets/K2GXT Directory 2.StaticWebAssets.xml
-C:/Users/jsb/Dropbox/src/K2GXT Directory 2/obj/Debug/net5.0/scopedcss/Shared/MainLayout.razor.rz.scp.css
-C:/Users/jsb/Dropbox/src/K2GXT Directory 2/obj/Debug/net5.0/scopedcss/Shared/NavMenu.razor.rz.scp.css
-C:/Users/jsb/Dropbox/src/K2GXT Directory 2/obj/Debug/net5.0/scopedcss/bundle/K2GXT Directory 2.styles.css
-C:/Users/jsb/Dropbox/src/K2GXT Directory 2/obj/Debug/net5.0/scopedcss/projectbundle/K2GXT Directory 2.bundle.scp.css
-C:/Users/jsb/Dropbox/src/K2GXT Directory 2/obj/Debug/net5.0/K2GXT Directory 2.RazorTargetAssemblyInfo.cache
-C:/Users/jsb/Dropbox/src/K2GXT Directory 2/obj/Debug/net5.0/K2GXT Directory 2.RazorTargetAssemblyInfo.cs
-C:/Users/jsb/Dropbox/src/K2GXT Directory 2/obj/Debug/net5.0/K2GXT Directory 2.Views.pdb
-C:/Users/jsb/Dropbox/src/K2GXT Directory 2/obj/Debug/net5.0/K2GXT Directory 2.csproj.CopyComplete
-C:/Users/jsb/Dropbox/src/K2GXT Directory 2/obj/Debug/net5.0/K2GXT Directory 2.genruntimeconfig.cache
-/Users/jsb/Dropbox/src/K2GXT Directory 2/bin/Debug/net5.0/appsettings.Development.json
-/Users/jsb/Dropbox/src/K2GXT Directory 2/bin/Debug/net5.0/appsettings.json
-/Users/jsb/Dropbox/src/K2GXT Directory 2/bin/Debug/net5.0/K2GXT Directory 2.StaticWebAssets.xml
-/Users/jsb/Dropbox/src/K2GXT Directory 2/bin/Debug/net5.0/K2GXT Directory 2.deps.json
-/Users/jsb/Dropbox/src/K2GXT Directory 2/bin/Debug/net5.0/K2GXT Directory 2.runtimeconfig.json
-/Users/jsb/Dropbox/src/K2GXT Directory 2/bin/Debug/net5.0/K2GXT Directory 2.runtimeconfig.dev.json
-/Users/jsb/Dropbox/src/K2GXT Directory 2/bin/Debug/net5.0/K2GXT Directory 2.dll
-/Users/jsb/Dropbox/src/K2GXT Directory 2/bin/Debug/net5.0/ref/K2GXT Directory 2.dll
-/Users/jsb/Dropbox/src/K2GXT Directory 2/bin/Debug/net5.0/K2GXT Directory 2.pdb
-/Users/jsb/Dropbox/src/K2GXT Directory 2/bin/Debug/net5.0/K2GXT Directory 2.Views.dll
-/Users/jsb/Dropbox/src/K2GXT Directory 2/bin/Debug/net5.0/K2GXT Directory 2.Views.pdb
-/Users/jsb/Dropbox/src/K2GXT Directory 2/bin/Debug/net5.0/DnsClient.dll
-/Users/jsb/Dropbox/src/K2GXT Directory 2/bin/Debug/net5.0/MongoDB.Bson.dll
-/Users/jsb/Dropbox/src/K2GXT Directory 2/bin/Debug/net5.0/MongoDB.Driver.dll
-/Users/jsb/Dropbox/src/K2GXT Directory 2/bin/Debug/net5.0/MongoDB.Driver.Core.dll
-/Users/jsb/Dropbox/src/K2GXT Directory 2/bin/Debug/net5.0/MongoDB.Libmongocrypt.dll
-/Users/jsb/Dropbox/src/K2GXT Directory 2/bin/Debug/net5.0/Newtonsoft.Json.dll
-/Users/jsb/Dropbox/src/K2GXT Directory 2/bin/Debug/net5.0/Newtonsoft.Json.Bson.dll
-/Users/jsb/Dropbox/src/K2GXT Directory 2/bin/Debug/net5.0/SharpCompress.dll
-/Users/jsb/Dropbox/src/K2GXT Directory 2/bin/Debug/net5.0/System.Linq.Dynamic.Core.dll
-/Users/jsb/Dropbox/src/K2GXT Directory 2/bin/Debug/net5.0/runtimes/win/native/libzstd.dll
-/Users/jsb/Dropbox/src/K2GXT Directory 2/bin/Debug/net5.0/runtimes/win/native/snappy32.dll
-/Users/jsb/Dropbox/src/K2GXT Directory 2/bin/Debug/net5.0/runtimes/win/native/snappy64.dll
-/Users/jsb/Dropbox/src/K2GXT Directory 2/bin/Debug/net5.0/runtimes/linux/native/libmongocrypt.so
-/Users/jsb/Dropbox/src/K2GXT Directory 2/bin/Debug/net5.0/runtimes/osx/native/libmongocrypt.dylib
-/Users/jsb/Dropbox/src/K2GXT Directory 2/bin/Debug/net5.0/runtimes/win/native/mongocrypt.dll
-/Users/jsb/Dropbox/src/K2GXT Directory 2/obj/Debug/net5.0/K2GXT Directory 2.csproj.AssemblyReference.cache
-/Users/jsb/Dropbox/src/K2GXT Directory 2/obj/Debug/net5.0/K2GXT Directory 2.GeneratedMSBuildEditorConfig.editorconfig
-/Users/jsb/Dropbox/src/K2GXT Directory 2/obj/Debug/net5.0/K2GXT Directory 2.AssemblyInfoInputs.cache
-/Users/jsb/Dropbox/src/K2GXT Directory 2/obj/Debug/net5.0/K2GXT Directory 2.AssemblyInfo.cs
-/Users/jsb/Dropbox/src/K2GXT Directory 2/obj/Debug/net5.0/K2GXT Directory 2.csproj.CoreCompileInputs.cache
-/Users/jsb/Dropbox/src/K2GXT Directory 2/obj/Debug/net5.0/K2GXT Directory 2.MvcApplicationPartsAssemblyInfo.cache
-/Users/jsb/Dropbox/src/K2GXT Directory 2/obj/Debug/net5.0/K2GXT Directory 2.RazorComponent.input.cache
-/Users/jsb/Dropbox/src/K2GXT Directory 2/obj/Debug/net5.0/RazorDeclaration/App.razor.g.cs
-/Users/jsb/Dropbox/src/K2GXT Directory 2/obj/Debug/net5.0/RazorDeclaration/Pages/Counter.razor.g.cs
-/Users/jsb/Dropbox/src/K2GXT Directory 2/obj/Debug/net5.0/RazorDeclaration/Pages/FetchData.razor.g.cs
-/Users/jsb/Dropbox/src/K2GXT Directory 2/obj/Debug/net5.0/RazorDeclaration/Pages/GetRepeaters.razor.g.cs
-/Users/jsb/Dropbox/src/K2GXT Directory 2/obj/Debug/net5.0/RazorDeclaration/Pages/Index.razor.g.cs
-/Users/jsb/Dropbox/src/K2GXT Directory 2/obj/Debug/net5.0/RazorDeclaration/Pages/RepeaterDetails.razor.g.cs
-/Users/jsb/Dropbox/src/K2GXT Directory 2/obj/Debug/net5.0/RazorDeclaration/Shared/SurveyPrompt.razor.g.cs
-/Users/jsb/Dropbox/src/K2GXT Directory 2/obj/Debug/net5.0/RazorDeclaration/_Imports.razor.g.cs
-/Users/jsb/Dropbox/src/K2GXT Directory 2/obj/Debug/net5.0/RazorDeclaration/Shared/MainLayout.razor.g.cs
-/Users/jsb/Dropbox/src/K2GXT Directory 2/obj/Debug/net5.0/RazorDeclaration/Shared/NavMenu.razor.g.cs
-/Users/jsb/Dropbox/src/K2GXT Directory 2/obj/Debug/net5.0/K2GXT Directory 2.RazorComponent.output.cache
-/Users/jsb/Dropbox/src/K2GXT Directory 2/obj/Debug/net5.0/RazorDeclaration/K2GXT Directory 2.dll
-/Users/jsb/Dropbox/src/K2GXT Directory 2/obj/Debug/net5.0/K2GXT Directory 2.TagHelpers.input.cache
-/Users/jsb/Dropbox/src/K2GXT Directory 2/obj/Debug/net5.0/K2GXT Directory 2.TagHelpers.output.cache
-/Users/jsb/Dropbox/src/K2GXT Directory 2/obj/Debug/net5.0/K2GXT Directory 2.RazorCoreGenerate.cache
-/Users/jsb/Dropbox/src/K2GXT Directory 2/obj/Debug/net5.0/Razor/App.razor.g.cs
-/Users/jsb/Dropbox/src/K2GXT Directory 2/obj/Debug/net5.0/Razor/Pages/Counter.razor.g.cs
-/Users/jsb/Dropbox/src/K2GXT Directory 2/obj/Debug/net5.0/Razor/Pages/FetchData.razor.g.cs
-/Users/jsb/Dropbox/src/K2GXT Directory 2/obj/Debug/net5.0/Razor/Pages/GetRepeaters.razor.g.cs
-/Users/jsb/Dropbox/src/K2GXT Directory 2/obj/Debug/net5.0/Razor/Pages/Index.razor.g.cs
-/Users/jsb/Dropbox/src/K2GXT Directory 2/obj/Debug/net5.0/Razor/Pages/RepeaterDetails.razor.g.cs
-/Users/jsb/Dropbox/src/K2GXT Directory 2/obj/Debug/net5.0/Razor/Shared/SurveyPrompt.razor.g.cs
-/Users/jsb/Dropbox/src/K2GXT Directory 2/obj/Debug/net5.0/Razor/_Imports.razor.g.cs
-/Users/jsb/Dropbox/src/K2GXT Directory 2/obj/Debug/net5.0/Razor/Shared/MainLayout.razor.g.cs
-/Users/jsb/Dropbox/src/K2GXT Directory 2/obj/Debug/net5.0/Razor/Shared/NavMenu.razor.g.cs
-/Users/jsb/Dropbox/src/K2GXT Directory 2/obj/Debug/net5.0/Razor/Pages/Error.cshtml.g.cs
-/Users/jsb/Dropbox/src/K2GXT Directory 2/obj/Debug/net5.0/Razor/Pages/_Host.cshtml.g.cs
-/Users/jsb/Dropbox/src/K2GXT Directory 2/obj/Debug/net5.0/K2GXT Directory 2.RazorAssemblyInfo.cache
-/Users/jsb/Dropbox/src/K2GXT Directory 2/obj/Debug/net5.0/K2GXT Directory 2.RazorAssemblyInfo.cs
-/Users/jsb/Dropbox/src/K2GXT Directory 2/obj/Debug/net5.0/staticwebassets/K2GXT Directory 2.StaticWebAssets.Manifest.cache
-/Users/jsb/Dropbox/src/K2GXT Directory 2/obj/Debug/net5.0/staticwebassets/K2GXT Directory 2.StaticWebAssets.xml
-/Users/jsb/Dropbox/src/K2GXT Directory 2/obj/Debug/net5.0/scopedcss/Shared/MainLayout.razor.rz.scp.css
-/Users/jsb/Dropbox/src/K2GXT Directory 2/obj/Debug/net5.0/scopedcss/Shared/NavMenu.razor.rz.scp.css
-/Users/jsb/Dropbox/src/K2GXT Directory 2/obj/Debug/net5.0/scopedcss/bundle/K2GXT Directory 2.styles.css
-/Users/jsb/Dropbox/src/K2GXT Directory 2/obj/Debug/net5.0/scopedcss/projectbundle/K2GXT Directory 2.bundle.scp.css
-/Users/jsb/Dropbox/src/K2GXT Directory 2/obj/Debug/net5.0/K2GXT Directory 2.RazorTargetAssemblyInfo.cache
-/Users/jsb/Dropbox/src/K2GXT Directory 2/obj/Debug/net5.0/K2GXT Directory 2.RazorTargetAssemblyInfo.cs
-/Users/jsb/Dropbox/src/K2GXT Directory 2/obj/Debug/net5.0/K2GXT Directory 2.Views.pdb
-/Users/jsb/Dropbox/src/K2GXT Directory 2/obj/Debug/net5.0/K2GXT Directory 2.csproj.CopyComplete
-/Users/jsb/Dropbox/src/K2GXT Directory 2/obj/Debug/net5.0/K2GXT Directory 2.dll
-/Users/jsb/Dropbox/src/K2GXT Directory 2/obj/Debug/net5.0/ref/K2GXT Directory 2.dll
-/Users/jsb/Dropbox/src/K2GXT Directory 2/obj/Debug/net5.0/K2GXT Directory 2.pdb
-/Users/jsb/Dropbox/src/K2GXT Directory 2/obj/Debug/net5.0/K2GXT Directory 2.genruntimeconfig.cache
-/Users/jsb/Dropbox/src/K2GXT Directory 2/obj/Debug/net5.0/RazorDeclaration/Pages/EditRepeater.razor.g.cs
-/Users/jsb/Dropbox/src/K2GXT Directory 2/obj/Debug/net5.0/Razor/Pages/EditRepeater.razor.g.cs
+C:\Users\jsb\Dropbox\src\K2GXT Directory 2\obj\Debug\net5.0\K2GXT Directory 2.dll
+C:\Users\jsb\Dropbox\src\K2GXT Directory 2\obj\Debug\net5.0\ref\K2GXT Directory 2.dll
+C:\Users\jsb\Dropbox\src\K2GXT Directory 2\obj\Debug\net5.0\K2GXT Directory 2.pdb
+C:\Users\jsb\Dropbox\src\K2GXT Directory 2\bin\Debug\net5.0\appsettings.Development.json
+C:\Users\jsb\Dropbox\src\K2GXT Directory 2\bin\Debug\net5.0\appsettings.json
+C:\Users\jsb\Dropbox\src\K2GXT Directory 2\bin\Debug\net5.0\K2GXT Directory 2.StaticWebAssets.xml
+C:\Users\jsb\Dropbox\src\K2GXT Directory 2\bin\Debug\net5.0\K2GXT Directory 2.exe
+C:\Users\jsb\Dropbox\src\K2GXT Directory 2\bin\Debug\net5.0\K2GXT Directory 2.deps.json
+C:\Users\jsb\Dropbox\src\K2GXT Directory 2\bin\Debug\net5.0\K2GXT Directory 2.runtimeconfig.json
+C:\Users\jsb\Dropbox\src\K2GXT Directory 2\bin\Debug\net5.0\K2GXT Directory 2.runtimeconfig.dev.json
+C:\Users\jsb\Dropbox\src\K2GXT Directory 2\bin\Debug\net5.0\K2GXT Directory 2.dll
+C:\Users\jsb\Dropbox\src\K2GXT Directory 2\bin\Debug\net5.0\ref\K2GXT Directory 2.dll
+C:\Users\jsb\Dropbox\src\K2GXT Directory 2\bin\Debug\net5.0\K2GXT Directory 2.pdb
+C:\Users\jsb\Dropbox\src\K2GXT Directory 2\bin\Debug\net5.0\K2GXT Directory 2.Views.dll
+C:\Users\jsb\Dropbox\src\K2GXT Directory 2\bin\Debug\net5.0\K2GXT Directory 2.Views.pdb
+C:\Users\jsb\Dropbox\src\K2GXT Directory 2\bin\Debug\net5.0\DnsClient.dll
+C:\Users\jsb\Dropbox\src\K2GXT Directory 2\bin\Debug\net5.0\MongoDB.Bson.dll
+C:\Users\jsb\Dropbox\src\K2GXT Directory 2\bin\Debug\net5.0\MongoDB.Driver.dll
+C:\Users\jsb\Dropbox\src\K2GXT Directory 2\bin\Debug\net5.0\MongoDB.Driver.Core.dll
+C:\Users\jsb\Dropbox\src\K2GXT Directory 2\bin\Debug\net5.0\MongoDB.Libmongocrypt.dll
+C:\Users\jsb\Dropbox\src\K2GXT Directory 2\bin\Debug\net5.0\Newtonsoft.Json.dll
+C:\Users\jsb\Dropbox\src\K2GXT Directory 2\bin\Debug\net5.0\Newtonsoft.Json.Bson.dll
+C:\Users\jsb\Dropbox\src\K2GXT Directory 2\bin\Debug\net5.0\SharpCompress.dll
+C:\Users\jsb\Dropbox\src\K2GXT Directory 2\bin\Debug\net5.0\System.Linq.Dynamic.Core.dll
+C:\Users\jsb\Dropbox\src\K2GXT Directory 2\bin\Debug\net5.0\runtimes\win\native\libzstd.dll
+C:\Users\jsb\Dropbox\src\K2GXT Directory 2\bin\Debug\net5.0\runtimes\win\native\snappy32.dll
+C:\Users\jsb\Dropbox\src\K2GXT Directory 2\bin\Debug\net5.0\runtimes\win\native\snappy64.dll
+C:\Users\jsb\Dropbox\src\K2GXT Directory 2\bin\Debug\net5.0\runtimes\linux\native\libmongocrypt.so
+C:\Users\jsb\Dropbox\src\K2GXT Directory 2\bin\Debug\net5.0\runtimes\osx\native\libmongocrypt.dylib
+C:\Users\jsb\Dropbox\src\K2GXT Directory 2\bin\Debug\net5.0\runtimes\win\native\mongocrypt.dll
+C:\Users\jsb\Dropbox\src\K2GXT Directory 2\obj\Debug\net5.0\K2GXT Directory 2.csproj.AssemblyReference.cache
+C:\Users\jsb\Dropbox\src\K2GXT Directory 2\obj\Debug\net5.0\K2GXT Directory 2.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\jsb\Dropbox\src\K2GXT Directory 2\obj\Debug\net5.0\K2GXT Directory 2.AssemblyInfoInputs.cache
+C:\Users\jsb\Dropbox\src\K2GXT Directory 2\obj\Debug\net5.0\K2GXT Directory 2.AssemblyInfo.cs
+C:\Users\jsb\Dropbox\src\K2GXT Directory 2\obj\Debug\net5.0\K2GXT Directory 2.csproj.CoreCompileInputs.cache
+C:\Users\jsb\Dropbox\src\K2GXT Directory 2\obj\Debug\net5.0\K2GXT Directory 2.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\jsb\Dropbox\src\K2GXT Directory 2\obj\Debug\net5.0\K2GXT Directory 2.RazorComponent.input.cache
+C:\Users\jsb\Dropbox\src\K2GXT Directory 2\obj\Debug\net5.0\RazorDeclaration\App.razor.g.cs
+C:\Users\jsb\Dropbox\src\K2GXT Directory 2\obj\Debug\net5.0\RazorDeclaration\Pages\Counter.razor.g.cs
+C:\Users\jsb\Dropbox\src\K2GXT Directory 2\obj\Debug\net5.0\RazorDeclaration\Pages\EditRepeater.razor.g.cs
+C:\Users\jsb\Dropbox\src\K2GXT Directory 2\obj\Debug\net5.0\RazorDeclaration\Pages\FetchData.razor.g.cs
+C:\Users\jsb\Dropbox\src\K2GXT Directory 2\obj\Debug\net5.0\RazorDeclaration\Pages\GetRepeaters.razor.g.cs
+C:\Users\jsb\Dropbox\src\K2GXT Directory 2\obj\Debug\net5.0\RazorDeclaration\Pages\Index.razor.g.cs
+C:\Users\jsb\Dropbox\src\K2GXT Directory 2\obj\Debug\net5.0\RazorDeclaration\Pages\RepeaterDetails.razor.g.cs
+C:\Users\jsb\Dropbox\src\K2GXT Directory 2\obj\Debug\net5.0\RazorDeclaration\Shared\SurveyPrompt.razor.g.cs
+C:\Users\jsb\Dropbox\src\K2GXT Directory 2\obj\Debug\net5.0\RazorDeclaration\_Imports.razor.g.cs
+C:\Users\jsb\Dropbox\src\K2GXT Directory 2\obj\Debug\net5.0\RazorDeclaration\Shared\MainLayout.razor.g.cs
+C:\Users\jsb\Dropbox\src\K2GXT Directory 2\obj\Debug\net5.0\RazorDeclaration\Shared\NavMenu.razor.g.cs
+C:\Users\jsb\Dropbox\src\K2GXT Directory 2\obj\Debug\net5.0\K2GXT Directory 2.RazorComponent.output.cache
+C:\Users\jsb\Dropbox\src\K2GXT Directory 2\obj\Debug\net5.0\RazorDeclaration\K2GXT Directory 2.dll
+C:\Users\jsb\Dropbox\src\K2GXT Directory 2\obj\Debug\net5.0\K2GXT Directory 2.TagHelpers.input.cache
+C:\Users\jsb\Dropbox\src\K2GXT Directory 2\obj\Debug\net5.0\K2GXT Directory 2.TagHelpers.output.cache
+C:\Users\jsb\Dropbox\src\K2GXT Directory 2\obj\Debug\net5.0\K2GXT Directory 2.RazorCoreGenerate.cache
+C:\Users\jsb\Dropbox\src\K2GXT Directory 2\obj\Debug\net5.0\Razor\App.razor.g.cs
+C:\Users\jsb\Dropbox\src\K2GXT Directory 2\obj\Debug\net5.0\Razor\Pages\Counter.razor.g.cs
+C:\Users\jsb\Dropbox\src\K2GXT Directory 2\obj\Debug\net5.0\Razor\Pages\EditRepeater.razor.g.cs
+C:\Users\jsb\Dropbox\src\K2GXT Directory 2\obj\Debug\net5.0\Razor\Pages\FetchData.razor.g.cs
+C:\Users\jsb\Dropbox\src\K2GXT Directory 2\obj\Debug\net5.0\Razor\Pages\GetRepeaters.razor.g.cs
+C:\Users\jsb\Dropbox\src\K2GXT Directory 2\obj\Debug\net5.0\Razor\Pages\Index.razor.g.cs
+C:\Users\jsb\Dropbox\src\K2GXT Directory 2\obj\Debug\net5.0\Razor\Pages\RepeaterDetails.razor.g.cs
+C:\Users\jsb\Dropbox\src\K2GXT Directory 2\obj\Debug\net5.0\Razor\Shared\SurveyPrompt.razor.g.cs
+C:\Users\jsb\Dropbox\src\K2GXT Directory 2\obj\Debug\net5.0\Razor\_Imports.razor.g.cs
+C:\Users\jsb\Dropbox\src\K2GXT Directory 2\obj\Debug\net5.0\Razor\Shared\MainLayout.razor.g.cs
+C:\Users\jsb\Dropbox\src\K2GXT Directory 2\obj\Debug\net5.0\Razor\Shared\NavMenu.razor.g.cs
+C:\Users\jsb\Dropbox\src\K2GXT Directory 2\obj\Debug\net5.0\Razor\Pages\Error.cshtml.g.cs
+C:\Users\jsb\Dropbox\src\K2GXT Directory 2\obj\Debug\net5.0\Razor\Pages\_Host.cshtml.g.cs
+C:\Users\jsb\Dropbox\src\K2GXT Directory 2\obj\Debug\net5.0\K2GXT Directory 2.RazorAssemblyInfo.cache
+C:\Users\jsb\Dropbox\src\K2GXT Directory 2\obj\Debug\net5.0\K2GXT Directory 2.RazorAssemblyInfo.cs
+C:\Users\jsb\Dropbox\src\K2GXT Directory 2\obj\Debug\net5.0\staticwebassets\K2GXT Directory 2.StaticWebAssets.Manifest.cache
+C:\Users\jsb\Dropbox\src\K2GXT Directory 2\obj\Debug\net5.0\staticwebassets\K2GXT Directory 2.StaticWebAssets.xml
+C:\Users\jsb\Dropbox\src\K2GXT Directory 2\obj\Debug\net5.0\scopedcss\Shared\MainLayout.razor.rz.scp.css
+C:\Users\jsb\Dropbox\src\K2GXT Directory 2\obj\Debug\net5.0\scopedcss\Shared\NavMenu.razor.rz.scp.css
+C:\Users\jsb\Dropbox\src\K2GXT Directory 2\obj\Debug\net5.0\scopedcss\bundle\K2GXT Directory 2.styles.css
+C:\Users\jsb\Dropbox\src\K2GXT Directory 2\obj\Debug\net5.0\scopedcss\projectbundle\K2GXT Directory 2.bundle.scp.css
+C:\Users\jsb\Dropbox\src\K2GXT Directory 2\obj\Debug\net5.0\K2GXT Directory 2.RazorTargetAssemblyInfo.cache
+C:\Users\jsb\Dropbox\src\K2GXT Directory 2\obj\Debug\net5.0\K2GXT Directory 2.RazorTargetAssemblyInfo.cs
+C:\Users\jsb\Dropbox\src\K2GXT Directory 2\obj\Debug\net5.0\K2GXT Directory 2.Views.pdb
+C:\Users\jsb\Dropbox\src\K2GXT Directory 2\obj\Debug\net5.0\K2GXT Directory 2.csproj.CopyComplete
+C:\Users\jsb\Dropbox\src\K2GXT Directory 2\obj\Debug\net5.0\K2GXT Directory 2.genruntimeconfig.cache

@@ -24,12 +24,52 @@ else
             <tr><td>Tx Frequency: </td><td><input @bind=@repeater.TxFreq/></td></tr>
 
             <tr><td>Offset: </td><td>@repeater.Offset</td></tr>
-
-            <tr><td>Tx Tone: </td><td><input @bind=@repeater.CTCSS/></td></tr>
-            <tr><td>Rx Tone: </td><td><input @bind=@repeater.RxCTCSS/></td></tr>
-            <tr><td>Tone: </td><td>@repeater.Tone</td></tr>
-            <tr><td>County: </td><td><input @bind=@repeater.County/></td></tr>
-            <tr><td>Location: </td><td><input @bind=@repeater.Location/></td></tr>
+            <tr><td>Tone: </td><td><select @bind="@repeater.Tone">
+                <option value="CSQ">CSQ</option>
+                <option value="Tone">Tone</option>
+                <option value="T-SQL">T-SQL</option>
+            </select></td></tr>
+             @if (repeater.CTCSS != null && (repeater.Tone != "CSQ" && repeater.Tone != "None"))
+                    {
+                        <tr><td>Tx Tone: </td><td><select @bind=@repeater.CTCSS>
+                            @foreach (var tone in RepeaterService.Tones.OrderBy(t=>t))
+                               {
+                                   <option value="@tone">@tone</option>
+                               } 
+                        </select></td></tr> 
+                        @if (repeater.RxCTCSS != null && repeater.Tone == "T-SQL")
+                        {
+                            <tr><td>Rx Tone: </td><td><select @bind=@repeater.RxCTCSS>
+                                @foreach (var tone in RepeaterService.Tones.OrderBy(t=>t))
+                              {
+                                  <option value="@tone">@tone</option>
+                              }  
+                            </select></td></tr>
+                        }
+                    }
+   
+            <tr><td>Latitude: </td><td><input @bind=@repeater.Location.coordinates[1]/></td></tr>
+            <tr><td>Longitude: </td><td><input @bind=@repeater.Location.coordinates[0]/></td></tr>
+            <tr><td>Grid Square: </td><td><input @bind=@repeater.GridSquare/></td></tr>
+            <tr><td>State:</td><td> <select @bind="repeater.State">
+                @if (counties != null)
+                {
+                    @foreach (var state in counties.ToArray().AsQueryable().Select(c=>c.state_name).Distinct())
+                    {
+                        <option value="@state">@state</option>
+                    }
+                }
+            </select></td></tr>
+            <tr><td>County: </td><td><select @bind="@repeater.County">
+                      @if (counties != null)
+                            {
+                                @foreach (var county in counties.ToArray().AsQueryable().Where(c => c.state_name == repeater.State).Select(c=>c.county).OrderBy(c=>c).Distinct())
+                                {
+                                    <option value="@county">@county</option>
+                                }
+                            }
+                </select></td></tr>
+            <tr><td>Description: </td><td><input @bind=@repeater.Description/></td></tr>
         </table>
            <button type="submit">Save</button><button type="submit" @onclick="@(async () => ResetForm())">Cancel</button>
     </EditForm>
@@ -40,7 +80,8 @@ else
     public string id { get; set; }
     
     private Repeater repeater;
-    private Repeater previousState;
+    private Repeater? previousState;
+    private Counties[] counties;
 
 
    protected override async Task OnInitializedAsync()
@@ -48,17 +89,21 @@ else
        
        repeater = await RepeaterService.GetRepeaterAsync(id);
        previousState = (Repeater)repeater.Clone();
+       counties = await RepeaterService.getCounties();
+
+
     }
 
     private async Task HandleSubmit()
     {
         if (await RepeaterService.SaveRepeater(repeater))
         {
+            previousState = null;
             NavManager.NavigateTo("/getRepeaters");
         }
     }
     
-    public void ResetForm()
+    private void ResetForm()
     {
         repeater = previousState;
         NavManager.NavigateTo("/getRepeaters");

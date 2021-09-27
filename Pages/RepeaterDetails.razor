@@ -20,12 +20,21 @@ else
 
         <tr><td>Offset: </td><td>@repeater.Offset</td></tr>
         
-        <tr><td>Tx Tone: </td><td>@repeater.CTCSS</td></tr>  
-        @if (repeater.RxCTCSS != null && repeater.Tone == "T SQL") {
-            <tr><td>Rx Tone: </td><td>@repeater.RxCTCSS</td></tr>
-        }
+
         <tr><td>Tone: </td><td>@repeater.Tone</td></tr>
-        <tr><td>Location: </td><td>@repeater.Location</td></tr>
+        @if (repeater.CTCSS != null && (repeater.Tone != "CSQ" && repeater.Tone != "None"))
+        {
+
+            <tr><td>Tx Tone: </td><td>@repeater.CTCSS</td></tr>
+            @if (repeater.RxCTCSS != null && repeater.Tone == "T SQL")
+            {
+                <tr><td>Rx Tone: </td><td>@repeater.RxCTCSS</td></tr>
+            }
+        }
+        <tr><td>State: </td><td>@repeater.State</td></tr>
+        <tr><td>County: </td><td>@repeater.County</td></tr>
+        <tr><td>Grid Square: </td><td>@repeater.GridSquare</td></tr>
+        <tr><td>Description: </td><td>@repeater.Description</td></tr>
     </table>
 }
 
