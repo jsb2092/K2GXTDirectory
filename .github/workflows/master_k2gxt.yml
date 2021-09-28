@@ -53,5 +53,5 @@ jobs:
         with:
           app-name: 'k2gxt'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_786E9116635044D78586E312DB494BFD }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_F95D180559C14A56AB84382E7D905A72 }}
           package: .
