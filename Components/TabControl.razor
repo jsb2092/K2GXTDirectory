@@ -2,7 +2,7 @@
     <div class="btn-group" role="group">
         @foreach (TabPage tabPage in Pages)
         {
-            <button style="width: 75px;" type="button"
+            <button  type="button"
                     class="btn @GetButtonClass(tabPage)"
                     @onclick=@( () => ActivatePage(tabPage) )>
                 @tabPage.Text
