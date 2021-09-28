@@ -18,20 +18,20 @@ else
            <DataAnnotationsValidator />
             <ValidationSummary />
 
-        <table id="repeaterDetails">
-            <tr><td style="width:150px">Callsign: </td><td><input @bind=@repeater.CallSign/></td></tr>
-            <tr><td>Rx Frequency: </td> <td><input @bind=@repeater.RxFreq/></td></tr>
-            <tr><td>Tx Frequency: </td><td><input @bind=@repeater.TxFreq/></td></tr>
+        <table id="repeaterDetails" style="border-wdth:1">
+            <tr><td style="width:150px">Callsign: </td><td><input class="editInput" @bind=@repeater.CallSign/></td></tr>
+            <tr><td>Rx Frequency: </td> <td><input class="editInput" @bind=@repeater.RxFreq/></td></tr>
+            <tr><td>Tx Frequency: </td><td><input class="editInput" @bind=@repeater.TxFreq/></td></tr>
 
             <tr><td>Offset: </td><td>@repeater.Offset</td></tr>
-            <tr><td>Tone: </td><td><select @bind="@repeater.Tone">
+            <tr><td>Tone: </td><td><select class="editInput" @bind="@repeater.Tone">
                 <option value="CSQ">CSQ</option>
                 <option value="Tone">Tone</option>
                 <option value="T-SQL">T-SQL</option>
             </select></td></tr>
              @if (repeater.CTCSS != null && (repeater.Tone != "CSQ" && repeater.Tone != "None"))
                     {
-                        <tr><td>Tx Tone: </td><td><select @bind=@repeater.CTCSS>
+                        <tr><td>Tx Tone: </td><td><select class="editInput" @bind=@repeater.CTCSS>
                             @foreach (var tone in RepeaterService.Tones.OrderBy(t=>t))
                                {
                                    <option value="@tone">@tone</option>
@@ -39,7 +39,7 @@ else
                         </select></td></tr> 
                         @if (repeater.RxCTCSS != null && repeater.Tone == "T-SQL")
                         {
-                            <tr><td>Rx Tone: </td><td><select @bind=@repeater.RxCTCSS>
+                            <tr><td>Rx Tone: </td><td><select class="editInput" @bind=@repeater.RxCTCSS>
                                 @foreach (var tone in RepeaterService.Tones.OrderBy(t=>t))
                               {
                                   <option value="@tone">@tone</option>
@@ -48,28 +48,30 @@ else
                         }
                     }
    
-            <tr><td>Latitude: </td><td><input @bind=@repeater.Location.coordinates[1]/></td></tr>
-            <tr><td>Longitude: </td><td><input @bind=@repeater.Location.coordinates[0]/></td></tr>
-            <tr><td>Grid Square: </td><td><input @bind=@repeater.GridSquare/></td></tr>
-            <tr><td>State:</td><td> <select @bind="repeater.State">
+            <tr><td>Latitude: </td><td><input class="editInput" @bind=@repeater.Location.coordinates[1]/></td></tr>
+            <tr><td>Longitude: </td><td><input class="editInput" @bind=@repeater.Location.coordinates[0]/></td></tr>
+            <tr><td>Grid Square: </td><td><input class="editInput" @bind=@repeater.GridSquare/></td></tr>
+            <tr><td>State:</td><td> <select class="editInput" @bind="repeater.State">
                 @if (counties != null)
-                {
+                {    
+                    <option style="display:none">Select a State</option>
                     @foreach (var state in counties.ToArray().AsQueryable().Select(c=>c.state_name).Distinct())
                     {
                         <option value="@state">@state</option>
                     }
                 }
             </select></td></tr>
-            <tr><td>County: </td><td><select @bind="@repeater.County">
+            <tr><td>County: </td><td><select class="editInput" @bind="@repeater.County">
                       @if (counties != null)
                             {
+                            
                                 @foreach (var county in counties.ToArray().AsQueryable().Where(c => c.state_name == repeater.State).Select(c=>c.county).OrderBy(c=>c).Distinct())
                                 {
                                     <option value="@county">@county</option>
                                 }
                             }
                 </select></td></tr>
-            <tr><td>Description: </td><td><input @bind=@repeater.Description/></td></tr>
+            <tr><td>Description: </td><td><input class="editInput" @bind=@repeater.Description/></td></tr>
         </table>
            <button type="submit">Save</button><button type="submit" @onclick="@(async () => ResetForm())">Cancel</button>
     </EditForm>

@@ -34,7 +34,12 @@ th {
     white-space: nowrap;
 }
 #repeaterDetails tr td {
+
     padding-bottom: 10px;
+}
+
+.editInput {
+    width:250px;
 }
 
 #blazor-error-ui {
