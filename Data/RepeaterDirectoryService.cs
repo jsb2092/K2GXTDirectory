@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 
 using System.Text.Json;
@@ -8,6 +9,7 @@ using System.Threading.Tasks;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
+using Newtonsoft.Json;
 
 namespace K2GXT_Directory_2.Data
 {
@@ -50,12 +52,23 @@ namespace K2GXT_Directory_2.Data
                 });
 
             }
-            MongoClient dbClient =
-                new MongoClient(
-                    "mongodb+srv://k2gxt:XrpAJULNNHICwQIs@cluster0.fv2i8.mongodb.net/test?authSource=admin&replicaSet=atlas-zytw02-shard-0&readPreference=primary&appname=MongoDB%20Compass&ssl=true");
-            database = dbClient.GetDatabase("directory");
-            collection = database.GetCollection<Repeater>("repeater");
-            countiesCollection = database.GetCollection<Counties>("usa_counties");
+            
+            // get the data from a json file that looks like:
+            //{
+            //    "connectionString": "<your connection string>"
+            //}
+
+            using (StreamReader r = new StreamReader("Config/connection.json"))
+            {
+                string json = r.ReadToEnd();
+                var items = JsonConvert.DeserializeObject<Dictionary<string, string>>(json);
+
+                MongoClient dbClient =
+                    new MongoClient(items["connectionString"]);
+                 database = dbClient.GetDatabase("directory");
+                collection = database.GetCollection<Repeater>("repeater");
+                countiesCollection = database.GetCollection<Counties>("usa_counties");
+            }
 
 
         }
