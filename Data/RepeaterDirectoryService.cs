@@ -58,7 +58,7 @@ namespace K2GXT_Directory_2.Data
             //    "connectionString": "<your connection string>"
             //}
 
-            using (StreamReader r = new StreamReader("Config/connection.json"))
+            using (StreamReader r = new StreamReader("connection.json"))
             {
                 string json = r.ReadToEnd();
                 var items = JsonConvert.DeserializeObject<Dictionary<string, string>>(json);
