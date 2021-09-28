@@ -33,13 +33,13 @@ a, .btn-link {
 th {
     white-space: nowrap;
 }
-#repeaterDetails tr td {
+.repeaterDetails tr td {
 
     padding-bottom: 10px;
 }
 
 .editInput {
-    width:250px;
+    width:200px;
 }
 
 #blazor-error-ui {

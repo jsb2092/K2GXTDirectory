@@ -67,6 +67,77 @@ namespace K2GXT_Directory_2.Data
 
         public string Offset => (TxFreq - RxFreq > 0 ? "+" : "") + $"{(TxFreq - RxFreq):0.0}" + " MHz";
 
+        [BsonIgnore]
+        public string FMEnabledString
+        {
+            get => FMEnabled ? "Enabled" : "Disabled";
+            set => FMEnabled = value == "Enabled";
+        }
+        
+        public bool FMEnabled { get; set; }
+        public int? AllStarId { get; set; }
+        public int? EcholinkNum { get; set; }
+        public string EcholinkCall { get; set; }
+        public int? IRLPNum{ get; set; }
+        
+        [BsonIgnore]
+        public string DMREnabledString
+        {
+            get => DMREnabled ? "Enabled" : "Disabled";
+            set => DMREnabled = value == "Enabled";
+        }
+        public bool DMREnabled { get; set; }
+        public int DMRColorCode { get; set; }
+        
+        public string DStarType { get; set; }
+        public int? DMRId { get; set; }
+        
+        [BsonIgnore]
+        public string YSFEnabledString
+        {
+            get => YSFEnabled ? "Enabled" : "Disabled";
+            set => YSFEnabled = value == "Enabled";
+        }
+        public bool YSFEnabled { get; set; }
+        public int YSFDGUp { get; set; }
+        public int YSFDGDown { get; set; }
+        public int YSFBandwidth { get; set; }  
+        
+        [BsonIgnore]
+        public string DStarEnabledString
+        {
+            get => DStarEnabled ? "Enabled" : "Disabled";
+            set => DStarEnabled = value == "Enabled";
+        }
+        public bool DStarEnabled { get; set; }
+        
+        [BsonIgnore]
+        public string P25EnabledString
+        {
+            get => P25Enabled ? "Enabled" : "Disabled";
+            set => P25Enabled = value == "Enabled";
+        }
+        public bool P25Enabled { get; set; }      
+        
+        public int? P25Nac { get; set; }
+        
+        public string NXDNEnabledString
+        {
+            get => NXDNEnabled ? "Enabled" : "Disabled";
+            set => NXDNEnabled = value == "Enabled";
+        }
+        public bool NXDNEnabled { get; set; } 
+        public int? NXDNRAN { get; set; }
+        public int? NXDNBandwidth { get; set; }
+        
+    
+        public int? CoverageRadiusKM { get; set; }
+        
+        public bool isOpen { get; set; }
+        public bool Active { get; set; }
+        
+        
+
     }
     
 

@@ -35,7 +35,7 @@ else
             <th>
                 <span @onclick="@(async () => await sortAsync("CTCSS"))">
                     <img width="12" src="@imageSortName"/>
-                    CTCSS
+                    Tones
                 </span> </th>
             <th>
                 <span @onclick="@(async () => await sortAsync("County"))">
@@ -58,21 +58,28 @@ else
         <tbody>
             @foreach (var repeater in repeaters)
             {
-                <tr>      
+                <tr>
                     <td><a href="/editRepeater/@repeater._id"> <img width="12" src="@imageEditName"/></a></td>
                     <td><a href="/repeaterDetails/@repeater._id">@repeater.CallSign</a></td>
                     <td>@repeater.RxFreq</td>
                     <td>@repeater.TxFreq</td>
-             
-
-                    <td>@repeater.CTCSS</td>
+                    <td>
+                    @if (repeater.CTCSS != null && (repeater.Tone != "CSQ" && repeater.Tone != "None"))
+                    {
+                        @repeater.CTCSS
+                         @if (repeater.RxCTCSS != null && repeater.Tone == "T SQL")
+                         {
+                             <span> / </span> @repeater.RxCTCSS
+                         }
+                         
+                        
+                    }
+                    </td>
                     <td>@repeater.County</td>
                     <td>@repeater.GridSquare</td>
                     <td>@repeater.Description</td>
                     
-              
-                                     
-                </tr>
+                    </tr>
             }
         </tbody>
     </table>
