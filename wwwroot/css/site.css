@@ -60,4 +60,8 @@ th {
         right: 0.75rem;
         top: 0.5rem;
     }
-#mapid { height: 180px; }
+
+#testMap {
+    height: 200px;
+    width: 200px;
+}
