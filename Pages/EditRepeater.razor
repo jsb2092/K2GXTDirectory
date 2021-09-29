@@ -14,14 +14,20 @@
 }
 else
 {
-    <EditForm Model="@repeater" OnSubmit="@HandleSubmit">
+    <EditForm Model="@repeater" OnValidSubmit="@HandleValidSubmit">
            <DataAnnotationsValidator />
-            <ValidationSummary />
+           <ValidationSummary />
            <div style="float:left; margin-right:30px"><p>Editing Repeater: @repeater.CallSign (@repeater.RxFreq)</p>
   
                <table class="repeaterDetails" >
                    <tr><td style="width:150px">Callsign: </td><td><input class="editInput" @bind=@repeater.CallSign/></td></tr>
+                   <tr><td>Usability: </td> <td><select class="editInput" @bind=@repeater.isOpenString>
+                      <option value="Open">Open</option>
+                      <option value="Closed">Closed</option>
+                      <option value="Private">Private</option>
+                  </select></td></tr>
                    <tr><td>Rx Frequency: </td> <td><input class="editInput" @bind=@repeater.RxFreq/></td></tr>
+              
                    <tr><td>Tx Frequency: </td><td><input class="editInput" @bind=@repeater.TxFreq/></td></tr>
 
                    <tr><td>Offset: </td><td>@repeater.Offset</td></tr>
@@ -102,7 +108,12 @@ else
                                    <option value="Disabled">Disabled</option>
                                </select>
                            </td></tr>
-                           <tr><td>Color Code: </td> <td><input disabled=@(!repeater.DMREnabled) class="editInput" @bind=@repeater.DMRColorCode/></td></tr>
+                           <tr><td>Color Code: </td> <td><select disabled=@(!repeater.DMREnabled) class="editInput" @bind=@repeater.DMRColorCode>
+                            @for (var cc=0; cc<16; cc++) 
+                               {
+                                   <option value="@cc">@cc</option>
+                               }           
+                           </select></td></tr>
                        </table>
                    </TabPage>
                    <TabPage Text="D-Star">
@@ -153,7 +164,7 @@ else
                                </select>
                            </td></tr>
                            <tr><td>DG Up</td> <td><input disabled=@(!repeater.YSFEnabled) class="editInput" @bind=@repeater.YSFDGUp/></td></tr>
-                           <tr><td>DG Down</td> <td><input disabled=@(!repeater.YSFEnabled) class="editInput" @bind=@repeater.YSFDGUp/></td></tr>
+                           <tr><td>DG Down</td> <td><input disabled=@(!repeater.YSFEnabled) class="editInput" @bind=@repeater.YSFDGDown/></td></tr>
                            <tr><td>Bandwidth</td> <td><input disabled=@(!repeater.YSFEnabled) class="editInput" @bind=@repeater.YSFBandwidth/></td></tr>
                                                                                                    
                        </table>
@@ -188,7 +199,7 @@ else
 
     }
 
-    private async Task HandleSubmit()
+    private async Task HandleValidSubmit()
     {
         if (await RepeaterService.SaveRepeater(repeater))
         {

@@ -1,11 +1,12 @@
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-
 using System.Text.Json;
 using System.Threading.Tasks;
+using K2GXT_Directory_2.Data;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
@@ -93,6 +94,7 @@ namespace K2GXT_Directory_2.Data
         
         public async Task<Repeater> GetRepeaterAsync(string id)
         {
+               
             // try to get the data from the list first, if we can't read from the db
             try
             {

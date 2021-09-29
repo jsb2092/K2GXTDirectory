@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Driver.GeoJsonObjectModel;
@@ -26,7 +27,7 @@ namespace K2GXT_Directory_2.Data
     public class Repeater : ICloneable
 
     {
-        
+
         public object Clone()
         {
             return this.MemberwiseClone();
@@ -37,11 +38,15 @@ namespace K2GXT_Directory_2.Data
 
         public DateTime Date { get; set; }
 
-        [BsonElement("Callsign")] public string CallSign { get; set; }
+        [BsonElement("Callsign")] [Required] public string CallSign { get; set; }
 
-        [BsonElement("Receive Frequency")] public double RxFreq { get; set; }
+        [BsonElement("Receive Frequency")]
+        [Required]
+        public double RxFreq { get; set; }
 
-        [BsonElement("Transmit Frequency")] public double TxFreq { get; set; }
+        [BsonElement("Transmit Frequency")]
+        [Required]
+        public double TxFreq { get; set; }
 
         public double? CTCSS { get; set; }
 
@@ -54,14 +59,16 @@ namespace K2GXT_Directory_2.Data
         public string State { get; set; }
         public string County { get; set; }
 
-        [BsonElement("Location")]
-        public LocationInfo Location { get; set; }
+        [BsonElement("Location")] public LocationInfo Location { get; set; }
 
         private string _gridSquare;
-        [BsonElement("GridSquare")] 
+
+        [BsonElement("GridSquare")]
         public string GridSquare
         {
-            get => Location?.coordinates[0] != null ? Utility.latLonToGridSquare(Location.coordinates[1], Location.coordinates[0]) : _gridSquare;
+            get => Location?.coordinates[0] != null
+                ? Utility.latLonToGridSquare(Location.coordinates[1], Location.coordinates[0])
+                : _gridSquare;
             set => _gridSquare = value;
         }
 
@@ -73,67 +80,74 @@ namespace K2GXT_Directory_2.Data
             get => FMEnabled ? "Enabled" : "Disabled";
             set => FMEnabled = value == "Enabled";
         }
-        
+
         public bool FMEnabled { get; set; }
         public int? AllStarId { get; set; }
         public int? EcholinkNum { get; set; }
         public string EcholinkCall { get; set; }
-        public int? IRLPNum{ get; set; }
-        
+        public int? IRLPNum { get; set; }
+
         [BsonIgnore]
         public string DMREnabledString
         {
             get => DMREnabled ? "Enabled" : "Disabled";
             set => DMREnabled = value == "Enabled";
         }
+
         public bool DMREnabled { get; set; }
         public int DMRColorCode { get; set; }
-        
+
         public string DStarType { get; set; }
         public int? DMRId { get; set; }
-        
+
         [BsonIgnore]
         public string YSFEnabledString
         {
             get => YSFEnabled ? "Enabled" : "Disabled";
             set => YSFEnabled = value == "Enabled";
         }
+
         public bool YSFEnabled { get; set; }
         public int YSFDGUp { get; set; }
         public int YSFDGDown { get; set; }
-        public int YSFBandwidth { get; set; }  
-        
+        public int YSFBandwidth { get; set; }
+
         [BsonIgnore]
         public string DStarEnabledString
         {
             get => DStarEnabled ? "Enabled" : "Disabled";
             set => DStarEnabled = value == "Enabled";
         }
+
         public bool DStarEnabled { get; set; }
-        
+
         [BsonIgnore]
         public string P25EnabledString
         {
             get => P25Enabled ? "Enabled" : "Disabled";
             set => P25Enabled = value == "Enabled";
         }
-        public bool P25Enabled { get; set; }      
-        
+
+        public bool P25Enabled { get; set; }
+
         public int? P25Nac { get; set; }
-        
+
+        [BsonIgnore]
         public string NXDNEnabledString
         {
             get => NXDNEnabled ? "Enabled" : "Disabled";
             set => NXDNEnabled = value == "Enabled";
         }
-        public bool NXDNEnabled { get; set; } 
+
+        public bool NXDNEnabled { get; set; }
         public int? NXDNRAN { get; set; }
         public int? NXDNBandwidth { get; set; }
-        
-    
+
+
         public int? CoverageRadiusKM { get; set; }
         
-        public bool isOpen { get; set; }
+        public string isOpenString { get; set; }
+
         public bool Active { get; set; }
         
         

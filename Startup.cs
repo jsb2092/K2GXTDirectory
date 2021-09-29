@@ -28,7 +28,6 @@ namespace K2GXT_Directory_2
         {
             services.AddRazorPages();
             services.AddServerSideBlazor();
-            services.AddSingleton<WeatherForecastService>();
             services.AddSingleton<RepeaterDirectoryService>();
         }
 

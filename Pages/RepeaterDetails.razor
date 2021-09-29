@@ -2,9 +2,13 @@
 
 @using K2GXT_Directory_2.Data
 
+@using System.Drawing
 @inject RepeaterDirectoryService RepeaterService
+@inject IJSRuntime JS
 
-<a href="/getRepeaters"> <img width="16" src="/images/back.png"/> Back</a>
+
+
+
 
 @if (repeater == null)
 {
@@ -12,44 +16,103 @@
 }
 else
 {
-    <div><p>Repeater Details for: @repeater.CallSign</p></div>
-    <table id="repeaterDetails">
-        <tr><td style="width:150px">Callsign: </td><td>@repeater.CallSign</td></tr>
-        <tr><td>Rx Frequency: </td> <td>@repeater.RxFreq</td></tr>
-        <tr><td>Tx Frequency: </td><td>@repeater.TxFreq</td></tr>
+    <div style="float: left">
+    <a href="/getRepeaters"> <img width="16" src="/images/back.png"/> Back</a>
+        <div ><p>Repeater Details for: @repeater.CallSign</p></div>
+        <table id="repeaterDetails">
+            <tr><td style="width:150px">Callsign: </td><td>@repeater.CallSign</td></tr>
+            <tr><td>Use </td> <td>@(repeater.isOpenString)</td></tr>
+        
+            <tr><td>Rx Frequency: </td> <td>@repeater.RxFreq</td></tr>
+            <tr><td>Tx Frequency: </td><td>@repeater.TxFreq</td></tr>
 
-        <tr><td>Offset: </td><td>@repeater.Offset</td></tr>
+            <tr><td>Offset: </td><td>@repeater.Offset</td></tr>
         
 
-        <tr><td>Tone: </td><td>@repeater.Tone</td></tr>
-        @if (repeater.CTCSS != null && (repeater.Tone != "CSQ" && repeater.Tone != "None"))
-        {
-
-            <tr><td>Tx Tone: </td><td>@repeater.CTCSS</td></tr>
-            @if (repeater.RxCTCSS != null && repeater.Tone == "T SQL")
+            <tr><td>Tone: </td><td>@repeater.Tone</td></tr>
+            @if (repeater.CTCSS != null && (repeater.Tone != "CSQ" && repeater.Tone != "None"))
             {
-                <tr><td>Rx Tone: </td><td>@repeater.RxCTCSS</td></tr>
+
+                <tr><td>Tx Tone: </td><td>@repeater.CTCSS</td></tr>
+                @if (repeater.RxCTCSS != null && repeater.Tone == "T-SQL")
+                {
+                    <tr><td>Rx Tone: </td><td>@repeater.RxCTCSS</td></tr>
+                }
             }
-        }
-        <tr><td>State: </td><td>@repeater.State</td></tr>
-        <tr><td>County: </td><td>@repeater.County</td></tr>
-        <tr><td>Grid Square: </td><td>@repeater.GridSquare</td></tr>
-        <tr><td>Description: </td><td>@repeater.Description</td></tr>
-    </table>
+            <tr><td>State: </td><td>@repeater.State</td></tr>
+            <tr><td>County: </td><td>@repeater.County</td></tr>
+            <tr><td>Grid Square: </td><td>@repeater.GridSquare</td></tr>
+            <tr><td>Description: </td><td>@repeater.Description</td></tr>
+            @if (repeater.FMEnabled)
+            {
+                <tr><td>FM Analog Mode:</td><td>@repeater.FMEnabledString</td></tr>
+                @if (repeater.AllStarId != null)
+                {
+                    <tr><td>AllStar ID:</td><td><a target="_blank" href="http://stats.allstarlink.org/nodeinfo.cgi?node=@repeater.AllStarId">@repeater.AllStarId</a> </td></tr>
+                }
+                @if (repeater.EcholinkNum != null)
+                {
+                    <tr><td>Echolink #: </td> <td>@repeater.EcholinkNum</td></tr>
+                    <tr><td>Echolink Call: </td> <td>@repeater.EcholinkCall></td></tr>
+                }
+                @if (repeater.IRLPNum != null)
+                {
+                    <tr><td>IRLP #: </td> <td><a target="_blank" href="http://status.irlp.net/?nodeid=@repeater.IRLPNum">@repeater.IRLPNum></a></td></tr>
+                }
+            }
+            @if (repeater.DStarEnabled)
+            {
+                <tr><td>D-Star Mode:</td><td>@repeater.DStarEnabledString</td></tr>
+                <tr><td>D-Star Type:</td><td>@repeater.DStarType</td></tr>
+            }
+            @if (repeater.DMREnabled)
+            {
+                <tr><td>DMR Mode:</td><td>@repeater.DMREnabledString</td></tr>
+                <tr><td>DMR Id:</td><td>@repeater.DMRId</td></tr>
+                <tr><td>DMR Color Code:</td><td>@repeater.DMRColorCode</td></tr>
+            }
+            @if (repeater.NXDNEnabled)
+            {
+                <tr><td>NXDM Mode:</td><td>@repeater.NXDNEnabledString</td></tr>
+                <tr><td>NXDM Mode:</td><td>@repeater.NXDNRAN</td></tr>
+                <tr><td>NXDM Mode:</td><td>@repeater.NXDNBandwidth</td></tr>
+            }
+            @if (repeater.P25Enabled)
+            {
+                <tr><td>P25 Mode:</td><td>@repeater.P25EnabledString</td></tr>
+                <tr><td>P25 NAC $:</td><td>@repeater.P25Nac</td></tr>
+            } 
+            @if (repeater.YSFEnabled)
+            {
+                <tr><td>YSR Mode:</td><td>@repeater.YSFEnabledString</td></tr>
+                <tr><td>YSR Bandwidth:</td><td>@repeater.YSFBandwidth</td></tr>
+                <tr><td>YSF DG Up:</td><td>@repeater.YSFDGUp</td></tr>
+                <tr><td>YSF DG Down:</td><td>@repeater.YSFDGDown</td></tr>
+            }
+        </table>
+    </div>
+    <div id="mapContainer" style="width: 300px; height: 300px;">
+        <MapBoxView></MapBoxView>
+    </div>
+ 
+    
+ 
 }
 
 @code {
+
     [Parameter]
     public string id { get; set; }
-    
+
     private Repeater repeater;
 
 
-   protected override async Task OnInitializedAsync()
-    {
-       
-       repeater = await RepeaterService.GetRepeaterAsync(id);
-    }
 
+    protected override async Task OnInitializedAsync()
+    {
+
+        repeater = await RepeaterService.GetRepeaterAsync(id);
+
+    }
 
 }
