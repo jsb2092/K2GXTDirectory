@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>Darnton.Blazor.Leaflet</id>
+    <version>0.1.3</version>
+    <authors>Bernard Darnton</authors>
+    <license type="expression">MIT</license>
+    <licenseUrl>https://licenses.nuget.org/MIT</licenseUrl>
+    <description>Leaflet.js Interop Library for Blazor - .NET 5</description>
+    <copyright>2020 Bernard Darnton</copyright>
+    <dependencies>
+      <group targetFramework="net5.0">
+        <dependency id="Microsoft.AspNetCore.Components" version="5.0.0" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.AspNetCore.Components.Web" version="5.0.0" exclude="Build,Analyzers" />
+      </group>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="/Users/jsb/Dropbox/src/DitDah/Darnton.Blazor.Leaflet/bin/Debug/net5.0/Darnton.Blazor.Leaflet.dll" target="lib/net5.0/Darnton.Blazor.Leaflet.dll" />
+    <file src="/Users/jsb/Dropbox/src/DitDah/Darnton.Blazor.Leaflet/bin/Debug/net5.0/Darnton.Blazor.Leaflet.xml" target="lib/net5.0/Darnton.Blazor.Leaflet.xml" />
+    <file src="/Users/jsb/Dropbox/src/DitDah/Darnton.Blazor.Leaflet/obj/Debug/net5.0/staticwebassets/msbuild.Darnton.Blazor.Leaflet.Microsoft.AspNetCore.StaticWebAssets.props" target="build/Microsoft.AspNetCore.StaticWebAssets.props" />
+    <file src="/Users/jsb/Dropbox/src/DitDah/Darnton.Blazor.Leaflet/obj/Debug/net5.0/staticwebassets/msbuild.build.Darnton.Blazor.Leaflet.props" target="build/Darnton.Blazor.Leaflet.props" />
+    <file src="/Users/jsb/Dropbox/src/DitDah/Darnton.Blazor.Leaflet/obj/Debug/net5.0/staticwebassets/msbuild.buildMultiTargeting.Darnton.Blazor.Leaflet.props" target="buildMultiTargeting/Darnton.Blazor.Leaflet.props" />
+    <file src="/Users/jsb/Dropbox/src/DitDah/Darnton.Blazor.Leaflet/obj/Debug/net5.0/staticwebassets/msbuild.buildTransitive.Darnton.Blazor.Leaflet.props" target="buildTransitive/Darnton.Blazor.Leaflet.props" />
+    <file src="/Users/jsb/Dropbox/src/DitDah/Darnton.Blazor.Leaflet/wwwroot/js/leaflet-map.js" target="staticwebassets/js/leaflet-map.js" />
+  </files>
+</package>

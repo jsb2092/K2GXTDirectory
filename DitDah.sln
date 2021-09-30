@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "K2GXT Directory 2", "..\K2GXTDirectory\K2GXT Directory 2.csproj", "{62EAEC04-0C6E-4902-805D-044782006369}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Darnton.Blazor.Leaflet", "Darnton.Blazor.Leaflet\Darnton.Blazor.Leaflet.csproj", "{A1188586-94CB-4335-AB63-61F019868B77}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{62EAEC04-0C6E-4902-805D-044782006369}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{62EAEC04-0C6E-4902-805D-044782006369}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{62EAEC04-0C6E-4902-805D-044782006369}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{62EAEC04-0C6E-4902-805D-044782006369}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A1188586-94CB-4335-AB63-61F019868B77}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1188586-94CB-4335-AB63-61F019868B77}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1188586-94CB-4335-AB63-61F019868B77}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1188586-94CB-4335-AB63-61F019868B77}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
