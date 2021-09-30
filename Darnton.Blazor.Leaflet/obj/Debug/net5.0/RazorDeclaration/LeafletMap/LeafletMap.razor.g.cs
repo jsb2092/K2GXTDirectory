@@ -13,7 +13,7 @@ namespace Darnton.Blazor.Leaflet.LeafletMap
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Components;
 #nullable restore
-#line 1 "/Users/jsb/Dropbox/My Mac (Jeremys-MacBook-Pro.local)/Downloads/LeafletBlazor-master 2/Darnton.Blazor.Leaflet/_Imports.razor"
+#line 1 "/Users/jsb/Dropbox/src/DitDah/Darnton.Blazor.Leaflet/_Imports.razor"
 using Microsoft.AspNetCore.Components.Web;
 
 #line default
