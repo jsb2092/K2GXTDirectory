@@ -74,27 +74,36 @@ namespace K2GXT_Directory_2.Data
 
         }
 
-        public Task<Repeater[]> GetRepeaterListAsync()
+        public Task<Repeater[]> GetRepeaterListAsync(int limit = 100)
         {
- 
-            var filter = Builders<Repeater>.Filter.Empty;
-            var sort = Builders<Repeater>.Sort.Ascending("Receive Frequency");
-            IAsyncCursor<Repeater> repeatersAsDocs = collection.FindSync(filter,
-                new FindOptions<Repeater, Repeater>()
-                {
-                    Sort = sort
-                });
-            repeaters = repeatersAsDocs.ToEnumerable().ToArray();
-            foreach (var r in repeaters)
+            return GetRepeaterListByLocation(43, -77.6, limit);
+        }
+
+        public Task<Repeater[]> GetRepeaterListByLocation(double lat, double lng, int limit = 100)
+        {
+            var geoPoint = new BsonDocument
             {
-                r.Location ??= new LocationInfo();
-            }
+                {"type", "Point"},
+                { "coordinates", new BsonArray(new double[] {lng, lat}) }
+            };
+            var geoNearOptions = new BsonDocument
+            {
+                {"spherical", true},
+                {"near", geoPoint},
+                {"distanceField", "distance"}
+            };
+            var stage = new BsonDocumentPipelineStageDefinition<Repeater, Repeater>(new BsonDocument
+            {
+                {"$geoNear", geoNearOptions}
+            });
+            var sort = Builders<Repeater>.Sort.Ascending("distance");
+            var result = collection.Aggregate().AppendStage(stage).Limit(limit).Sort(sort).ToListAsync().Result;
+            repeaters = result.ToArray();
             return Task.FromResult(repeaters);
         }
         
         public async Task<Repeater> GetRepeaterAsync(string id)
         {
-               
             // try to get the data from the list first, if we can't read from the db
             try
             {
@@ -105,6 +114,34 @@ namespace K2GXT_Directory_2.Data
                 var filter = new BsonDocument()
                     .Add("_id", ObjectId.Parse(id));
                  return  await collection.Find(filter).Limit(1).FirstAsync();
+            }
+        }
+
+        public async Task<Repeater[]> GetAllRepeaters()
+        {
+            var filter = new BsonDocument();
+            var sort = Builders<Repeater>.Sort.Ascending("Receive Frequency");
+            var r =  collection.FindSync(filter,    
+                new FindOptions<Repeater, Repeater>()
+            {
+                Sort = sort
+            });
+            return r.ToList().ToArray();    
+        }
+
+        public async Task<Repeater[]> GetRepeatersByCallSignAsync(string callsign)
+        {
+            // try to get the data from the list first, if we can't read from the db
+            try
+            {
+                return repeaters.AsQueryable().Where(repeater => repeater.CallSign == callsign).ToArray();
+            }
+            catch
+            {
+                var filter = new BsonDocument()
+                    .Add("Callsign", callsign);
+                var r = await collection.FindAsync(filter);
+                return r.ToList().ToArray();
             }
         }
 

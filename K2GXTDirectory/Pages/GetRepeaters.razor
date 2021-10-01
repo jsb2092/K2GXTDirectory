@@ -1,10 +1,16 @@
-﻿@page "/getRepeaters"
+﻿@page "/getRepeaters/"
+@page "/allRepeaters/{callsign}"
+@page "/getRepeaters/{callsign}"
 
 @using K2GXT_Directory_2.Data
 @using System.Linq.Dynamic.Core
+@using BlazorLeaflet.Models
 
 @inject RepeaterDirectoryService RepeaterService
-
+@inject IJSRuntime jsRuntime
+@inject NavigationManager MyNavigationManager
+@using BrowserInterop.Extensions
+@using BrowserInterop.Geolocation
 
 <h1>Repeater Directory</h1>
 
@@ -71,8 +77,7 @@ else
                          {
                              <span> / </span> @repeater.RxCTCSS
                          }
-                         
-                        
+          
                     }
                     </td>
                     <td>@repeater.County</td>
@@ -86,19 +91,63 @@ else
 }
 
 @code {
+    [Parameter]  
+    public string? callsign { get; set; } 
+    
     private Repeater[] repeaters;
     private string currentSort;
     private string currentOrder;
     private string imageSortName;
     private string imageEditName;
+    private WindowNavigatorGeolocation geolocationWrapper;
 
     protected override async Task OnInitializedAsync()
     {
+        
+        GeolocationPosition currentPosition = new GeolocationPosition();
+        try
+        {
+            var window = await jsRuntime.Window();
+            var navigator = await window.Navigator();
+            geolocationWrapper = navigator.Geolocation;
+            currentPosition = (await geolocationWrapper.GetCurrentPosition(new PositionOptions()
+            {
+                EnableHighAccuracy = true,
+                MaximumAgeTimeSpan = TimeSpan.FromHours(1),
+                TimeoutTimeSpan = TimeSpan.FromMinutes(1)
+            })).Location;
+        }
+        catch
+        {
+        }
+        var currentPos = new LatLng((float)38.56588962746834, (float)-97.84486619343919);
+  
+        if (currentPosition?.Coords != null)
+        {
+            currentPos = new LatLng((float)currentPosition.Coords.Latitude, (float)currentPosition.Coords.Longitude);
+ 
+        }
         currentSort = "RFreq";
         currentOrder = "asc";
         imageSortName = "images/sort-asc.png";
         imageEditName = "images/edit.png";
-        repeaters = await RepeaterService.GetRepeaterListAsync();
+   
+        if (callsign != null)
+        {
+            if (callsign == "all")
+            {
+                repeaters = await RepeaterService.GetAllRepeaters();
+            }
+            else
+            {
+                repeaters = await RepeaterService.GetRepeatersByCallSignAsync(callsign);
+            }
+        }
+        else
+        {
+            repeaters = await RepeaterService.GetRepeaterListByLocation(currentPos.Lat, currentPos.Lng, 100);
+            
+        }
     }
 
     private Task sortAsync(string sortData)

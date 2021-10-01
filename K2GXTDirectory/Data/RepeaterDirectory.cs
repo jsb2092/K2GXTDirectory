@@ -14,6 +14,7 @@ namespace K2GXT_Directory_2.Data
      
         public string type { get; set; }
         public double?[] coordinates { get; set; }
+      
         public LocationInfo () 
         {
             type = "point";
