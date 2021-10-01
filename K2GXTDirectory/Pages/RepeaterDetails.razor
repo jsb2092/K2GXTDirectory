@@ -1,5 +1,7 @@
 @page "/repeaterDetails/{id}"
 @using K2GXT_Directory_2.Data
+@using BlazorLeaflet
+@using BlazorLeaflet.Models
 
 @inject RepeaterDirectoryService RepeaterService
 @inject IJSRuntime jsRuntime
@@ -91,8 +93,8 @@ else
     </div>
     @if (repeater.Location.coordinates[1] != null)
     {
-        <div style="margin-top: 30px; margin-right: 30px; float: right">
-            <LeafletMap Map="PositionMap" TileLayer="OpenStreetMapsTileLayer"/>
+        <div id="repeaterMap">
+            <LeafletMap Map="_map" />
         </div>
     }
 
@@ -107,64 +109,56 @@ else
     public string id { get; set; }
 
     private Repeater repeater;
-    protected Map PositionMap;
-    protected TileLayer OpenStreetMapsTileLayer;
-    protected MapStateViewModel MapStateViewModel;
-    protected MarkerViewModel MarkerViewModel;
-    private LatLng mapCentre;
-
+ 
+    private Map _map;
 
 
     protected override async Task OnInitializedAsync()
     {
 
         repeater = await RepeaterService.GetRepeaterAsync(id);
+        var loc = new LatLng((float)repeater.Location.coordinates[1].Value, (float)repeater.Location.coordinates[0].Value);
         if (repeater.Location.coordinates[1] != null)
         {
-
-            mapCentre = new LatLng(repeater.Location.coordinates[1].Value, repeater.Location.coordinates[0].Value);
-
-            MapStateViewModel = new MapStateViewModel
+            _map = new Map(jsRuntime)
             {
-                MapCentreLatitude = mapCentre.Lat,
-                MapCentreLongitude = mapCentre.Lng,
-                Zoom = 10
+                Center = loc,
+                Zoom = 9f
             };
-            PositionMap = new Map("repeaterMap", new MapOptions
+
+            _map.OnInitialized += () =>
             {
-                Center = mapCentre,
-                Zoom = 10
-            });
-            OpenStreetMapsTileLayer = new TileLayer(
-                "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-                new TileLayerOptions
+                _map.AddLayer(new TileLayer
                 {
-                    Attribution = @"Map data &copy; <a href=""https://www.openstreetmap.org/"">OpenStreetMap</a> contributors, " +
-                                  @"<a href=""https://creativecommons.org/licenses/by-sa/2.0/"">CC-BY-SA</a>"
-                }
-                );
-
-        }
-    }
-
-
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        if (firstRender)
-        {
+                    UrlTemplate = "https://a.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                    Attribution = "&copy; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors",
+                });
+                _map.AddLayer(new Marker(loc)
+                {
+                    
+                    ZIndexOffset = 5,
+                    Title = "WR2AHL"
+                });
+                // radius in m
+                _map.AddLayer( new Circle
+                {
+                    Position = loc,
+                    Radius = 30000
+                });
+         
+              
+            };
       
 
-            var marker = new Marker(mapCentre, new MarkerOptions
-            {
-                Title = "WR2AHL",
-                Alt = "WR2AHL",
-                Opacity = 50,
+    //     mapCentre = new LatLng(repeater.Location.coordinates[1].Value, repeater.Location.coordinates[0].Value);
 
-            });
-           // await marker.AddTo(PositionMap);
+
+
 
         }
-    
     }
+
+
+    
 
 }

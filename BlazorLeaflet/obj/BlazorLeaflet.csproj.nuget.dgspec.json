@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/Users/jsb/Dropbox/src/DitDah/Darnton.Blazor.Leaflet/Darnton.Blazor.Leaflet.csproj": {}
+    "/Users/jsb/Dropbox/src/DitDah/BlazorLeaflet/BlazorLeaflet.csproj": {}
   },
   "projects": {
-    "/Users/jsb/Dropbox/src/DitDah/Darnton.Blazor.Leaflet/Darnton.Blazor.Leaflet.csproj": {
-      "version": "0.1.3",
+    "/Users/jsb/Dropbox/src/DitDah/BlazorLeaflet/BlazorLeaflet.csproj": {
+      "version": "0.4.0-alpha",
       "restore": {
-        "projectUniqueName": "/Users/jsb/Dropbox/src/DitDah/Darnton.Blazor.Leaflet/Darnton.Blazor.Leaflet.csproj",
-        "projectName": "Darnton.Blazor.Leaflet",
-        "projectPath": "/Users/jsb/Dropbox/src/DitDah/Darnton.Blazor.Leaflet/Darnton.Blazor.Leaflet.csproj",
+        "projectUniqueName": "/Users/jsb/Dropbox/src/DitDah/BlazorLeaflet/BlazorLeaflet.csproj",
+        "projectName": "BlazorLeaflet",
+        "projectPath": "/Users/jsb/Dropbox/src/DitDah/BlazorLeaflet/BlazorLeaflet.csproj",
         "packagesPath": "/Users/jsb/.nuget/packages/",
-        "outputPath": "/Users/jsb/Dropbox/src/DitDah/Darnton.Blazor.Leaflet/obj/",
+        "outputPath": "/Users/jsb/Dropbox/src/DitDah/BlazorLeaflet/obj/",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "/usr/local/share/dotnet/sdk/NuGetFallbackFolder"
@@ -43,11 +43,11 @@
           "dependencies": {
             "Microsoft.AspNetCore.Components": {
               "target": "Package",
-              "version": "[5.0.0, )"
+              "version": "[3.0.0-rc1.19457.4, )"
             },
             "Microsoft.AspNetCore.Components.Web": {
               "target": "Package",
-              "version": "[5.0.0, )"
+              "version": "[3.0.0-rc1.19457.4, )"
             }
           },
           "imports": [
@@ -65,7 +65,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/6.0.100-rc.1.21463.6/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/5.0.401/RuntimeIdentifierGraph.json"
         }
       }
     }

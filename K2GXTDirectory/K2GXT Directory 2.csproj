@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Darnton.Blazor.Leaflet\Darnton.Blazor.Leaflet.csproj" />
+    <ProjectReference Include="..\BlazorLeaflet\BlazorLeaflet.csproj" />
   </ItemGroup>
 
 </Project>
