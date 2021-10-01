@@ -69,6 +69,11 @@ th {
     float: right
 }
 
+#bigRepeaterMap {
+    height: 700px;
+    width: 100%;
+}
+
 .map-icon {
     height: 75px;
     width: 75px;

@@ -1,0 +1,89 @@
+@page "/mapRepeaters"
+@using K2GXT_Directory_2.Data
+@using BlazorLeaflet
+@using BlazorLeaflet.Models
+@using System.Drawing
+@using BlazorLeaflet.Models.Events
+
+@inject RepeaterDirectoryService RepeaterService
+@inject IJSRuntime jsRuntime
+
+@if (repeaters == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <div id="bigRepeaterMap">
+        <LeafletMap Map="_map"/>
+    </div>
+
+}
+@code {
+    private Repeater[] repeaters;
+    private Map _map;
+    protected override async Task OnInitializedAsync()
+    {
+        repeaters = await RepeaterService.GetRepeaterListAsync();
+     
+        _map = new Map(jsRuntime)
+        {
+            // TODO: Find the user's location
+            Center = new LatLng((float)43.15531, (float)-77.60859),
+            Zoom = 9
+        };
+        _map.OnInitialized += () =>
+        {
+            _map.AddLayer(new TileLayer
+            {
+                UrlTemplate = "https://a.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                Attribution = "&copy; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors",
+            });
+
+            foreach (var repeater in repeaters)
+            {
+                
+                if (repeater.Location.coordinates[1] != null)
+                {
+                    var loc = new LatLng((float)repeater.Location.coordinates[1].Value, (float)repeater.Location.coordinates[0].Value);
+
+                    bool hasCoverage = repeater.CoverageRadiusKM != null && repeater.CoverageRadiusKM > 0;
+
+
+                    if (hasCoverage)
+                    {
+                        _map.AddLayer(new Circle
+                        {
+                            Position = loc,
+    // radius in m
+                            Radius = repeater.CoverageRadiusKM.Value * 1000f,
+                            Fill = true,
+                            FillColor = Color.Blue,
+                            FillOpacity = .10
+                        });
+                    }
+                    _map.AddLayer(new Marker(loc)
+                    {
+                        IsInteractive = true,
+                        ZIndexOffset = 100,
+                        Position = loc,
+                        Icon = new Icon()
+                        {
+                            Url = "/images/marker-icon.png",
+                            Anchor = new Point(7, 25),
+                            TooltipAnchor = new Point(0, 0)
+
+                        },
+                        
+                        Title = repeater.CallSign
+                    });
+                 
+                }
+
+            }
+        };
+
+    }
+
+}
+
