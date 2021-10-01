@@ -53,6 +53,7 @@ window.leafletBlazor = {
         addLayer(mapId, layer, shapefileLayer.id);
     },
     addMarker: function (mapId, marker, objectReference) {
+ 
         var options = Object.assign({}, createInteractiveLayer(marker),
             {
                 keyboard: marker.isKeyboardAccessible,
@@ -226,8 +227,8 @@ function createIcon(icon) {
     return L.icon({
         iconUrl: icon.url,
         iconRetinaUrl: icon.retinaUrl,
-        iconSize: icon.size ? L.point(icon.size.value.width, icon.size.value.height) : null,
-        iconAnchor: icon.anchor ? L.point(icon.anchor.value.x, icon.anchor.value.y) : null,
+        iconSize: icon.size ? L.point(icon.size.width, icon.size.height) : null,
+        iconAnchor: icon.anchor ? L.point(icon.anchor.x, icon.anchor.y) : null,
         popupAnchor: L.point(icon.popupAnchor.x, icon.popupAnchor.y),
         tooltipAnchor: L.point(icon.tooltipAnchor.x, icon.tooltipAnchor.y),
         shadowUrl: icon.shadowUrl,
