@@ -176,17 +176,16 @@ else
                         TooltipAnchor = new Point(0, 0)
 
                     },
-                    Title = repeater.CallSign
+                    Tooltip = new Tooltip()
+                    {
+                        IsPermanent = false,
+                        Direction = "bottom",
+                        Content = repeater.CallSign
+                    }
+
                 };
 
-                /*marker.Tooltip = new Tooltip()
-                {
-                    IsPermanent = false,
-                    Content = "WR2AHL",
-                    Direction = "top",
-                    Opacity = .5
-
-                };*/
+             
                 _map.AddLayer(marker);
              
              

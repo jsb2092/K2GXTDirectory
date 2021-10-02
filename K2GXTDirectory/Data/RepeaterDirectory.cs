@@ -155,8 +155,12 @@ namespace K2GXT_Directory_2.Data
 
 
         public int? CoverageRadiusKM { get; set; }
-        
-        public string isOpenString { get; set; }
+
+        private string _isOpenString;
+        public string isOpenString
+        {
+            get => _isOpenString ?? "Open";
+            set => _isOpenString = value ?? "Open"; }
 
         public bool Active { get; set; }
 
