@@ -39,7 +39,9 @@ namespace K2GXT_Directory_2.Data
 
         public DateTime Date { get; set; }
 
-        [BsonElement("Callsign")] [Required] public string CallSign { get; set; }
+        private string _callsign;
+        [BsonElement("Callsign")] [Required] 
+        public string CallSign { get => _callsign?.ToUpper(); set=>_callsign = value.ToUpper(); }
 
         [BsonElement("Receive Frequency")]
         [Required]
@@ -150,8 +152,12 @@ namespace K2GXT_Directory_2.Data
         public string isOpenString { get; set; }
 
         public bool Active { get; set; }
-        
-        
+
+        public Repeater()
+        {
+            Tone = "CSQ";
+            Location = new LocationInfo();
+        }
 
     }
     

@@ -156,10 +156,10 @@ namespace K2GXT_Directory_2.Data
                     Sort = sort
                 });
             counties = countiesAsDocs.ToEnumerable().ToArray();
-            foreach (var r in repeaters)
+           /* foreach (var r in repeaters)
             {
                 r.Location ??= new LocationInfo();
-            }
+            }*/
             return Task.FromResult(counties);
         }
         
@@ -167,7 +167,15 @@ namespace K2GXT_Directory_2.Data
         {
             try
             {
-                await collection.ReplaceOneAsync(r => r._id == repeater._id, repeater);
+                if (repeater._id != null)
+                {
+                    await collection.ReplaceOneAsync(r => r._id == repeater._id, repeater);
+                }
+                else
+                {
+                    await collection.InsertOneAsync(repeater);
+
+                }
                 return true;
             }
             catch
