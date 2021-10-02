@@ -1,3 +1,0 @@
-﻿<Project>
-  <Import Project="../buildMultiTargeting/Darnton.Blazor.Leaflet.props" />
-</Project>
