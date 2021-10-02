@@ -101,8 +101,15 @@ else
                             TooltipAnchor = new Point(0, 0)
 
                         },
-                        
-                        Title = repeater.CallSign
+                   
+                        Tooltip = new Tooltip()
+                        {
+                            IsPermanent = false,
+                            Direction = "bottom",
+                            Content = repeater.CallSign
+                        }
+                  
+                
                     });
                  
                 }

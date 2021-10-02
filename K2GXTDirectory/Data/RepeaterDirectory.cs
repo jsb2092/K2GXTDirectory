@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using FluentValidation;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Driver.GeoJsonObjectModel;
@@ -12,7 +13,10 @@ namespace K2GXT_Directory_2.Data
     public class LocationInfo
     {
      
+        
         public string type { get; set; }
+        
+        [Required]
         public double?[] coordinates { get; set; }
       
         public LocationInfo () 
@@ -41,10 +45,13 @@ namespace K2GXT_Directory_2.Data
 
         private string _callsign;
         [BsonElement("Callsign")] [Required] 
+      
+        
         public string CallSign { get => _callsign?.ToUpper(); set=>_callsign = value.ToUpper(); }
 
         [BsonElement("Receive Frequency")]
         [Required]
+        [Range(1, 100000, ErrorMessage = "Please select a valid Rx frequency")]
         public double RxFreq { get; set; }
 
         [BsonElement("Transmit Frequency")]
@@ -156,10 +163,43 @@ namespace K2GXT_Directory_2.Data
         public Repeater()
         {
             Tone = "CSQ";
+            isOpenString = "Open";
             Location = new LocationInfo();
         }
 
     }
-    
+
+    public class RepeaterValidator : AbstractValidator<Repeater>
+    {
+        public RepeaterValidator()
+        {
+
+            RuleFor(r => r.CallSign)
+                .NotEmpty().WithMessage("You must enter a callsign")
+                .MinimumLength(4).WithMessage("Callsign must be a mininum of 4 characters");
+            
+            RuleFor(r => r.RxFreq)
+                .NotNull().WithMessage("You must have an Rx Frequency")
+                .GreaterThan(0).WithMessage("Please enter a valid Rx frequency");
+            RuleFor(r => r.TxFreq)
+                .NotNull().WithMessage("You must have an Tx Frequency")
+                .GreaterThan(0).WithMessage("Please enter a valid Tx frequency");
+            
+            RuleFor(r => r.Location.coordinates[1])
+                .NotNull().WithMessage("You must have an Latitude")
+                .GreaterThanOrEqualTo(-90).WithMessage("Latitude must be greater than -90")
+                .LessThanOrEqualTo(90).WithMessage("Latitude must be less than 90");
+            
+            RuleFor(r => r.Location.coordinates[0])
+                .NotNull().WithMessage("You must have an Longitude")
+                .GreaterThanOrEqualTo(-180).WithMessage("Longitude must be greater than -180")
+                .LessThanOrEqualTo(180).WithMessage("Longitude must be less than 180");
+
+            RuleFor(r => r.State)
+                .NotEmpty().WithMessage("Please select a state");
+
+
+        }
+    }
 
 }

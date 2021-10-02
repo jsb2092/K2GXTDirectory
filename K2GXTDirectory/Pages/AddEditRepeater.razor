@@ -1,10 +1,7 @@
 @page "/editRepeater/{id}"
 @page "/addRepeater/"
-
-
 @using K2GXT_Directory_2.Data
-
-
+@using Blazored.FluentValidation
 @inject RepeaterDirectoryService RepeaterService
 @inject NavigationManager NavManager
 
@@ -17,8 +14,10 @@
 else
 {
     <EditForm Model="@repeater" OnValidSubmit="@HandleValidSubmit">
-           <DataAnnotationsValidator />
-           <ValidationSummary />
+          <FluentValidationValidator />
+          <ValidationSummary />
+           
+               
            <div style="float:left; margin-right:30px">
            @if (repeater.CallSign != null) 
             {
@@ -35,7 +34,7 @@ else
                       <option value="Closed">Closed</option>
                       <option value="Private">Private</option>
                   </select></td></tr>
-                   <tr><td>Rx Frequency: </td> <td><input class="editInput" @bind=@repeater.RxFreq/></td></tr>
+                   <tr><td>Rx Frequency: </td> <td><input  class="editInput" @bind=@repeater.RxFreq/></td></tr>
               
                    <tr><td>Tx Frequency: </td><td><input class="editInput" @bind=@repeater.TxFreq/></td></tr>
 
@@ -200,6 +199,7 @@ else
     private Counties[] counties;
 
 
+
    protected override async Task OnInitializedAsync()
     {
        if (id != null)
@@ -219,6 +219,8 @@ else
 
     private async Task HandleValidSubmit()
     {
+        
+       
         if (await RepeaterService.SaveRepeater(repeater))
         {
             previousState = null;
@@ -232,4 +234,5 @@ else
         NavManager.NavigateTo("/getRepeaters");
         
     }
+    
 }
