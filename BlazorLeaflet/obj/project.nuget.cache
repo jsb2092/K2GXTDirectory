@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "tB4/sn8CvSp8/rC+6k/FtgDaJr31FOAmfljUbTbNMqYznDEV58x1eww2IG/EwM50ShpwBSXli2iLoNKG/P7LwA==",
+  "dgSpecHash": "95A/As57Fgv02fUm5lAEUcX6wSvCPpNUOJ5/24MVQ8ylFRW/K5Ibus6uKuHQkonzYtZ62Gxai7zqpYUuezj3YQ==",
   "success": true,
-  "projectFilePath": "/Users/jsb/Dropbox/src/DitDah/BlazorLeaflet/BlazorLeaflet.csproj",
+  "projectFilePath": "/Users/jsb/Dropbox/src/RepeaterQTH/BlazorLeaflet/BlazorLeaflet.csproj",
   "expectedPackageFiles": [
     "/Users/jsb/.nuget/packages/microsoft.aspnetcore.authorization/3.0.0-rc1.19457.4/microsoft.aspnetcore.authorization.3.0.0-rc1.19457.4.nupkg.sha512",
     "/Users/jsb/.nuget/packages/microsoft.aspnetcore.components/3.0.0-rc1.19457.4/microsoft.aspnetcore.components.3.0.0-rc1.19457.4.nupkg.sha512",

@@ -1,0 +1,32 @@
+﻿<Properties StartupConfiguration="{AB62B53E-4C15-48F8-80EB-4F49D5AEA4F3}|Default">
+  <MonoDevelop.Ide.Workbench ActiveDocument="K2GXTDirectory/Areas/Identity/Pages/Account/_ViewImports.cshtml">
+    <Files>
+      <File FileName="K2GXTDirectory/Areas/Identity/Pages/Account/_ViewImports.cshtml" Line="1" Column="1" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="DitDah" expanded="True">
+            <Node name="K2GXT Directory 2" expanded="True">
+              <Node name="Areas" expanded="True">
+                <Node name="Identity" expanded="True">
+                  <Node name="Pages" expanded="True">
+                    <Node name="Account" expanded="True" />
+                  </Node>
+                </Node>
+              </Node>
+              <Node name="Data" expanded="True" selected="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.ItemProperties.K2GXT_220Directory_2202 PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>

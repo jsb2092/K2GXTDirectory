@@ -1,0 +1,16 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3": {
+      "ProjectGuid": "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3",
+      "DisplayName": "Miscellaneous Files",
+      "ColorIndex": -1
+    },
+    "ab62b53e-4c15-48f8-80eb-4f49d5aea4f3": {
+      "ProjectGuid": "ab62b53e-4c15-48f8-80eb-4f49d5aea4f3",
+      "DisplayName": "K2GXT Directory 2",
+      "ColorIndex": 0
+    }
+  },
+  "NextColorIndex": 1
+}

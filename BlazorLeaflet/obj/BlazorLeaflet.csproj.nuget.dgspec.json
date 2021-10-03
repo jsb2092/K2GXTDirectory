@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/Users/jsb/Dropbox/src/DitDah/BlazorLeaflet/BlazorLeaflet.csproj": {}
+    "/Users/jsb/Dropbox/src/RepeaterQTH/BlazorLeaflet/BlazorLeaflet.csproj": {}
   },
   "projects": {
-    "/Users/jsb/Dropbox/src/DitDah/BlazorLeaflet/BlazorLeaflet.csproj": {
+    "/Users/jsb/Dropbox/src/RepeaterQTH/BlazorLeaflet/BlazorLeaflet.csproj": {
       "version": "0.4.0-alpha",
       "restore": {
-        "projectUniqueName": "/Users/jsb/Dropbox/src/DitDah/BlazorLeaflet/BlazorLeaflet.csproj",
+        "projectUniqueName": "/Users/jsb/Dropbox/src/RepeaterQTH/BlazorLeaflet/BlazorLeaflet.csproj",
         "projectName": "BlazorLeaflet",
-        "projectPath": "/Users/jsb/Dropbox/src/DitDah/BlazorLeaflet/BlazorLeaflet.csproj",
+        "projectPath": "/Users/jsb/Dropbox/src/RepeaterQTH/BlazorLeaflet/BlazorLeaflet.csproj",
         "packagesPath": "/Users/jsb/.nuget/packages/",
-        "outputPath": "/Users/jsb/Dropbox/src/DitDah/BlazorLeaflet/obj/",
+        "outputPath": "/Users/jsb/Dropbox/src/RepeaterQTH/BlazorLeaflet/obj/",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "/usr/local/share/dotnet/sdk/NuGetFallbackFolder"
