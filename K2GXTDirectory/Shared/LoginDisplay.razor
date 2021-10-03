@@ -31,7 +31,7 @@
     private string helloName;
     protected override async Task OnAfterRenderAsync(bool first)
     {
-        if (first)
+        if (first && User != null)
         {
             helloName = User.Identity.Name;
             ApplicationUser currentUser = null;
