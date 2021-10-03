@@ -4,7 +4,7 @@
 @using Blazored.FluentValidation
 @inject RepeaterDirectoryService RepeaterService
 @inject NavigationManager NavManager
-
+<AuthorizeView Context="editPage">
 <a href="/getRepeaters"> <img width="16" src="/images/back.png"/> Back</a>
 
 @if (repeater == null)
@@ -13,6 +13,7 @@
 }
 else
 {
+    
     <EditForm Model="@repeater" OnValidSubmit="@HandleValidSubmit">
           <FluentValidationValidator />
           <ValidationSummary />
@@ -188,8 +189,13 @@ else
            </div>
                     
     </EditForm>
+    
 }
-
+</AuthorizeView>
+<NotAuthorized Context="editPage">
+    <h1>Authentication Failure!</h1>
+    <p>You're not signed in.</p>
+</NotAuthorized>
 @code {
     [Parameter]
     public string id { get; set; }
