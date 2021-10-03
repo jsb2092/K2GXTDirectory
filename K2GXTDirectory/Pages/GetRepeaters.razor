@@ -1,5 +1,4 @@
 ﻿@page "/getRepeaters/"
-@page "/allRepeaters/{callsign}"
 @page "/getRepeaters/{callsign}"
 
 @using K2GXT_Directory_2.Data
@@ -21,73 +20,8 @@
 }
 else
 {
-    <table class="table">
-        <thead>
-        <tr>
-            <th></th>
-            <th>
-                <span @onclick="@(async () => await sortAsync("CallSign"))"><img width="12" src="@imageSortName"/>Callsign
-                </span> </th>
-            <th>
-                <span @onclick="@(async () => await sortAsync("RxFreq"))"><img width="12" src="@imageSortName"/>Rx Freq
-                </span> </th>
-            <th>
-                <span @onclick="@(async () => await sortAsync("TxFreq"))">
-                    <img width="12" src="@imageSortName"/>
-                    Tx Freq
-                </span> </th>
-
-
-            <th>
-                <span @onclick="@(async () => await sortAsync("CTCSS"))">
-                    <img width="12" src="@imageSortName"/>
-                    Tones
-                </span> </th>
-            <th>
-                <span @onclick="@(async () => await sortAsync("County"))">
-                    <img width="12" src="@imageSortName"/>
-                    County
-                </span> </th>
-                        <th>
-                            <span @onclick="@(async () => await sortAsync("GridSquare"))">
-                                <img width="12" src="@imageSortName"/>
-                                Grid Square
-                            </span> </th>
-            <th>
-                <span @onclick="@(async () => await sortAsync("Description"))">
-                    <img width="12" src="@imageSortName"/>
-                    Location
-                </span> </th>
-
-        </tr>
-        </thead>
-        <tbody>
-            @foreach (var repeater in repeaters)
-            {
-                <tr>
-                    <td><a href="/editRepeater/@repeater._id"> <img width="12" src="@imageEditName"/></a></td>
-                    <td><a href="/repeaterDetails/@repeater._id">@repeater.CallSign</a></td>
-                    <td>@repeater.RxFreq</td>
-                    <td>@repeater.TxFreq</td>
-                    <td>
-                    @if (repeater.CTCSS != null && (repeater.Tone != "CSQ" && repeater.Tone != "None"))
-                    {
-                        @repeater.CTCSS
-                         @if (repeater.RxCTCSS != null && repeater.Tone == "T SQL")
-                         {
-                             <span> / </span> @repeater.RxCTCSS
-                         }
-          
-                    }
-                    </td>
-                    <td>@repeater.County</td>
-                    <td>@repeater.GridSquare</td>
-                    <td>@repeater.Description</td>
-                    
-                    </tr>
-            }
-        </tbody>
-    </table>
+    <RepeaterList repeaters=repeaters/>
+   
 }
 
 @code {
@@ -95,10 +29,7 @@ else
     public string? callsign { get; set; } 
     
     private Repeater[] repeaters;
-    private string currentSort;
-    private string currentOrder;
-    private string imageSortName;
-    private string imageEditName;
+
     private WindowNavigatorGeolocation geolocationWrapper;
 
     protected override async Task OnInitializedAsync()
@@ -127,21 +58,11 @@ else
             currentPos = new LatLng((float)currentPosition.Coords.Latitude, (float)currentPosition.Coords.Longitude);
  
         }
-        currentSort = "RFreq";
-        currentOrder = "asc";
-        imageSortName = "images/sort-asc.png";
-        imageEditName = "images/edit.png";
-   
+
         if (callsign != null)
         {
-            if (callsign == "all")
-            {
-                repeaters = await RepeaterService.GetAllRepeaters();
-            }
-            else
-            {
-                repeaters = await RepeaterService.GetRepeatersByCallSignAsync(callsign);
-            }
+            repeaters = await RepeaterService.GetRepeatersByCallSignAsync(callsign);
+  
         }
         else
         {
@@ -150,17 +71,7 @@ else
         }
     }
 
-    private Task sortAsync(string sortData)
-    {
-        if (currentSort == sortData)
-        {
-            currentOrder = currentOrder == "asc" ? "desc" : "asc";
-            imageSortName = "images/sort-" + currentOrder + ".png";
-        }
-        currentSort = sortData;
-        repeaters = repeaters.AsQueryable().OrderBy(sortData + " "+ currentOrder).ToArray();
-        return Task.FromResult(true);
-    }
+   
 
 }
 

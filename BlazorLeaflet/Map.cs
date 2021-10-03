@@ -151,7 +151,7 @@ namespace BlazorLeaflet
                 {
                     if (item is Layer layer)
                     {
-                        LeafletInterops.RemoveLayer(_jsRuntime, Id, layer.Id);
+                        Task.FromResult(LeafletInterops.RemoveLayer(_jsRuntime, Id, layer.Id));
                     }
                 }
             }
@@ -160,7 +160,7 @@ namespace BlazorLeaflet
             {
                 foreach (var oldItem in args.OldItems)
                     if (oldItem is Layer layer)
-                        LeafletInterops.RemoveLayer(_jsRuntime, Id, layer.Id);
+                        Task.FromResult(LeafletInterops.RemoveLayer(_jsRuntime, Id, layer.Id));
 
                 foreach (var newItem in args.NewItems)
                     LeafletInterops.AddLayer(_jsRuntime, Id, newItem as Layer);

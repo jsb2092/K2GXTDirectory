@@ -121,7 +121,7 @@ namespace K2GXT_Directory_2.Data
         {
             var filter = new BsonDocument();
             var sort = Builders<Repeater>.Sort.Ascending("Receive Frequency");
-            var r =  collection.FindSync(filter,    
+            var r =  await collection.FindAsync(filter,    
                 new FindOptions<Repeater, Repeater>()
             {
                 Sort = sort
