@@ -1,0 +1,42 @@
+﻿
+@page "/allRepeaters"
+
+
+@using RepeaterQTH.Data
+@using System.Linq.Dynamic.Core
+@using BlazorLeaflet.Models
+
+@inject RepeaterDirectoryService RepeaterService
+@inject IJSRuntime jsRuntime
+@inject NavigationManager MyNavigationManager
+@using BrowserInterop.Extensions
+@using BrowserInterop.Geolocation
+
+<h1>Repeater Directory</h1>
+
+
+@if (repeaters == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <RepeaterList repeaters=repeaters/>
+}
+
+@code {
+
+    private Repeater[] repeaters;
+
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        repeaters = await RepeaterService.GetAllRepeaters();
+           
+    }
+
+   
+
+}
+

@@ -1,0 +1,79 @@
+﻿@page "/getRepeaters/"
+@page "/getRepeaters/{callsign}"
+
+@using RepeaterQTH.Data
+@using System.Linq.Dynamic.Core
+@using BlazorLeaflet.Models
+
+@inject RepeaterDirectoryService RepeaterService
+@inject IJSRuntime jsRuntime
+@inject NavigationManager MyNavigationManager
+@using BrowserInterop.Extensions
+@using BrowserInterop.Geolocation
+
+<h1>Repeater Directory</h1>
+
+
+@if (repeaters == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <RepeaterList repeaters=repeaters/>
+   
+}
+
+@code {
+    [Parameter]  
+    #nullable enable
+    public string? callsign { get; set; } 
+    #nullable disable
+    
+    private Repeater[] repeaters;
+
+    private WindowNavigatorGeolocation geolocationWrapper;
+
+    protected override async Task OnInitializedAsync()
+    {
+        
+        GeolocationPosition currentPosition = new GeolocationPosition();
+        try
+        {
+            var window = await jsRuntime.Window();
+            var navigator = await window.Navigator();
+            geolocationWrapper = navigator.Geolocation;
+            currentPosition = (await geolocationWrapper.GetCurrentPosition(new PositionOptions()
+            {
+                EnableHighAccuracy = true,
+                MaximumAgeTimeSpan = TimeSpan.FromHours(1),
+                TimeoutTimeSpan = TimeSpan.FromMinutes(1)
+            })).Location;
+        }
+        catch
+        {
+        }
+        var currentPos = new LatLng((float)38.56588962746834, (float)-97.84486619343919);
+  
+        if (currentPosition?.Coords != null)
+        {
+            currentPos = new LatLng((float)currentPosition.Coords.Latitude, (float)currentPosition.Coords.Longitude);
+ 
+        }
+
+        if (callsign != null)
+        {
+            repeaters = await RepeaterService.GetRepeatersByCallSignAsync(callsign);
+  
+        }
+        else
+        {
+            repeaters = await RepeaterService.GetRepeaterListByLocation(currentPos.Lat, currentPos.Lng, 100);
+            
+        }
+    }
+
+   
+
+}
+

@@ -1,0 +1,103 @@
+@using RepeaterQTH.Data
+@using System.Linq.Dynamic.Core
+<table class="table">
+    <thead>
+    <tr>
+        <AuthorizeView>
+            <Authorized>
+                <th></th>
+            </Authorized>
+        </AuthorizeView>
+        <th>
+            <span @onclick="@(async () => await sortAsync("CallSign"))"><img width="12" src="@imageSortName"/>Callsign
+            </span> </th>
+        <th>
+            <span @onclick="@(async () => await sortAsync("RxFreq"))"><img width="12" src="@imageSortName"/>Rx Freq
+            </span> </th>
+        <th>
+            <span @onclick="@(async () => await sortAsync("TxFreq"))">
+                <img width="12" src="@imageSortName"/>
+                Tx Freq
+            </span> </th>
+
+
+        <th>
+            <span @onclick="@(async () => await sortAsync("CTCSS"))">
+                <img width="12" src="@imageSortName"/>
+                Tones
+            </span> </th>
+        <th>
+            <span @onclick="@(async () => await sortAsync("County"))">
+                <img width="12" src="@imageSortName"/>
+                County
+            </span> </th>
+        <th>
+            <span @onclick="@(async () => await sortAsync("GridSquare"))">
+                <img width="12" src="@imageSortName"/>
+                Grid Square
+            </span> </th>
+        <th>
+            <span @onclick="@(async () => await sortAsync("Description"))">
+                <img width="12" src="@imageSortName"/>
+                Location
+            </span> </th>
+
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var repeater in repeaters)
+    {
+        <tr>
+             <AuthorizeView>
+             <Authorized>
+                 <td><a href="/editRepeater/@repeater._id"> <img width="12" src="@imageEditName"/></a></td>
+             </Authorized>
+             </AuthorizeView>
+                        <td><a href="/repeaterDetails/@repeater._id">@repeater.CallSign</a></td>
+            <td>@repeater.RxFreq</td>
+            <td>@repeater.TxFreq</td>
+            <td>
+                @if (repeater.CTCSS != null && (repeater.Tone != "CSQ" && repeater.Tone != "None"))
+                {
+                    @repeater.CTCSS
+                    @if (repeater.RxCTCSS != null && repeater.Tone == "T SQL")
+                    {
+                        <span> / </span>
+                        @repeater.RxCTCSS
+                    }
+
+                }
+            </td>
+            <td>@repeater.County</td>
+            <td>@repeater.GridSquare</td>
+            <td>@repeater.Description</td>
+
+        </tr>
+    }
+    </tbody>
+</table>
+
+@code {
+    [Parameter] 
+    public Repeater[] repeaters { get; set; }
+    
+    private string currentSort =  "RFreq";
+    private string currentOrder = "asc";
+    private string imageSortName = "images/sort-asc.png";
+    private string imageEditName = "images/edit.png";
+    
+    
+    private Task sortAsync(string sortData)
+    {
+        
+        if (currentSort == sortData)
+        {
+            currentOrder = currentOrder == "asc" ? "desc" : "asc";
+            imageSortName = "images/sort-" + currentOrder + ".png";
+        }
+        currentSort = sortData;
+        
+        repeaters = repeaters.AsQueryable().OrderBy(sortData + " "+ currentOrder).ToArray();
+        return Task.FromResult(true);
+    }
+}
