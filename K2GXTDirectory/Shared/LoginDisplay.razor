@@ -1,6 +1,20 @@
+@using Microsoft.AspNetCore.Identity
+@using K2GXT_Directory_2.Data
+@using System.Security.Claims
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
 <AuthorizeView>
     <Authorized>
-        <a href="Identity/Account/Manage">Hello, @context.User.Identity.Name!</a>
+        @{
+           
+            User = context.User;
+            if (string.IsNullOrEmpty(helloName))
+            {
+                helloName = User.Identity.Name;
+            }
+
+        }
+        <a href="Identity/Account/Manage">Hello, @helloName!</a>
         <form method="post" action="Identity/Account/LogOut">
             <button type="submit" class="nav-link btn btn-link">Log out</button>
         </form>
@@ -10,3 +24,26 @@
         <a href="Identity/Account/Login">Log in</a>
     </NotAuthorized>
 </AuthorizeView>
+
+@code {
+
+    private ClaimsPrincipal User;
+    private string helloName;
+    protected override async Task OnAfterRenderAsync(bool first)
+    {
+        if (first)
+        {
+            helloName = User.Identity.Name;
+            ApplicationUser currentUser = null;
+            if (User != null) currentUser = await UserManager.GetUserAsync(User);
+            if (currentUser is {Callsign: { } })
+            {
+                helloName = currentUser.Callsign;
+            }
+            StateHasChanged();
+        }
+
+    }
+    
+
+}
