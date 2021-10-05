@@ -39,7 +39,10 @@ th {
 }
 
 .editInput {
-    width:235px;
+    width:236px;
+}
+.editInput-half {
+    width:118px;
 }
 
 #blazor-error-ui {
@@ -81,4 +84,27 @@ th {
     /* wonky placement as described in the Leaflet documentation*/
     margin-left: -37px;
     margin-top: -37px;
+}
+
+.searchTabs {
+    border: 1px solid black;
+}
+
+#modesTable td {
+    text-align: center;
+    width: 75px;
+}
+
+
+.searchTable {
+    width: 450px;
+    margin: 10px;
+    padding-bottom: 10px;
+}
+
+
+
+.searchContainer {
+    border: 1px solid gray;
+
 }

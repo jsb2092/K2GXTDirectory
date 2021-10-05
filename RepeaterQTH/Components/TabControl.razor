@@ -1,10 +1,13 @@
+@using RepeaterQTH.Data
+@inject SearchData searchData
+
 <CascadingValue Value="this">
-    <div class="btn-group" role="group">
+    <div class="btn-group" role="group" >
         @foreach (TabPage tabPage in Pages)
         {
             <button  type="button"
-                    class="btn @GetButtonClass(tabPage)"
-                    @onclick=@( () => ActivatePage(tabPage) )>
+                     class="btn @GetButtonClass(tabPage)"
+                     @onclick=@( () => ActivatePage(tabPage) )>
                 @tabPage.Text
             </button>
         }
@@ -12,11 +15,15 @@
     @ChildContent
 </CascadingValue>
 
+
 @code {
     // Next line is needed so we are able to add <TabPage> components inside
     [Parameter]
     public RenderFragment ChildContent { get; set; }
 
+    [Parameter]
+    public bool isSearch { get; set; }
+    
     public TabPage ActivePage { get; set; }
     List<TabPage> Pages = new List<TabPage>();
 
@@ -24,7 +31,7 @@
     {
         Pages.Add(tabPage);
         if (Pages.Count == 1)
-            ActivePage = tabPage;
+            ActivatePage(tabPage);
         StateHasChanged();
     }
 
@@ -36,5 +43,10 @@
     void ActivatePage(TabPage page)
     {
         ActivePage = page;
+        if (isSearch)
+        {
+            searchData.activeType = page.Text;
+        }
+        
     }
 }

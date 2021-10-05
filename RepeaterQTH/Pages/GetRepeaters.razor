@@ -8,6 +8,7 @@
 @inject RepeaterDirectoryService RepeaterService
 @inject IJSRuntime jsRuntime
 @inject NavigationManager MyNavigationManager
+@inject SearchData searchData
 @using BrowserInterop.Extensions
 @using BrowserInterop.Geolocation
 
@@ -36,40 +37,73 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        
-        GeolocationPosition currentPosition = new GeolocationPosition();
-        try
+        if (searchData.activeType == "Proximity")
         {
-            var window = await jsRuntime.Window();
-            var navigator = await window.Navigator();
-            geolocationWrapper = navigator.Geolocation;
-            currentPosition = (await geolocationWrapper.GetCurrentPosition(new PositionOptions()
+            LatLng currentPos = new LatLng();
+            if (searchData.zipcode != null)
             {
-                EnableHighAccuracy = true,
-                MaximumAgeTimeSpan = TimeSpan.FromHours(1),
-                TimeoutTimeSpan = TimeSpan.FromMinutes(1)
-            })).Location;
-        }
-        catch
+                var zipInfo = await RepeaterService.getLatLngForZip(searchData.zipcode);
+                currentPos = new LatLng((float)zipInfo.lat, (float)zipInfo.lng);
+            }
+            else
+            {
+                currentPos = new LatLng((float)searchData.lat, (float)searchData.lng);
+            }
+
+
+
+            if (callsign != null)
+            {
+                repeaters = await RepeaterService.GetRepeatersByCallSignAsync(callsign);
+
+            }
+            else
+            {
+                repeaters = await RepeaterService.GetRepeaterListByLocation(currentPos.Lat, currentPos.Lng, 100);
+
+            }
+        } 
+        else if (searchData.activeType == "State")
         {
-        }
-        var currentPos = new LatLng((float)38.56588962746834, (float)-97.84486619343919);
-  
-        if (currentPosition?.Coords != null)
-        {
-            currentPos = new LatLng((float)currentPosition.Coords.Latitude, (float)currentPosition.Coords.Longitude);
- 
+            repeaters = await RepeaterService.GetRepeaterListByState(searchData.state);
         }
 
-        if (callsign != null)
+        // filter
+        if (searchData.FM)
         {
-            repeaters = await RepeaterService.GetRepeatersByCallSignAsync(callsign);
-  
+            repeaters = repeaters.Where(r => r.FMEnabled == true).ToArray();
         }
-        else
+        if (searchData.DMR)
         {
-            repeaters = await RepeaterService.GetRepeaterListByLocation(currentPos.Lat, currentPos.Lng, 100);
-            
+            repeaters = repeaters.Where(r => r.DMREnabled == true).ToArray();
+        }
+        if (searchData.DSTAR)
+        {
+            repeaters = repeaters.Where(r => r.DStarEnabled == true).ToArray();
+        }
+        if (searchData.NXDN)
+        {
+            repeaters = repeaters.Where(r => r.NXDNEnabled == true).ToArray();
+        }
+        if (searchData.P25)
+        {
+            repeaters = repeaters.Where(r => r.P25Enabled == true).ToArray();
+        }
+        if (searchData.YSF)
+        {
+            repeaters = repeaters.Where(r => r.YSFEnabled == true).ToArray();
+        }
+        if (searchData.AllStar)
+        {
+            repeaters = repeaters.Where(r =>  r.AllStarId.HasValue && r.AllStarId.Value != 0).ToArray();
+        }
+        if (searchData.Echolink)
+        {
+            repeaters = repeaters.Where(r =>  r.EcholinkNum.HasValue && r.EcholinkNum.Value != 0).ToArray();
+        }
+        if (searchData.IRLP)
+        {
+            repeaters = repeaters.Where(r =>r.IRLPNum.HasValue && r.IRLPNum.Value != 0).ToArray();
         }
     }
 

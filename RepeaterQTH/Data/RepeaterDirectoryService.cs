@@ -37,6 +37,7 @@ namespace RepeaterQTH.Data
         private IMongoDatabase database;
         private IMongoCollection<Repeater> collection;
         private IMongoCollection<Counties> countiesCollection;
+        private IMongoCollection<Zipcode> zipcodeCollection;
 
         public RepeaterDirectoryService()
         {
@@ -69,6 +70,7 @@ namespace RepeaterQTH.Data
                  database = dbClient.GetDatabase("directory");
                 collection = database.GetCollection<Repeater>("repeater");
                 countiesCollection = database.GetCollection<Counties>("usa_counties");
+                zipcodeCollection = database.GetCollection<Zipcode>("zipcodes");
             }
 
 
@@ -101,7 +103,24 @@ namespace RepeaterQTH.Data
             repeaters = result.ToArray();
             return Task.FromResult(repeaters);
         }
-        
+
+        public async Task<Repeater[]> GetRepeaterListByState(string state, int limit = 100)
+        {
+         
+            var filter = new BsonDocument()
+                .Add("State", state);
+            var sort = Builders<Repeater>.Sort.Ascending("Receive Frequency");
+            var r = await collection.FindAsync(filter,
+                new FindOptions<Repeater, Repeater>()
+                {
+                Sort = sort
+                });
+            return r.ToList().ToArray();
+
+
+        }
+
+
         public async Task<Repeater> GetRepeaterAsync(string id)
         {
             // try to get the data from the list first, if we can't read from the db
@@ -163,6 +182,14 @@ namespace RepeaterQTH.Data
             return Task.FromResult(counties);
         }
         
+        
+        public async Task<Zipcode> getLatLngForZip(string zip)
+        {
+            var filter = new BsonDocument()
+                .Add("zip", zip);
+            return await zipcodeCollection.Find(filter).Limit(1).FirstAsync();
+       
+        }
         public async Task<bool> SaveRepeater(Repeater repeater)
         {
             try

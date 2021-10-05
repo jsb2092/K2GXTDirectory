@@ -1,0 +1,107 @@
+@page "/search/"
+@using RepeaterQTH.Data
+@using BrowserInterop.Extensions
+@using BrowserInterop.Geolocation
+@using BlazorLeaflet.Models
+@using Blazored.FluentValidation
+@inject RepeaterDirectoryService RepeaterService
+@inject NavigationManager NavManager
+@inject SearchData searchData
+@inject IJSRuntime jsRuntime
+
+<EditForm Model="@searchData" OnValidSubmit="@HandleValidSubmit">
+
+    <ValidationSummary/>
+
+
+    <div style="float:left; margin-right:30px">
+        Enter Search Terms below: <button type="reset">Clear Data</button><br/>
+        
+        <TabControl isSearch="true">
+            <TabPage Text="Proximity">
+                <div class="searchContainer">
+                <table class="searchTable">
+                    <tr><td style="width:150px">Zipcode: </td><td><input class="editInput" @bind=@searchData.zipcode></td></tr>
+                    <tr><td colspan="2">--- OR --- </td></tr>
+                    <tr><td>Lat/Long: </td><td><input class="editInput-half" @bind=@searchData.lat><input class="editInput-half" @bind=@searchData.lng>&nbsp;<button type="button" @onclick="@findUserPos">Find</button></td></tr>
+                </table>
+                  </div>
+            </TabPage>
+          
+            <TabPage Text="State">
+                <div class="searchContainer">
+                <table class="searchTable">
+                    <tr><td style="width:150px">State: </td>
+                        <td>
+                            <select class="editInput" @bind=@searchData.state>
+                                    @foreach (var state in counties.ToArray().AsQueryable().Select(c => c.state_name).Distinct())
+                                    {
+                                        <option value="@state">@state</option>
+                                    }
+                            </select></td></tr>
+                </table>
+                </div>
+            </TabPage>
+        </TabControl>
+            <table class="searchTable" id="modesTable">
+                <tr><td ></td><td>Analog</td><td>DMR</td><td>D-Star</td><td>NXDN</td><td>P25</td><td>YSF</td></tr>
+                <tr><td style="text-align: right; padding-right: 25px" >Mode: </td><td><input type="checkbox" @bind="@searchData.FM" /></td><td><input type="checkbox" @bind="@searchData.DMR" /></td><td><input type="checkbox" @bind="@searchData.DSTAR" /></td><td><input type="checkbox" @bind="@searchData.NXDN" /></td><td><input type="checkbox" @bind="@searchData.P25" /></td><td><input type="checkbox" @bind="@searchData.YSF" /></td></tr>
+                <tr><td colspan=5><br /></td></tr>
+                <tr><td ></td><td>Allstar</td><td>Echolink</td><td>IRLP</td></tr>
+                <tr><td style="text-align: right; padding-right: 25px" >Feature: </td><td><input type="checkbox" @bind="@searchData.AllStar" /></td><td><input type="checkbox" @bind="@searchData.Echolink" /></td><td><input type="checkbox" @bind="@searchData.IRLP" /></td></tr>
+            </table>
+
+
+             <button type="submit">Search!</button>
+    </div>
+</EditForm>
+
+@code {
+
+    private WindowNavigatorGeolocation geolocationWrapper;
+      private Counties[] counties;
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        counties = await RepeaterService.getCounties();
+        // reset the search values???
+
+    }
+
+    public async Task<bool> findUserPos()
+    {
+        GeolocationPosition currentPosition = new GeolocationPosition();
+        try
+        {
+            var window = await jsRuntime.Window();
+            var navigator = await window.Navigator();
+            geolocationWrapper = navigator.Geolocation;
+            currentPosition = (await geolocationWrapper.GetCurrentPosition(new PositionOptions()
+            {
+                EnableHighAccuracy = true,
+                MaximumAgeTimeSpan = TimeSpan.FromHours(1),
+                TimeoutTimeSpan = TimeSpan.FromMinutes(1)
+            })).Location;
+        }
+        catch
+        {
+        }
+        if (currentPosition?.Coords != null)
+        {
+            searchData.lat = currentPosition.Coords.Latitude;
+            searchData.lng = currentPosition.Coords.Longitude;
+ 
+        }
+        return false;
+    }
+
+
+
+    private async Task HandleValidSubmit()
+    {
+        var a = searchData.zipcode;
+        NavManager.NavigateTo("/getRepeaters/");
+     
+    }
+}
