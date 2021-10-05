@@ -1,4 +1,6 @@
 @page "/repeaterDetails/{id}"
+@page "/repeaterDetails/{lat}/{lng}"
+@inherits BasePageComponent
 @using RepeaterQTH.Data
 @using BlazorLeaflet
 @using BlazorLeaflet.Models
@@ -6,6 +8,7 @@
 
 @inject RepeaterDirectoryService RepeaterService
 @inject IJSRuntime jsRuntime
+@inject NavigationManager NavManager;
 
 
 
@@ -17,7 +20,7 @@
 else
 {
     <div style="float: left; margin-right: 100px">
-        <a href="/getRepeaters"> <img width="16" src="/images/back.png"/> Back</a>
+        <a @onclick="@GoBack"> <img width="16" src="/images/back.png"/> Back</a>
         <div ><p>Repeater Details for: @repeater.CallSign</p></div>
         <table id="repeaterDetails">
             <tr><td style="width:150px">Callsign: </td><td>@repeater.CallSign</td></tr>
@@ -108,16 +111,36 @@ else
 
     [Parameter]
     public string id { get; set; }
+    [Parameter]
+    public string lat { get; set; }
+    [Parameter]
+    public string lng { get; set; }
 
     private Repeater repeater;
  
     private Map _map;
 
+    private void GoBack()
+    {
+        var pg = _pageState.GetGoBackPage();
+        if (pg.Contains("mapAllRepeaters"))
+        {
+            pg = "mapAllRepeaters/" + repeater.Location.coordinates[1] + "/" + repeater.Location.coordinates[0];
+        }
+        NavManager.NavigateTo(pg);
+    }
 
     protected override async Task OnInitializedAsync()
     {
 
-        repeater = await RepeaterService.GetRepeaterAsync(id);
+        if (id != null)
+        {
+            repeater = await RepeaterService.GetRepeaterAsync(id);
+        }
+        else
+        {
+            repeater = (await RepeaterService.GetRepeaterListByLocation(Double.Parse(lat), Double.Parse(lng), 1, 1)).First();
+        }
         if (repeater.Location.coordinates[1] != null)
         {
             bool hasCoverage = repeater.CoverageRadiusKM != null && repeater.CoverageRadiusKM > 0;

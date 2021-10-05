@@ -1,0 +1,186 @@
+@page "/mapAllRepeaters/{lat?}/{lng?}"
+@inherits BasePageComponent
+@using RepeaterQTH.Data
+@using BlazorLeaflet
+@using BlazorLeaflet.Models
+@using System.Drawing
+@using BlazorLeaflet.Models.Events
+@using BrowserInterop.Extensions
+@inject RepeaterDirectoryService RepeaterService
+@inject IJSRuntime jsRuntime
+@inject SearchData searchData
+@inject NavigationManager NavManager;
+
+@using BrowserInterop.Geolocation
+
+
+@if (repeaters == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <a @onclick="@GoBack"> <img width="16" src="/images/back.png"/> Back</a>
+    <div id="bigRepeaterMap">
+        <LeafletMap Map="_map"/>
+    </div>
+
+}
+@code {
+    [Parameter] 
+    public string lat { get; set; }
+    [Parameter] 
+    public string lng { get; set; }
+    
+    private Repeater[] repeaters;
+    private List<Repeater> onMap;
+    private Map _map;
+    private WindowNavigatorGeolocation geolocationWrapper;
+
+    
+    private void GoBack()
+    {
+        NavManager.NavigateTo(_pageState.GetGoBackPage());
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        onMap = new List<Repeater>();
+        LatLng currentPos = new LatLng(0, 0);
+        if (lat != null && lng != null)
+        {
+            currentPos = new LatLng((float)Double.Parse(lat), (float)Double.Parse(lng));
+        }
+        else
+        {
+        
+            GeolocationPosition currentPosition = new GeolocationPosition();
+            try
+            {
+                var window = await jsRuntime.Window();
+                var navigator = await window.Navigator();
+                geolocationWrapper = navigator.Geolocation;
+                currentPosition = (await geolocationWrapper.GetCurrentPosition(new PositionOptions()
+                {
+                    EnableHighAccuracy = true,
+                    MaximumAgeTimeSpan = TimeSpan.FromHours(1),
+                    TimeoutTimeSpan = TimeSpan.FromMinutes(1)
+                })).Location;
+                currentPos.Lat = (float)currentPosition.Coords.Latitude;
+                currentPos.Lng = (float)currentPosition.Coords.Longitude;
+
+            }
+            catch
+            {
+
+            }
+        }
+
+        repeaters = await RepeaterService.GetRepeaterListByLocation(currentPos.Lat, currentPos.Lng, 500, 200);
+        
+
+        _map = new Map(jsRuntime)
+        {
+            Center = currentPos,
+            Zoom = 6
+        };
+  
+  
+        _map.OnInitialized += () =>
+        {
+            var tiles = new TileLayer
+            {
+                UrlTemplate = "https://a.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                Attribution = "&copy; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors",
+                MinimumZoom = 9,
+            };
+
+    
+            _map.AddLayer(tiles);
+            mapRepeaters(_map);
+
+            
+        };
+    
+        var meh = new Map.MapEventHandler(MapEventHandler);
+        _map.OnMoveEnd += meh;
+        _map.OnClick += MapOnOnClick;
+
+    }
+
+    private async void MapOnOnClick(Map sender, MouseEvent e)
+    {
+   
+        var repeater = (await RepeaterService.GetRepeaterListByLocation((e.LatLng.Lat), e.LatLng.Lng, 1, 1));
+
+
+        if (repeater != null && repeater.Length > 0)
+        {
+            NavManager.NavigateTo("/repeaterDetails/" + e.LatLng.Lat + "/" + e.LatLng.Lng);
+        }
+
+    }
+
+    private void MapEventHandler(object sender, Event e)
+    {
+        mapRepeaters(sender as Map);
+    }
+
+    private async void mapRepeaters(Map _map)
+    {
+
+        var coords = await _map.GetCenter();
+        repeaters = await RepeaterService.GetRepeaterListByLocation(coords.Lat, coords.Lng, 100, 200);
+        foreach (var repeater in repeaters)
+        {
+            if (onMap.Contains(repeater)) continue;
+            onMap.Add(repeater);
+            if (repeater.Location.coordinates[1] == null) continue;
+            var loc = new LatLng((float)repeater.Location.coordinates[1].Value, (float)repeater.Location.coordinates[0].Value);
+
+            bool hasCoverage = repeater.CoverageRadiusKM != null && repeater.CoverageRadiusKM > 0;
+
+
+            if (hasCoverage)
+            {
+                _map.AddLayer(new Circle
+                {
+                    Position = loc,
+    // radius in m
+                    Radius = repeater.CoverageRadiusKM.Value * 1000f,
+                    Fill = true,
+                    FillColor = Color.Blue,
+                    FillOpacity = .10
+                });
+            }
+            _map.AddLayer(new Marker(loc)
+            {
+                IsInteractive = true,
+                ZIndexOffset = 100,
+                Position = loc,
+                Icon = new Icon()
+                {
+                    Url = "/images/marker-icon.png",
+                    Anchor = new Point(7, 25),
+                    TooltipAnchor = new Point(0, 0),
+
+                },
+
+                Tooltip = new Tooltip()
+                {
+                    IsPermanent = false,
+                    Direction = "bottom",
+                    Content = repeater.CallSign,
+
+                }, IsBubblingMouseEvents = true
+                
+
+            });
+        }
+    }
+}
+
+
+
+
+

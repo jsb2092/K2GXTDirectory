@@ -1,5 +1,6 @@
 @page "/editRepeater/{id}"
 @page "/addRepeater/"
+@inherits BasePageComponent
 @using RepeaterQTH.Data
 @using Blazored.FluentValidation
 @inject RepeaterDirectoryService RepeaterService
@@ -256,14 +257,16 @@
         if (await RepeaterService.SaveRepeater(repeater))
         {
             previousState = null;
-            NavManager.NavigateTo("/getRepeaters");
+            NavManager.NavigateTo(_pageState.GetGoBackPage());
+            
+
         }
     }
     
     private void ResetForm()
     {
         repeater = previousState;
-        NavManager.NavigateTo("/getRepeaters");
+        NavManager.NavigateTo(_pageState.GetGoBackPage());
         
     }
     

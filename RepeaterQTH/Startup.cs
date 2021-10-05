@@ -11,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using RepeaterQTH.Areas.Identity;
+using RepeaterQTH.Components;
 using RepeaterQTH.Data;
 
 namespace RepeaterQTH
@@ -44,6 +45,7 @@ namespace RepeaterQTH
 
             services.AddSingleton<RepeaterDirectoryService>();
             services.AddSingleton<SearchData>();
+            services.AddSingleton<PageHistoryState>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

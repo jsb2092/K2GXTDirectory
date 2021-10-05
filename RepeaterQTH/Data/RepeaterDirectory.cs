@@ -10,7 +10,7 @@ using RepeaterQTH.Support;
 namespace RepeaterQTH.Data
 {
     [BsonIgnoreExtraElements]
-    public class LocationInfo
+    public class LocationInfo: IEquatable<LocationInfo>
     {
      
         
@@ -25,11 +25,17 @@ namespace RepeaterQTH.Data
             coordinates = new double?[] {null, null} ;
   
         }
+        
+        public bool Equals(LocationInfo other)
+        {
+            if (other == null) return false;
+            return (coordinates[0].Equals(other.coordinates[0]) && coordinates[1].Equals(other.coordinates[1]));
+        }
     }
 
 
     [BsonIgnoreExtraElements]
-    public class Repeater : ICloneable
+    public class Repeater : ICloneable, IEquatable<Repeater>
 
     {
 
@@ -164,6 +170,13 @@ namespace RepeaterQTH.Data
 
         public bool Active { get; set; }
 
+        
+        public bool Equals(Repeater other)
+        {
+            if (other == null) return false;
+            //return (Location.Equals(other.Location) && CallSign.Equals(other.CallSign) && (RxFreq.Equals(other.RxFreq)));
+            return (_id.Equals(other._id));
+        }
         public Repeater()
         {
             Tone = "CSQ";
