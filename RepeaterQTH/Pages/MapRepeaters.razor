@@ -7,6 +7,7 @@
 
 @inject RepeaterDirectoryService RepeaterService
 @inject IJSRuntime jsRuntime
+@inject SearchData searchData
 @using BrowserInterop.Extensions
 @using BrowserInterop.Geolocation
 
@@ -29,94 +30,111 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        GeolocationPosition currentPosition = new GeolocationPosition();
-        try
+        LatLng currentPos = new LatLng();
+        int range = searchData.range;
+        if (searchData.rangeUnit == "MI")
         {
-            var window = await jsRuntime.Window();
-            var navigator = await window.Navigator();
-            geolocationWrapper = navigator.Geolocation;
-            currentPosition = (await geolocationWrapper.GetCurrentPosition(new PositionOptions()
-            {
-                EnableHighAccuracy = true,
-                MaximumAgeTimeSpan = TimeSpan.FromHours(1),
-                TimeoutTimeSpan = TimeSpan.FromMinutes(1)
-            })).Location;
+            range = (int)(range * 1.069);
         }
-        catch
+        if (searchData.activeType == "Proximity")
         {
-        }
-        var currentPos = new LatLng((float)38.56588962746834, (float)-97.84486619343919);
-        var zoom = 5;
-        if (currentPosition?.Coords != null)
-        {
-            currentPos = new LatLng((float)currentPosition.Coords.Latitude, (float)currentPosition.Coords.Longitude);
-            zoom = 8;
-        }
-        _map = new Map(jsRuntime)
-        {
-            
-            Center = currentPos,
-            Zoom = zoom
-        };
-        repeaters = await RepeaterService.GetRepeaterListByLocation(currentPos.Lat, currentPos.Lng, 50);
-        _map.OnInitialized += () =>
-        {
-            _map.AddLayer(new TileLayer
+           
+            if (searchData.zipcode != null)
             {
-                UrlTemplate = "https://a.tile.openstreetmap.org/{z}/{x}/{y}.png",
-                Attribution = "&copy; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors",
-            });
-            
-            foreach (var repeater in repeaters)
-            {
-                
-                if (repeater.Location.coordinates[1] != null)
-                {
-                    var loc = new LatLng((float)repeater.Location.coordinates[1].Value, (float)repeater.Location.coordinates[0].Value);
-
-                    bool hasCoverage = repeater.CoverageRadiusKM != null && repeater.CoverageRadiusKM > 0;
-
-
-                    if (hasCoverage)
-                    {
-                        _map.AddLayer(new Circle
-                        {
-                            Position = loc,
-    // radius in m
-                            Radius = repeater.CoverageRadiusKM.Value * 1000f,
-                            Fill = true,
-                            FillColor = Color.Blue,
-                            FillOpacity = .10
-                        });
-                    }
-                    _map.AddLayer(new Marker(loc)
-                    {
-                        IsInteractive = true,
-                        ZIndexOffset = 100,
-                        Position = loc,
-                        Icon = new Icon()
-                        {
-                            Url = "/images/marker-icon.png",
-                            Anchor = new Point(7, 25),
-                            TooltipAnchor = new Point(0, 0)
-
-                        },
-                   
-                        Tooltip = new Tooltip()
-                        {
-                            IsPermanent = false,
-                            Direction = "bottom",
-                            Content = repeater.CallSign
-                        }
-                  
-                
-                    });
-                 
-                }
-
+                var zipInfo = await RepeaterService.getLatLngForZip(searchData.zipcode);
+                currentPos = new LatLng((float)zipInfo.lat, (float)zipInfo.lng);
             }
-        };
+            else
+            {
+                currentPos = new LatLng((float)searchData.lat, (float)searchData.lng);
+            }
+            repeaters = await RepeaterService.GetRepeaterListByLocation(currentPos.Lat, currentPos.Lng, range);
+        } else if (searchData.activeType == "State")
+        {
+            range = 300;
+            var state = await RepeaterService.getLatLngForState(searchData.state);
+            currentPos.Lat = (float)state.lat;
+            currentPos.Lng = (float)state.lng;
+            repeaters = await RepeaterService.GetRepeaterListByState(searchData.state, range);
+            
+        }
+        
+            var zoom = range switch
+            {
+                <= 30 => 10,
+                <= 50 => 9,
+                <= 125 => 8,
+                _ => 7
+            };
+            _map = new Map(jsRuntime)
+            {
+                Center = currentPos,
+                Zoom = zoom
+            };
+  
+         
+            _map.OnInitialized += () =>
+            {
+                _map.AddLayer(new TileLayer
+                {
+                    UrlTemplate = "https://a.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                    Attribution = "&copy; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors",
+                });
 
+                foreach (var repeater in repeaters)
+                {
+
+                    if (repeater.Location.coordinates[1] != null)
+                    {
+                        var loc = new LatLng((float)repeater.Location.coordinates[1].Value, (float)repeater.Location.coordinates[0].Value);
+
+                        bool hasCoverage = repeater.CoverageRadiusKM != null && repeater.CoverageRadiusKM > 0;
+
+
+                        if (hasCoverage)
+                        {
+                            _map.AddLayer(new Circle
+                            {
+                                Position = loc,
+    // radius in m
+                                Radius = repeater.CoverageRadiusKM.Value * 1000f,
+                                Fill = true,
+                                FillColor = Color.Blue,
+                                FillOpacity = .10
+                            });
+                        }
+                        _map.AddLayer(new Marker(loc)
+                        {
+                            IsInteractive = true,
+                            ZIndexOffset = 100,
+                            Position = loc,
+                            Icon = new Icon()
+                            {
+                                Url = "/images/marker-icon.png",
+                                Anchor = new Point(7, 25),
+                                TooltipAnchor = new Point(0, 0)
+
+                            },
+
+                            Tooltip = new Tooltip()
+                            {
+                                IsPermanent = false,
+                                Direction = "bottom",
+                                Content = repeater.CallSign,
+                                
+                            },
+                            
+
+
+                        });
+                    
+
+                    }
+
+                }
+            };
+
+        }
     }
 
 }

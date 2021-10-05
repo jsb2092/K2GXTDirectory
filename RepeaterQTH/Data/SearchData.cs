@@ -6,8 +6,10 @@ namespace RepeaterQTH.Data
         public string zipcode { get; set; }
         public double lat { get; set; }
         public double lng { get; set; }
-        
-        public string state { get; set; }
+
+        public int range { get; set; } = 50;
+        public string rangeUnit { get; set; } = "KM";
+        public string state { get; set; } = "Alabama";
         public bool FM { get; set; }
         public bool DMR { get; set; }
 

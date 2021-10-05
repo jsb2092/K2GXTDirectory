@@ -38,6 +38,7 @@ namespace RepeaterQTH.Data
         private IMongoCollection<Repeater> collection;
         private IMongoCollection<Counties> countiesCollection;
         private IMongoCollection<Zipcode> zipcodeCollection;
+        private IMongoCollection<State> stateCollection;
 
         public RepeaterDirectoryService()
         {
@@ -71,18 +72,16 @@ namespace RepeaterQTH.Data
                 collection = database.GetCollection<Repeater>("repeater");
                 countiesCollection = database.GetCollection<Counties>("usa_counties");
                 zipcodeCollection = database.GetCollection<Zipcode>("zipcodes");
+                stateCollection = database.GetCollection<State>("usa_state_location");
             }
 
 
         }
-
-        public Task<Repeater[]> GetRepeaterListAsync(int limit = 100)
+        
+        public Task<Repeater[]> GetRepeaterListByLocation(double lat, double lng, int distance = 100, int limit = 100)
         {
-            return GetRepeaterListByLocation(43, -77.6, limit);
-        }
-
-        public Task<Repeater[]> GetRepeaterListByLocation(double lat, double lng, int limit = 100)
-        {
+            // convert to from km to m 
+            distance *= 1000;
             var geoPoint = new BsonDocument
             {
                 {"type", "Point"},
@@ -92,6 +91,7 @@ namespace RepeaterQTH.Data
             {
                 {"spherical", true},
                 {"near", geoPoint},
+                {"maxDistance", distance},
                 {"distanceField", "distance"}
             };
             var stage = new BsonDocumentPipelineStageDefinition<Repeater, Repeater>(new BsonDocument
@@ -188,6 +188,14 @@ namespace RepeaterQTH.Data
             var filter = new BsonDocument()
                 .Add("zip", zip);
             return await zipcodeCollection.Find(filter).Limit(1).FirstAsync();
+       
+        }
+        
+        public async Task<State> getLatLngForState(string state)
+        {
+            var filter = new BsonDocument()
+                .Add("state", state);
+            return await stateCollection.Find(filter).Limit(1).FirstAsync();
        
         }
         public async Task<bool> SaveRepeater(Repeater repeater)

@@ -11,6 +11,7 @@
 @inject SearchData searchData
 @using BrowserInterop.Extensions
 @using BrowserInterop.Geolocation
+@using MongoDB.Bson.Serialization.Options
 
 <h1>Repeater Directory</h1>
 
@@ -49,7 +50,11 @@ else
             {
                 currentPos = new LatLng((float)searchData.lat, (float)searchData.lng);
             }
-
+            int range = searchData.range;
+            if (searchData.rangeUnit == "MI")
+            {
+                range = (int)(range * 1.069);
+            }
 
 
             if (callsign != null)
@@ -59,8 +64,7 @@ else
             }
             else
             {
-                repeaters = await RepeaterService.GetRepeaterListByLocation(currentPos.Lat, currentPos.Lng, 100);
-
+                repeaters = await RepeaterService.GetRepeaterListByLocation(currentPos.Lat, currentPos.Lng, range);
             }
         } 
         else if (searchData.activeType == "State")

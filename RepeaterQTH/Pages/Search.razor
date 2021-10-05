@@ -21,10 +21,15 @@
             <TabPage Text="Proximity">
                 <div class="searchContainer">
                 <table class="searchTable">
-                    <tr><td style="width:150px">Zipcode: </td><td><input class="editInput" @bind=@searchData.zipcode></td></tr>
-                    <tr><td colspan="2">--- OR --- </td></tr>
+                    <tr><td style="width:150px">Zipcode: </td><td><input class="editInput" @bind="@searchData.zipcode"></td></tr>
+                    <tr><td colspan="2" style="text-align: center">--- OR --- </td></tr>
                     <tr><td>Lat/Long: </td><td><input class="editInput-half" @bind=@searchData.lat><input class="editInput-half" @bind=@searchData.lng>&nbsp;<button type="button" @onclick="@findUserPos">Find</button></td></tr>
-                </table>
+                    <tr><td>&nbsp;</td></tr>
+                    <tr><td>Within: </td><td><input  class="editInput" type="number" @bind="@searchData.range"> <select @bind=@searchData.rangeUnit>
+                        <option value="KM">KM</option>
+                        <option value="MI">MI</option>
+                        </select></td></tr>
+                    </table>
                   </div>
             </TabPage>
           
@@ -34,11 +39,13 @@
                     <tr><td style="width:150px">State: </td>
                         <td>
                             <select class="editInput" @bind=@searchData.state>
-                                    @foreach (var state in counties.ToArray().AsQueryable().Select(c => c.state_name).Distinct())
-                                    {
-                                        <option value="@state">@state</option>
-                                    }
-                            </select></td></tr>
+                                @foreach (var state in counties.ToArray().AsQueryable().Select(c => c.state_name).Distinct())
+                                {
+                                    <option value="@state">@state</option>
+                                }
+                            </select>
+                        </td>
+                        </tr>
                 </table>
                 </div>
             </TabPage>
@@ -52,7 +59,8 @@
             </table>
 
 
-             <button type="submit">Search!</button>
+        <button type="submit" @onclick="@(ListResults)">List</button> or  
+        <button type="submit" @onclick="@(MapResults)">Map</button>
     </div>
 </EditForm>
 
@@ -101,7 +109,21 @@
     private async Task HandleValidSubmit()
     {
         var a = searchData.zipcode;
-        NavManager.NavigateTo("/getRepeaters/");
-     
+   
     }
+
+    public void ListResults()
+    {
+        NavManager.NavigateTo("/getRepeaters/");
+
+    }
+     
+    
+    public void MapResults()
+    {
+        NavManager.NavigateTo("/mapRepeaters/");
+
+    }
+
+        
 }
