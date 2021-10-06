@@ -11,6 +11,7 @@
 @inject NavigationManager NavManager;
 
 @using BrowserInterop.Geolocation
+@using RepeaterQTH.Support
 
 
 @if (repeaters == null)
@@ -66,7 +67,7 @@ else
             repeaters = await RepeaterService.GetRepeaterListByState(searchData.state, range);
             
         }
-        
+        repeaters = Utility.FilterRepeaters(repeaters, searchData);
             var zoom = range switch
             {
                 <= 30 => 10,
@@ -145,6 +146,9 @@ else
         _map.OnClick += MapOnOnClick;
 
     }
+
+ 
+    
     private async void MapOnOnClick(Map sender, MouseEvent e)
     {
    

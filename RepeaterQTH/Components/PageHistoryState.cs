@@ -14,6 +14,10 @@ namespace RepeaterQTH.Components
         public void AddPageToHistory(string pageName)
         {
             previousPages.Add(pageName);
+            if (previousPages.Count > 10)
+            {
+                previousPages.RemoveAt(0);
+            }
         }
 
         public string GetGoBackPage()
