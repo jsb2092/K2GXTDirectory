@@ -80,6 +80,12 @@ namespace RepeaterQTH.Support
                 {
                     repeaters = repeaters.Where(r =>r.IRLPNum.HasValue && r.IRLPNum.Value != 0).ToArray();
                 }
+
+                if (!searchData.SelectedBands.Contains("All"))
+                {
+                    repeaters = repeaters.Where(r => searchData.SelectedBands.Contains(r.Band)).ToArray();
+                }
+
                 return repeaters;
             }
             

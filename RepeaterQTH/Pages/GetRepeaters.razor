@@ -44,10 +44,17 @@ else
         if (searchData.activeType == "Proximity")
         {
             LatLng currentPos = new LatLng();
-            if (searchData.zipcode is {Length: >= 5 })
+            if (searchData.zipcode is { Length: >= 5 })
             {
                 var zipInfo = await RepeaterService.getLatLngForZip(searchData.zipcode);
-                currentPos = new LatLng((float)zipInfo.lat, (float)zipInfo.lng);
+                if (zipInfo != null) 
+                {
+                    currentPos = new LatLng((float)zipInfo.lat, (float)zipInfo.lng);
+                } else
+                {
+                    currentPos = new LatLng(0, 0);
+                }
+
             }
             else
             {

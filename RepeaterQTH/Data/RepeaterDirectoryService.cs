@@ -185,6 +185,7 @@ namespace RepeaterQTH.Data
         
         public async Task<Zipcode> getLatLngForZip(string zip)
         {
+            zip = zip.Trim();
             var filter = new BsonDocument()
                 .Add("zip", zip);
             return await zipcodeCollection.Find(filter).Limit(1).FirstAsync();

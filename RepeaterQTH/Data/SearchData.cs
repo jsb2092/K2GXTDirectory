@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace RepeaterQTH.Data
 {
     public class SearchData
@@ -23,6 +25,9 @@ namespace RepeaterQTH.Data
         public bool Echolink {  get; set; }
         public bool IRLP { get; set;  }
 
+        public List<string> AvailableBands { get; set; } = new List<string> { "10m", "6m", "2m", "1.25m", "70cm", "33cm", "23cm"};
+
+        public List<string> SelectedBands { get; set; } = new List<string> {"All"};
 
     }
 }

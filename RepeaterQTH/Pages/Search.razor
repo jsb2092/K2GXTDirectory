@@ -10,6 +10,7 @@
 @inject SearchData searchData
 @inject IJSRuntime jsRuntime
 
+
 <EditForm Model="@searchData" OnValidSubmit="@HandleValidSubmit">
 
     <ValidationSummary/>
@@ -54,9 +55,31 @@
             <table class="searchTable" id="modesTable">
                 <tr><td ></td><td>Analog</td><td>DMR</td><td>D-Star</td><td>NXDN</td><td>P25</td><td>YSF</td></tr>
                 <tr><td style="text-align: right; padding-right: 25px" >Mode: </td><td><input type="checkbox" @bind="@searchData.FM" /></td><td><input type="checkbox" @bind="@searchData.DMR" /></td><td><input type="checkbox" @bind="@searchData.DSTAR" /></td><td><input type="checkbox" @bind="@searchData.NXDN" /></td><td><input type="checkbox" @bind="@searchData.P25" /></td><td><input type="checkbox" @bind="@searchData.YSF" /></td></tr>
-                <tr><td colspan=5><br /></td></tr>
+                <tr><td colspan="5"><br /></td></tr>
                 <tr><td ></td><td>Allstar</td><td>Echolink</td><td>IRLP</td></tr>
                 <tr><td style="text-align: right; padding-right: 25px" >Feature: </td><td><input type="checkbox" @bind="@searchData.AllStar" /></td><td><input type="checkbox" @bind="@searchData.Echolink" /></td><td><input type="checkbox" @bind="@searchData.IRLP" /></td></tr>
+                <tr><td colspan="5"><br /></td></tr>
+          
+                <tr><td ></td><td>Available</td><td></td><td>Selected</td></tr>
+                <tr><td style="text-align: right; padding-right: 25px; vertical-align: top"  >Band:</td><td style="text-align: left; vertical-align:top">
+                    <select size="7" style="width:100px" @bind="CurrentBandToAdd">
+                        @foreach(var band in searchData.AvailableBands) {
+                            <option id="@band">@band</option>
+                        }
+                </select>
+                </td><td style="text-align: center; padding-top:25px; vertical-align:top">
+                    <a @onclick="@AddBand"><img class="clickable" src="images/arrow-right.png" width=25/></a><br />
+                    <a @onclick="@RemoveBand"><img class="clickable" src="images/arrow-left.png" width=25/></a></td>
+                <td style="text-align: left;">
+                <select size="7" style="width:100px" @bind="CurrentBandToRemove">
+                        @foreach(var band in searchData.SelectedBands) {
+                           <option id="@band">@band</option>
+                        }
+                </select>
+
+
+                </td>
+               </tr>
             </table>
 
 
@@ -68,16 +91,42 @@
 @code {
 
     private WindowNavigatorGeolocation geolocationWrapper;
-      private Counties[] counties;
-
+    private Counties[] counties;
+    private string SelectedBands = string.Empty;
+    private string CurrentBandToAdd;
+    private string CurrentBandToRemove;
+   
 
     protected override async Task OnInitializedAsync()
     {
-        counties = await RepeaterService.getCounties();
+        counties ??= await RepeaterService.getCounties();
+        if (searchData.AvailableBands.Count > 0) CurrentBandToAdd = searchData.AvailableBands[0];
         // reset the search values???
-
     }
 
+    public void AddBand()
+    {
+        //searchData.AvailableBands.Remove(CurrentBandToAdd);
+        if (!searchData.SelectedBands.Contains(CurrentBandToAdd)) searchData.SelectedBands.Add(CurrentBandToAdd);
+        if (searchData.SelectedBands.Count > 1 && searchData.SelectedBands.Contains("All")) searchData.SelectedBands.Remove("All");
+
+        // if (searchData.AvailableBands.Count > 0) CurrentBandToAdd = searchData.AvailableBands[0];
+       
+    }
+
+    public void RemoveBand()
+    {
+        if (!string.IsNullOrEmpty(CurrentBandToRemove)) {
+       //     searchData.AvailableBands.Add(CurrentBandToRemove);
+            searchData.SelectedBands.Remove(CurrentBandToRemove);
+            if (searchData.SelectedBands.Count > 0) CurrentBandToRemove = searchData.SelectedBands[0];
+            if (searchData.SelectedBands.Count == 0) searchData.SelectedBands.Add("All");
+        }
+       
+}
+
+
+    
     public async Task<bool> findUserPos()
     {
         GeolocationPosition currentPosition = new GeolocationPosition();

@@ -64,6 +64,27 @@ namespace RepeaterQTH.Data
         [Required]
         public double TxFreq { get; set; }
 
+        public string Band { 
+            get {
+                double f = RxFreq;
+                if (f >= 28.3 && f <= 29.7)
+                    return "10m";
+                else if (f >= 50.1 && f <= 54.0)
+                    return "6m";
+                else if (f >= 144.0 && f <= 148.0)
+                    return "2m";
+                else if (f >= 222.0 && f <= 225.0)
+                    return "1.25m";
+                else if (f >= 420.0 && f <= 450.0)
+                    return "70cm";
+                else if (f >= 902.0 && f <= 928.0)
+                    return "33cm";
+                else if (f >= 1240.0 && f <= 1300.0)
+                    return "23cm";
+                return string.Empty;
+            } 
+        }
+
         public double? CTCSS { get; set; }
 
         [BsonElement("Tone Mode")] public string Tone { get; set; }

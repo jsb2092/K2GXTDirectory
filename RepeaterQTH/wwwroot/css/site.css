@@ -108,3 +108,7 @@ th {
     border: 1px solid gray;
 
 }
+
+.clickable {
+    cursor: pointer;
+}
