@@ -83,8 +83,8 @@
     
     private string currentSort =  "RFreq";
     private string currentOrder = "asc";
-    private string imageSortName = "images/sort-asc.png";
-    private string imageEditName = "images/edit.png";
+    private string imageSortName = "images/sort-asc-white.png";
+    private string imageEditName = "images/edit-white.png";
     
     
     private Task sortAsync(string sortData)
@@ -93,7 +93,7 @@
         if (currentSort == sortData)
         {
             currentOrder = currentOrder == "asc" ? "desc" : "asc";
-            imageSortName = "images/sort-" + currentOrder + ".png";
+            imageSortName = "images/sort-" + currentOrder + "-white.png";
         }
         currentSort = sortData;
         
