@@ -5,13 +5,13 @@ html, body {
 }
 
 a, .btn-link {
-    color: #0366d6;
+    color: #e0a800;
 }
 
 .btn-primary {
     color: #fff;
-    background-color: #1b6ec2;
-    border-color: #1861ac;
+    background-color: #663C09;
+    border-color: #673D10;
 }
 
 .content {
@@ -73,7 +73,7 @@ th {
 }
 
 #bigRepeaterMap {
-    height: 700px;
+    height: calc(100vh - 150px);
     width: 100%;
 }
 
@@ -87,6 +87,7 @@ th {
 }
 
 .searchTabs {
+    
     border: 1px solid black;
 }
 
@@ -97,15 +98,22 @@ th {
 
 
 .searchTable {
-    width: 450px;
-    margin: 10px;
-    padding-bottom: 10px;
+  
+    table-layout: fixed;
+    margin-bottom: 0px;
+
 }
 
 
 
 .searchContainer {
+
+    width: 525px;
+
+}
+.searchContainer-border {
     border: 1px solid gray;
+
 
 }
 

@@ -21,57 +21,60 @@
         
         <TabControl isSearch="true">
             <TabPage Text="Proximity">
-                <div class="searchContainer">
-                <table class="searchTable">
-                    <tr><td style="width:150px">Zipcode: </td><td><input class="editInput" @bind="@searchData.zipcode"></td></tr>
-                    <tr><td colspan="2" style="text-align: center">--- OR --- </td></tr>
-                    <tr><td>Lat/Long: </td><td><input class="editInput-half" @bind=@searchData.lat><input class="editInput-half" @bind=@searchData.lng>&nbsp;<button type="button" @onclick="@findUserPos">Find</button></td></tr>
-                    <tr><td>&nbsp;</td></tr>
-                    <tr><td>Within: </td><td><input  class="editInput" type="number" @bind="@searchData.range"> <select @bind=@searchData.rangeUnit>
-                        <option value="KM">KM</option>
-                        <option value="MI">MI</option>
+                <div class="searchContainer searchContainer-border">
+                    <table class="table table-borderless table-sm table-dark searchTable" >
+                        <tr><td style="width:150px">Zipcode: </td><td><input class="editInput" @bind="@searchData.zipcode"></td></tr>
+                        <tr><td colspan="2" style="text-align: center">--- OR --- </td></tr>
+                        <tr><td>Lat/Long: </td><td><input class="editInput-half" @bind=@searchData.lat><input class="editInput-half" @bind=@searchData.lng>&nbsp;<button type="button" @onclick="@findUserPos">Find</button></td></tr>
+                        <tr><td>&nbsp;</td></tr>
+                        <tr><td>Within: </td><td><input  class="editInput" type="number" @bind="@searchData.range"> <select @bind=@searchData.rangeUnit>
+                            <option value="KM">KM</option>
+                            <option value="MI">MI</option>
                         </select></td></tr>
                     </table>
-                  </div>
+                </div>
             </TabPage>
           
             <TabPage Text="State">
-                <div class="searchContainer">
-                <table class="searchTable">
-                    <tr><td style="width:150px">State: </td>
-                        <td>
-                            <select class="editInput" @bind=@searchData.state>
-                                @foreach (var state in counties.ToArray().AsQueryable().Select(c => c.state_name).Distinct())
-                                {
-                                    <option value="@state">@state</option>
-                                }
-                            </select>
-                        </td>
+                <div class="searchContainer searchContainer-border">
+                    <table class="table table-borderless table-dark searchTable">
+                        <tr><td style="width:150px">State: </td>
+                            <td>
+                                <select class="editInput" @bind=@searchData.state>
+                                    @foreach (var state in counties.ToArray().AsQueryable().Select(c => c.state_name).Distinct())
+                                    {
+                                        <option value="@state">@state</option>
+                                    }
+                                </select>
+                            </td>
                         </tr>
-                </table>
+                    </table>
                 </div>
             </TabPage>
         </TabControl>
-            <table class="searchTable" id="modesTable">
+           <div class="searchContainer">
+            <table class="table-dark searchTable" id="modesTable">
                 <tr><td ></td><td>Analog</td><td>DMR</td><td>D-Star</td><td>NXDN</td><td>P25</td><td>YSF</td></tr>
-                <tr><td style="text-align: right; padding-right: 25px" >Mode: </td><td><input type="checkbox" @bind="@searchData.FM" /></td><td><input type="checkbox" @bind="@searchData.DMR" /></td><td><input type="checkbox" @bind="@searchData.DSTAR" /></td><td><input type="checkbox" @bind="@searchData.NXDN" /></td><td><input type="checkbox" @bind="@searchData.P25" /></td><td><input type="checkbox" @bind="@searchData.YSF" /></td></tr>
+                <tr><td style="text-align: right; padding-right: 15px" >Mode: </td><td><input type="checkbox" @bind="@searchData.FM" /></td><td><input type="checkbox" @bind="@searchData.DMR" /></td><td><input type="checkbox" @bind="@searchData.DSTAR" /></td><td><input type="checkbox" @bind="@searchData.NXDN" /></td><td><input type="checkbox" @bind="@searchData.P25" /></td><td><input type="checkbox" @bind="@searchData.YSF" /></td></tr>
+            <tr><td colspan="5"><br /></td></tr>
+
+                <tr><td ></td><td>Allstar</td><td>EchoLnk</td><td>IRLP</td></tr>
+                <tr><td style="text-align: right; padding-right: 15px" >Feature: </td><td><input type="checkbox" @bind="@searchData.AllStar" /></td><td><input type="checkbox" @bind="@searchData.Echolink" /></td><td><input type="checkbox" @bind="@searchData.IRLP" /></td></tr>
                 <tr><td colspan="5"><br /></td></tr>
-                <tr><td ></td><td>Allstar</td><td>Echolink</td><td>IRLP</td></tr>
-                <tr><td style="text-align: right; padding-right: 25px" >Feature: </td><td><input type="checkbox" @bind="@searchData.AllStar" /></td><td><input type="checkbox" @bind="@searchData.Echolink" /></td><td><input type="checkbox" @bind="@searchData.IRLP" /></td></tr>
-                <tr><td colspan="5"><br /></td></tr>
-          
-                <tr><td ></td><td>Available</td><td></td><td>Selected</td></tr>
-                <tr><td style="text-align: right; padding-right: 25px; vertical-align: top"  >Band:</td><td style="text-align: left; vertical-align:top">
-                    <select size="7" style="width:100px" @bind="CurrentBandToAdd">
+                    
+                <tr><td ></td><td colspan="2">Available</td><td></td><td colspan="2">Selected</td></tr>
+                <tr><td style="text-align: right; padding-right: 15px; vertical-align: top"  >Band:</td>
+                    <td colspan="2" style="text-align: left; vertical-align:top">
+                    <select size="7" style="width:100%" @bind="CurrentBandToAdd">
                         @foreach(var band in searchData.AvailableBands) {
                             <option id="@band">@band</option>
                         }
                 </select>
                 </td><td style="text-align: center; padding-top:25px; vertical-align:top">
-                    <a @onclick="@AddBand"><img class="clickable" src="images/arrow-right.png" width=25/></a><br />
-                    <a @onclick="@RemoveBand"><img class="clickable" src="images/arrow-left.png" width=25/></a></td>
-                <td style="text-align: left;">
-                <select size="7" style="width:100px" @bind="CurrentBandToRemove">
+                    <a @onclick="@AddBand"><img class="clickable" src="images/arrow-right-white.png" width=25/></a><br />
+                    <a @onclick="@RemoveBand"><img class="clickable" src="images/arrow-left-white.png" width=25/></a></td>
+                <td colspan="2" style="text-align: left;">
+                <select size="7" style="width:100%" @bind="CurrentBandToRemove">
                         @foreach(var band in searchData.SelectedBands) {
                            <option id="@band">@band</option>
                         }
@@ -82,7 +85,7 @@
                </tr>
             </table>
 
-
+        </div>
         <button type="submit" @onclick="@(ListResults)">List</button> or  
         <button type="submit" @onclick="@(MapResults)">Map</button>
     </div>
