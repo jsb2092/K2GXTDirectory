@@ -2,11 +2,21 @@
 
 html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    background-color: #23272b;
+    color: #b3b7bb;
+
+}
+
+.navbar {
+    background-color: #1b1e21;
+    border-bottom: 1px solid #b9bbbe;
+    color: #b3b7bb;
 }
 
 a, .btn-link {
     color: #e0a800;
 }
+
 
 .btn-primary {
     color: #fff;
