@@ -60,7 +60,7 @@ else
             GeolocationPosition currentPosition = new GeolocationPosition();
             try
             {
-                throw new Exception();
+
 
                 var window = await jsRuntime.Window();
                 var navigator = await window.Navigator();
@@ -77,6 +77,8 @@ else
             }
             catch
             {
+            }
+            if (currentPos.Lat == 0) {
                 try
                 {
                     var ip = await GetIpAddress();

@@ -137,6 +137,7 @@
     
     public async Task<bool> findUserPos()
     {
+        LatLng currentPos = new LatLng(0, 0);
         GeolocationPosition currentPosition = new GeolocationPosition();
         try
         {
@@ -149,17 +150,26 @@
                 MaximumAgeTimeSpan = TimeSpan.FromHours(1),
                 TimeoutTimeSpan = TimeSpan.FromMinutes(1)
             })).Location;
+            if (currentPosition != null)
+            {
+                currentPos.Lat = (float)currentPosition.Coords.Latitude;
+                currentPos.Lng = (float)currentPosition.Coords.Longitude; 
+            }
         }
         catch
         {
+            
+        }
+        if (currentPos.Lat == 0) {
+      
             try
             {
                 var ip = await GetIpAddress();
                 var ipCache = await RepeaterService.findIPCache(ip);
                 if (ipCache != null && ipCache.updated > DateTime.Now.AddDays(-7))
                 {
-                    currentPosition.Coords.Latitude = (float)ipCache.lat;
-                    currentPosition.Coords.Longitude= (float)ipCache.lng;       
+                    currentPos.Lat = (float)ipCache.lat;
+                    currentPos.Lng= (float)ipCache.lng;       
                 }
                 else
                 {
@@ -172,21 +182,23 @@
                     var client = new WebServiceClient(int.Parse(items["geolite-user"]), items["geolite-key"], host: "geolite.info");
 
                     var response = await client.CityAsync(ip);
-                    currentPosition.Coords.Latitude = (float)response.Location.Latitude;
-                    currentPosition.Coords.Longitude = (float)response.Location.Longitude;
-                    await RepeaterService.insertIPCache(new IPLocation() { ip = ip, lat = response.Location.Latitude, lng = response.Location.Longitude, updated = DateTime.Now });
+                    if (response.Location.Latitude != null)
+                    {
+                        currentPos.Lat = (float)response.Location.Latitude;
+                        currentPos.Lng = (float)response.Location.Longitude;
+                        await RepeaterService.insertIPCache(new IPLocation() { ip = ip, lat = response.Location.Latitude, lng = response.Location.Longitude, updated = DateTime.Now });
+                    }
                 }
             }
             catch (Exception)
             {
             }
         }
-        if (currentPosition?.Coords != null)
-        {
-            searchData.lat = currentPosition.Coords.Latitude;
-            searchData.lng = currentPosition.Coords.Longitude;
- 
-        }
+
+        searchData.lat = currentPos.Lat;
+        searchData.lng = currentPos.Lng;
+
+    
         return false;
     }
     public async Task<string> GetIpAddress()
