@@ -4,6 +4,7 @@
 @using BlazorLeaflet
 @using BlazorLeaflet.Models
 @using System.Drawing
+@using System.IO
 @using BlazorLeaflet.Models.Events
 @using BrowserInterop.Extensions
 @inject RepeaterDirectoryService RepeaterService
@@ -12,6 +13,8 @@
 @inject NavigationManager NavManager;
 
 @using BrowserInterop.Geolocation
+@using MaxMind.GeoIP2
+@using Newtonsoft.Json
 
 
 @if (repeaters == null)
@@ -57,6 +60,8 @@ else
             GeolocationPosition currentPosition = new GeolocationPosition();
             try
             {
+                throw new Exception();
+
                 var window = await jsRuntime.Window();
                 var navigator = await window.Navigator();
                 geolocationWrapper = navigator.Geolocation;
@@ -72,7 +77,31 @@ else
             }
             catch
             {
+                try
+                {
+                    var ip = await GetIpAddress();
+                    var ipCache = await RepeaterService.findIPCache(ip);
+                    if (ipCache != null && ipCache.updated > DateTime.Now.AddDays(-7))
+                    {
+                        currentPos.Lat = (float)ipCache.lat;
+                        currentPos.Lng = (float)ipCache.lng;       
+                    }
+                    else
+                    {
+                        using StreamReader r = new StreamReader("connection.json");
+                        string json = r.ReadToEnd();
+                        var items = JsonConvert.DeserializeObject<Dictionary<string, string>>(json);
 
+                        var client = new WebServiceClient(int.Parse(items["geolite-user"]), items["geolite-key"], host: "geolite.info");
+                        var response = await client.CityAsync(ip);
+                        currentPos.Lat = (float)response.Location.Latitude;
+                        currentPos.Lng = (float)response.Location.Longitude;
+                        await RepeaterService.insertIPCache(new IPLocation() { ip = ip, lat = response.Location.Latitude, lng = response.Location.Longitude, updated = DateTime.Now });
+                    }
+                }
+                catch (Exception e)
+                {
+                }
             }
         }
 
@@ -176,6 +205,21 @@ else
                 
 
             });
+        }
+    }
+    
+    public async Task<string> GetIpAddress()
+    {
+        try
+        {
+            var ipAddress = await jsRuntime.InvokeAsync<string>("getIpAddress")
+                .ConfigureAwait(true);
+            return ipAddress;
+        }
+        catch(Exception e)
+        {
+    //If your request was blocked by CORS or some extension like uBlock Origin then you will get an exception.
+            return string.Empty;
         }
     }
 }

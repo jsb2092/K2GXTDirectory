@@ -1,6 +1,8 @@
 ﻿@page "/"
+
 @namespace RepeaterQTH.Pages
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
 @{
     Layout = null;
 }
@@ -42,6 +44,16 @@
 <!--<script src="js/leafletBlazorInterops.js"></script>-->
 <script src="_content/BlazorLeaflet/js/leafletBlazorInterops.js"></script>
 <script src="_content/BrowserInterop/scripts.js"></script>
+<script>
+  window.getIpAddress = () => {
+    return fetch('https://jsonip.com/')
+      .then((response) => response.json())
+      .then((data) => {
+        return data.ip
+      })
+  }
+</script>
+
 </body>
 
 </html>

@@ -1,3 +1,7 @@
 {
-  "connectionString": "mongodb+srv:// < connection string >"
+    "connectionString": "mongodb+srv:// < connection string >",
+    "geolite-user": "",
+    "geolite-key": "",
+    "Google-clientID": "",
+    "Google-clientSecret": ""
 }

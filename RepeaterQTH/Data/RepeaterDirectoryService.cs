@@ -39,6 +39,7 @@ namespace RepeaterQTH.Data
         private IMongoCollection<Counties> countiesCollection;
         private IMongoCollection<Zipcode> zipcodeCollection;
         private IMongoCollection<State> stateCollection;
+        private IMongoCollection<IPLocation> ipCacheCollection;
 
         public RepeaterDirectoryService()
         {
@@ -73,6 +74,7 @@ namespace RepeaterQTH.Data
                 countiesCollection = database.GetCollection<Counties>("usa_counties");
                 zipcodeCollection = database.GetCollection<Zipcode>("zipcodes");
                 stateCollection = database.GetCollection<State>("usa_state_location");
+                ipCacheCollection = database.GetCollection<IPLocation>("ip_cache");
             }
 
 
@@ -217,6 +219,30 @@ namespace RepeaterQTH.Data
             catch
             {
                 return false;
+            }
+        }
+        
+        public async Task insertIPCache(IPLocation ipLocation)
+        {   
+            var filter = new BsonDocument()
+                .Add("ip", ipLocation.ip);
+            var updateOptions = new FindOneAndReplaceOptions<IPLocation>() { IsUpsert = true };
+            await ipCacheCollection.FindOneAndReplaceAsync(filter, ipLocation, updateOptions);
+
+        }
+        
+        public async Task<IPLocation> findIPCache(string ip)
+        {
+            var filter = new BsonDocument()
+                .Add("ip", ip);
+            try
+            {
+                var ipResult = await ipCacheCollection.Find(filter).Limit(1).FirstAsync();
+                return ipResult;
+            }
+            catch
+            {
+                return null;
             }
         }
 

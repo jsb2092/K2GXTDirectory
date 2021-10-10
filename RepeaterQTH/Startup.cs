@@ -1,4 +1,6 @@
 
+using System.Collections.Generic;
+using System.IO;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
@@ -10,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Newtonsoft.Json;
 using RepeaterQTH.Areas.Identity;
 using RepeaterQTH.Components;
 using RepeaterQTH.Data;
@@ -42,10 +45,26 @@ namespace RepeaterQTH
                 .AddScoped<AuthenticationStateProvider,
                     RevalidatingIdentityAuthenticationStateProvider<ApplicationUser>>();
             //services.AddDatabaseDeveloperPageExceptionFilter();
+            using StreamReader r = new StreamReader("connection.json");
+            string json = r.ReadToEnd();
+            var items = JsonConvert.DeserializeObject<Dictionary<string, string>>(json);
 
+            services.AddAuthentication()
+                .AddGoogle(options =>
+                {
+                    IConfigurationSection googleAuthNSection =
+                        Configuration.GetSection("Authentication:Google");
+
+                    options.ClientId = items["Google-clientID"];
+                    options.ClientSecret = items["Google-clientSecret"];
+                });
             services.AddSingleton<RepeaterDirectoryService>();
             services.AddSingleton<SearchData>();
             services.AddSingleton<PageHistoryState>();
+            services
+                .AddCors(x => x.AddPolicy("externalRequests",
+                    policy => policy
+                        .WithOrigins("https://jsonip.com")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -75,6 +94,7 @@ namespace RepeaterQTH
                 endpoints.MapBlazorHub();
                 endpoints.MapFallbackToPage("/_Host");
             });
+            app.UseCors("externalRequests");
         }
     }
 }

@@ -4,6 +4,11 @@
 @using BrowserInterop.Geolocation
 @using BlazorLeaflet.Models
 @using Blazored.FluentValidation
+@using MaxMind.GeoIP2
+@using MongoDB.Driver
+@using Newtonsoft.Json
+@using Newtonsoft.Json.Serialization
+@using System.IO
 @inherits BasePageComponent
 @inject RepeaterDirectoryService RepeaterService
 @inject NavigationManager NavManager
@@ -147,6 +152,34 @@
         }
         catch
         {
+            try
+            {
+                var ip = await GetIpAddress();
+                var ipCache = await RepeaterService.findIPCache(ip);
+                if (ipCache != null && ipCache.updated > DateTime.Now.AddDays(-7))
+                {
+                    currentPosition.Coords.Latitude = (float)ipCache.lat;
+                    currentPosition.Coords.Longitude= (float)ipCache.lng;       
+                }
+                else
+                {
+                    using StreamReader r = new StreamReader("connection.json");
+                    string json = r.ReadToEnd();
+                    var items = JsonConvert.DeserializeObject<Dictionary<string, string>>(json);
+
+                    MongoClient dbClient =
+                        new MongoClient(items["connectionString"]);
+                    var client = new WebServiceClient(int.Parse(items["geolite-user"]), items["geolite-key"], host: "geolite.info");
+
+                    var response = await client.CityAsync(ip);
+                    currentPosition.Coords.Latitude = (float)response.Location.Latitude;
+                    currentPosition.Coords.Longitude = (float)response.Location.Longitude;
+                    await RepeaterService.insertIPCache(new IPLocation() { ip = ip, lat = response.Location.Latitude, lng = response.Location.Longitude, updated = DateTime.Now });
+                }
+            }
+            catch (Exception)
+            {
+            }
         }
         if (currentPosition?.Coords != null)
         {
@@ -155,6 +188,20 @@
  
         }
         return false;
+    }
+    public async Task<string> GetIpAddress()
+    {
+        try
+        {
+            var ipAddress = await jsRuntime.InvokeAsync<string>("getIpAddress")
+                .ConfigureAwait(true);
+            return ipAddress;
+        }
+        catch(Exception e)
+        {
+    //If your request was blocked by CORS or some extension like uBlock Origin then you will get an exception.
+            return string.Empty;
+        }
     }
 
 

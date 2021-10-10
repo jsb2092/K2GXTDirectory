@@ -8,6 +8,8 @@
   <ItemGroup>
     <PackageReference Include="Blazored.FluentValidation" Version="2.0.1" />
     <PackageReference Include="BrowserInterop" Version="1.1.2" />
+    <PackageReference Include="MaxMind.GeoIP2" Version="4.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="5.0.10" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="5.0.10" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.9" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="5.0.9" />
