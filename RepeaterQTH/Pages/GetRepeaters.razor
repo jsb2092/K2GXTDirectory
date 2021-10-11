@@ -16,7 +16,8 @@
 @using MongoDB.Bson.Serialization.Options
 
 
-<h1>Repeater Directory</h1>
+<div style="float: left"><h1>Repeater Directory</h1></div>
+<div style="float: right; margin-top: 20px"> <button @onclick="@DownloadText">Export</button></div>
 
 
 @if (repeaters == null)
@@ -26,8 +27,9 @@
 else
 {
     <RepeaterList repeaters=repeaters/>
-   
+
 }
+
 
 @code {
     [Parameter]  
@@ -84,6 +86,19 @@ else
 
         repeaters = Utility.FilterRepeaters(repeaters, searchData);
         
+    }
+    
+    async Task DownloadText()
+    {
+        string data = "Callsign, RxFreq, TxFreq, Tone, Tone Type, State,  Location\n";
+        foreach (var repeater in repeaters)
+        {
+            data += repeater.CallSign + ", " + repeater.RxFreq + ", " + repeater.TxFreq + ", " +repeater.CTCSS+"," + repeater.Tone + ", " + repeater.State + ", "+repeater.LocationInfo + "\n";
+        }
+
+        byte[] file = System.Text.Encoding.UTF8.GetBytes(data);
+        var fileName = "rqth" + DateTime.Now.ToString("yyyyMMddHHmm")+".csv";
+        await jsRuntime.InvokeVoidAsync("BlazorDownloadFile", fileName, "text/csv", file);
     }
     
 }
