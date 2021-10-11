@@ -23,7 +23,10 @@
 }
 else
 {
-    <a @onclick="@GoBack"> <img width="16" src="/images/back.png"/> Back</a>
+    <a @onclick="@GoBack"> <img width="16" src="/images/back.png"> Back</a>
+    <div style="float: right">
+    <input type="checkbox" checked @onchange="@CoverageChange"/><span> Show Coverage</span>
+    </div>
     <div id="bigRepeaterMap">
         <LeafletMap Map="_map"/>
     </div>
@@ -34,12 +37,38 @@ else
     public string lat { get; set; }
     [Parameter] 
     public string lng { get; set; }
+
+    private bool showCoverage { get; set; }
     
     private Repeater[] repeaters;
     private List<Repeater> onMap;
     private Map _map;
     private WindowNavigatorGeolocation geolocationWrapper;
 
+
+    private void CoverageChange()
+    {
+      
+        if (showCoverage)
+        {
+            mapCoverage();
+        }
+        else
+        {
+            foreach (var layer in _map.GetLayers())
+            {
+                if (layer is Circle)
+                {
+                    _map.RemoveLayer(layer);
+                }
+            }
+        }
+        showCoverage = !showCoverage;
+
+
+
+    }
+    
     
     private void GoBack()
     {
@@ -119,15 +148,7 @@ else
   
         _map.OnInitialized += () =>
         {
-            var tiles = new TileLayer
-            {
-                UrlTemplate = "https://a.tile.openstreetmap.org/{z}/{x}/{y}.png",
-                Attribution = "&copy; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors",
-                MinimumZoom = 9,
-            };
-
-    
-            _map.AddLayer(tiles);
+            tileMap(_map);
             mapRepeaters(_map);
 
             
@@ -157,6 +178,43 @@ else
         mapRepeaters(sender as Map);
     }
 
+    private void tileMap(Map _map)
+    {
+        var tiles = new TileLayer
+        {
+            UrlTemplate = "https://a.tile.openstreetmap.org/{z}/{x}/{y}.png",
+            Attribution = "&copy; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors",
+            MinimumZoom = 9,
+        };
+
+    
+        _map.AddLayer(tiles);
+    }
+
+    private void mapCoverage()
+    {
+        foreach (var repeater in onMap) {
+            bool hasCoverage = repeater.CoverageRadiusKM != null && repeater.CoverageRadiusKM > 0;
+
+            var loc = new LatLng((float)repeater.Location.coordinates[1].Value, (float)repeater.Location.coordinates[0].Value);
+
+            if (showCoverage && hasCoverage)
+            {
+                _map.AddLayer(new Circle
+                {
+                    Position = loc,
+    // radius in m
+                    Radius = repeater.CoverageRadiusKM.Value * 1000f,
+                    Fill = true,
+                    FillColor = Color.Blue,
+                    FillOpacity = .10
+                });
+            }
+        }
+    }
+
+
+    
     private async void mapRepeaters(Map _map)
     {
 
@@ -169,25 +227,11 @@ else
             if (repeater.Location.coordinates[1] == null) continue;
             var loc = new LatLng((float)repeater.Location.coordinates[1].Value, (float)repeater.Location.coordinates[0].Value);
 
-            bool hasCoverage = repeater.CoverageRadiusKM != null && repeater.CoverageRadiusKM > 0;
-
-
-            if (hasCoverage)
-            {
-                _map.AddLayer(new Circle
-                {
-                    Position = loc,
-    // radius in m
-                    Radius = repeater.CoverageRadiusKM.Value * 1000f,
-                    Fill = true,
-                    FillColor = Color.Blue,
-                    FillOpacity = .10
-                });
-            }
+           
             _map.AddLayer(new Marker(loc)
             {
+                //ID = repeater.CallSign+repeater.RxFreq,
                 IsInteractive = true,
-                ZIndexOffset = 100,
                 Position = loc,
                 Icon = new Icon()
                 {
@@ -207,7 +251,11 @@ else
                 
 
             });
+     
+            
+
         }
+        CoverageChange();
     }
     
     public async Task<string> GetIpAddress()
