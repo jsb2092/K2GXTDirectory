@@ -1,2 +1,4 @@
 /.github/workflows/master_k2gxt.yml
 /.github/workflows/master_k2gxt-ds.yml
+/BlazorLeaflet/bin/Debug/
+/BlazorLeaflet/obj/
