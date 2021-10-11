@@ -39,7 +39,7 @@
         <th>
             <span @onclick="@(async () => await sortAsync("Description"))">
                 <img width="12" src="@imageSortName"/>
-                Location
+                Location Info
             </span> </th>
 
     </tr>
@@ -70,7 +70,7 @@
             </td>
             <td>@repeater.County</td>
             <td>@repeater.GridSquare</td>
-            <td>@repeater.Description</td>
+            <td>@repeater.LocationInfo</td>
 
         </tr>
     }

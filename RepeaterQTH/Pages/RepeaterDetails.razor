@@ -45,7 +45,7 @@ else
             <tr><td>State: </td><td>@repeater.State</td></tr>
             <tr><td>County: </td><td>@repeater.County</td></tr>
             <tr><td>Grid Square: </td><td>@repeater.GridSquare</td></tr>
-            <tr><td>Description: </td><td>@repeater.Description</td></tr>
+            <tr><td>Located Info: </td><td>@repeater.LocationInfo</td></tr>
             @if (repeater.FMEnabled)
             {
                 <tr><td>FM Analog Mode:</td><td>@repeater.FMEnabledString</td></tr>
@@ -73,6 +73,8 @@ else
                 <tr><td>DMR Mode:</td><td>@repeater.DMREnabledString</td></tr>
                 <tr><td>DMR Id:</td><td>@repeater.DMRId</td></tr>
                 <tr><td>DMR Color Code:</td><td>@repeater.DMRColorCode</td></tr>
+                <tr><td>DMR Static TG1:</td><td>@repeater.DMRStaticTG1</td></tr>
+                <tr><td>DMR Static TG2:</td><td>@repeater.DMRStaticTG2</td></tr>
             }
             @if (repeater.NXDNEnabled)
             {

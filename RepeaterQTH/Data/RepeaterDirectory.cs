@@ -91,8 +91,8 @@ namespace RepeaterQTH.Data
 
         [BsonElement("Rx CTCSS")] public double? RxCTCSS { get; set; }
 
-        [BsonElement("Name")] public string Description { get; set; }
-
+        [BsonElement("Name")] public string LocationInfo { get; set; }
+        public string Details { get; set; }
         public string State { get; set; }
         public string County { get; set; }
 
@@ -110,6 +110,8 @@ namespace RepeaterQTH.Data
         }
 
         public string Offset => (TxFreq - RxFreq > 0 ? "+" : "") + $"{(TxFreq - RxFreq):0.0}" + " MHz";
+        
+
 
         [BsonIgnore]
         public string FMEnabledString
@@ -132,10 +134,13 @@ namespace RepeaterQTH.Data
         }
 
         public bool DMREnabled { get; set; }
+        public int? DMRId { get; set; }
         public int DMRColorCode { get; set; }
+        public int DMRStaticTG1 { get; set; }
+        public int DMRStaticTG2 { get; set; }
 
         public string DStarType { get; set; }
-        public int? DMRId { get; set; }
+  
 
         [BsonIgnore]
         public string YSFEnabledString
