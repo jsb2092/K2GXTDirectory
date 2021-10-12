@@ -3,17 +3,16 @@
 @inherits BasePageComponent
 
 @using RepeaterQTH.Data
-@using System.Linq.Dynamic.Core
 @using BlazorLeaflet.Models
 @using RepeaterQTH.Support;
 
 @inject RepeaterDirectoryService RepeaterService
+@inject LocationService LocationService
 @inject IJSRuntime jsRuntime
 @inject NavigationManager MyNavigationManager
 @inject SearchData searchData
-@using BrowserInterop.Extensions
-@using BrowserInterop.Geolocation
-@using MongoDB.Bson.Serialization.Options
+
+@using RepeaterQTH.Data.Services
 
 
 <div style="float: left"><h1>Repeater Directory</h1></div>
@@ -55,7 +54,7 @@ else
             LatLng currentPos = new LatLng();
             if (searchData.zipcode is { Length: >= 5 })
             {
-                var zipInfo = await RepeaterService.getLatLngForZip(searchData.zipcode);
+                var zipInfo = await LocationService.getLatLngForZip(searchData.zipcode);
                 if (zipInfo != null)
                 {
                     currentPos = new LatLng((float)zipInfo.lat, (float)zipInfo.lng);

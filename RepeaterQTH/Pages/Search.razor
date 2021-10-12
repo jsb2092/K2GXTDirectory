@@ -9,8 +9,10 @@
 @using Newtonsoft.Json
 @using Newtonsoft.Json.Serialization
 @using System.IO
+@using RepeaterQTH.Data.Services
 @inherits BasePageComponent
 @inject RepeaterDirectoryService RepeaterService
+@inject LocationService LocationService
 @inject NavigationManager NavManager
 @inject SearchData searchData
 @inject IJSRuntime jsRuntime
@@ -107,7 +109,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        counties ??= await RepeaterService.getCounties();
+        counties ??= await LocationService.getCounties();
         if (searchData.AvailableBands.Count > 0) CurrentBandToAdd = searchData.AvailableBands[0];
         // reset the search values???
     }
@@ -165,7 +167,7 @@
             try
             {
                 var ip = await GetIpAddress();
-                var ipCache = await RepeaterService.findIPCache(ip);
+                var ipCache = await LocationService.findIPCache(ip);
                 if (ipCache != null && ipCache.updated > DateTime.Now.AddDays(-7))
                 {
                     currentPos.Lat = (float)ipCache.lat;
@@ -186,7 +188,7 @@
                     {
                         currentPos.Lat = (float)response.Location.Latitude;
                         currentPos.Lng = (float)response.Location.Longitude;
-                        await RepeaterService.insertIPCache(new IPLocation() { ip = ip, lat = response.Location.Latitude, lng = response.Location.Longitude, updated = DateTime.Now });
+                        await LocationService.insertIPCache(new IPLocation() { ip = ip, lat = response.Location.Latitude, lng = response.Location.Longitude, updated = DateTime.Now });
                     }
                 }
             }

@@ -8,6 +8,7 @@
 @using BlazorLeaflet.Models.Events
 @using BrowserInterop.Extensions
 @inject RepeaterDirectoryService RepeaterService
+@inject LocationService LocationService
 @inject IJSRuntime jsRuntime
 @inject SearchData searchData
 @inject NavigationManager NavManager;
@@ -15,6 +16,7 @@
 @using BrowserInterop.Geolocation
 @using MaxMind.GeoIP2
 @using Newtonsoft.Json
+@using RepeaterQTH.Data.Services
 
 
 @if (repeaters == null)
@@ -111,7 +113,7 @@ else
                 try
                 {
                     var ip = await GetIpAddress();
-                    var ipCache = await RepeaterService.findIPCache(ip);
+                    var ipCache = await LocationService.findIPCache(ip);
                     if (ipCache != null && ipCache.updated > DateTime.Now.AddDays(-7))
                     {
                         currentPos.Lat = (float)ipCache.lat;
@@ -127,7 +129,7 @@ else
                         var response = await client.CityAsync(ip);
                         currentPos.Lat = (float)response.Location.Latitude;
                         currentPos.Lng = (float)response.Location.Longitude;
-                        await RepeaterService.insertIPCache(new IPLocation() { ip = ip, lat = response.Location.Latitude, lng = response.Location.Longitude, updated = DateTime.Now });
+                        await LocationService.insertIPCache(new IPLocation() { ip = ip, lat = response.Location.Latitude, lng = response.Location.Longitude, updated = DateTime.Now });
                     }
                 }
                 catch 

@@ -6,11 +6,13 @@
 @using System.Drawing
 @using BlazorLeaflet.Models.Events
 @inject RepeaterDirectoryService RepeaterService
+@inject LocationService LocationService
 @inject IJSRuntime jsRuntime
 @inject SearchData searchData
 @inject NavigationManager NavManager;
 
 @using BrowserInterop.Geolocation
+@using RepeaterQTH.Data.Services
 @using RepeaterQTH.Support
 
 
@@ -50,7 +52,7 @@ else
            
             if (searchData.zipcode != null)
             {
-                var zipInfo = await RepeaterService.getLatLngForZip(searchData.zipcode);
+                var zipInfo = await LocationService.getLatLngForZip(searchData.zipcode);
                 currentPos = new LatLng((float)zipInfo.lat, (float)zipInfo.lng);
             }
             else
@@ -61,7 +63,7 @@ else
         } else if (searchData.activeType == "State")
         {
             range = 300;
-            var state = await RepeaterService.getLatLngForState(searchData.state);
+            var state = await LocationService.getLatLngForState(searchData.state);
             currentPos.Lat = (float)state.lat;
             currentPos.Lng = (float)state.lng;
             repeaters = await RepeaterService.GetRepeaterListByState(searchData.state, range);

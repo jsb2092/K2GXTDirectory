@@ -16,6 +16,7 @@ using Newtonsoft.Json;
 using RepeaterQTH.Areas.Identity;
 using RepeaterQTH.Components;
 using RepeaterQTH.Data;
+using RepeaterQTH.Data.Services;
 
 namespace RepeaterQTH
 {
@@ -59,6 +60,7 @@ namespace RepeaterQTH
                     options.ClientSecret = items["Google-clientSecret"];
                 });
             services.AddSingleton<RepeaterDirectoryService>();
+            services.AddSingleton<LocationService>();
             services.AddSingleton<SearchData>();
             services.AddSingleton<PageHistoryState>();
             services

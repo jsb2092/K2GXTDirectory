@@ -5,7 +5,7 @@ using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Driver.GeoJsonObjectModel;
 using RepeaterQTH.Support;
 
-namespace RepeaterQTH.Data
+namespace RepeaterQTH.Data.Services
 {
   
     [BsonIgnoreExtraElements]

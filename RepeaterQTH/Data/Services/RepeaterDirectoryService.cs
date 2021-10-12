@@ -1,23 +1,19 @@
-using System;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Text.Json;
 using System.Threading.Tasks;
-using RepeaterQTH.Data;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
 using Newtonsoft.Json;
 
-namespace RepeaterQTH.Data
+namespace RepeaterQTH.Data.Services
 {
     public class RepeaterDirectoryService
     {
         private Repeater[] repeaters;
-
+        private IMongoDatabase database;
+        private IMongoCollection<Repeater> collection;
         public List<double> Tones = new()
         {
             67, 97.4, 141.3, 177.3, 213.8,
@@ -34,12 +30,8 @@ namespace RepeaterQTH.Data
         };
       
 
-        private IMongoDatabase database;
-        private IMongoCollection<Repeater> collection;
-        private IMongoCollection<Counties> countiesCollection;
-        private IMongoCollection<Zipcode> zipcodeCollection;
-        private IMongoCollection<State> stateCollection;
-        private IMongoCollection<IPLocation> ipCacheCollection;
+
+
 
         public RepeaterDirectoryService()
         {
@@ -70,14 +62,9 @@ namespace RepeaterQTH.Data
                 MongoClient dbClient =
                     new MongoClient(items["connectionString"]);
                  database = dbClient.GetDatabase("directory");
-                collection = database.GetCollection<Repeater>("repeater");
-                countiesCollection = database.GetCollection<Counties>("usa_counties");
-                zipcodeCollection = database.GetCollection<Zipcode>("zipcodes");
-                stateCollection = database.GetCollection<State>("usa_state_location");
-                ipCacheCollection = database.GetCollection<IPLocation>("ip_cache");
+                 collection = database.GetCollection<Repeater>("repeater");
+
             }
-
-
         }
         
         public Task<Repeater[]> GetRepeaterListByLocation(double lat, double lng, int distance = 100, int limit = 100)
@@ -121,8 +108,7 @@ namespace RepeaterQTH.Data
 
 
         }
-
-
+        
         public async Task<Repeater> GetRepeaterAsync(string id)
         {
             // try to get the data from the list first, if we can't read from the db
@@ -165,42 +151,8 @@ namespace RepeaterQTH.Data
                 return r.ToList().ToArray();
             }
         }
-
-        public Task<Counties[]> getCounties()
-        {
-            Counties[] counties;
-            var filter = Builders<Counties>.Filter.Empty;
-            var sort = Builders<Counties>.Sort.Ascending("state_name");
-            IAsyncCursor<Counties> countiesAsDocs = countiesCollection.FindSync(filter,
-                new FindOptions<Counties, Counties>()
-                {
-                    Sort = sort
-                });
-            counties = countiesAsDocs.ToEnumerable().ToArray();
-           /* foreach (var r in repeaters)
-            {
-                r.Location ??= new LocationInfo();
-            }*/
-            return Task.FromResult(counties);
-        }
         
-        
-        public async Task<Zipcode> getLatLngForZip(string zip)
-        {
-            zip = zip.Trim();
-            var filter = new BsonDocument()
-                .Add("zip", zip);
-            return await zipcodeCollection.Find(filter).Limit(1).FirstAsync();
-       
-        }
-        
-        public async Task<State> getLatLngForState(string state)
-        {
-            var filter = new BsonDocument()
-                .Add("state", state);
-            return await stateCollection.Find(filter).Limit(1).FirstAsync();
-       
-        }
+      
         public async Task<bool> SaveRepeater(Repeater repeater)
         {
             try
@@ -221,30 +173,6 @@ namespace RepeaterQTH.Data
                 return false;
             }
         }
-        
-        public async Task insertIPCache(IPLocation ipLocation)
-        {   
-            var filter = new BsonDocument()
-                .Add("ip", ipLocation.ip);
-            var updateOptions = new FindOneAndReplaceOptions<IPLocation>() { IsUpsert = true };
-            await ipCacheCollection.FindOneAndReplaceAsync(filter, ipLocation, updateOptions);
-
-        }
-        
-        public async Task<IPLocation> findIPCache(string ip)
-        {
-            var filter = new BsonDocument()
-                .Add("ip", ip);
-            try
-            {
-                var ipResult = await ipCacheCollection.Find(filter).Limit(1).FirstAsync();
-                return ipResult;
-            }
-            catch
-            {
-                return null;
-            }
-        }
-
+     
     }
 }

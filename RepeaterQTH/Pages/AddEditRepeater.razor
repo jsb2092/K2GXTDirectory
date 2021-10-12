@@ -3,7 +3,9 @@
 @inherits BasePageComponent
 @using RepeaterQTH.Data
 @using Blazored.FluentValidation
+@using RepeaterQTH.Data.Services
 @inject RepeaterDirectoryService RepeaterService
+@inject LocationService LocationService
 @inject NavigationManager NavManager
 <AuthorizeView Context="editPage">
 <Authorized>
@@ -248,7 +250,7 @@
            repeater = new Repeater();
        }
        
-       counties = await RepeaterService.getCounties();
+       counties = await LocationService.getCounties();
 
 
     }
