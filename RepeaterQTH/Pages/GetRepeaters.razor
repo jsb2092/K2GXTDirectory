@@ -17,7 +17,13 @@
 
 
 <div style="float: left"><h1>Repeater Directory</h1></div>
-<div style="float: right; margin-top: 20px"> <button @onclick="@DownloadText">Export</button></div>
+<div style="float: right; margin-top: 20px">
+    <select>
+        <option>Export</option>
+        <option @onclick="@DownloadCSV">Export CSV</option>
+        <option @onclick="@DownloadChirp">Export Chirp</option>
+    </select>
+</div>
 
 
 @if (repeaters == null)
@@ -32,11 +38,12 @@ else
 
 
 @code {
-    [Parameter]  
-    #nullable enable
-    public string? callsign { get; set; } 
-    #nullable disable
-    
+
+    [Parameter]
+#nullable enable
+        public string? callsign { get; set; }
+#nullable disable
+
     private Repeater[] repeaters;
 
 
@@ -49,10 +56,11 @@ else
             if (searchData.zipcode is { Length: >= 5 })
             {
                 var zipInfo = await RepeaterService.getLatLngForZip(searchData.zipcode);
-                if (zipInfo != null) 
+                if (zipInfo != null)
                 {
                     currentPos = new LatLng((float)zipInfo.lat, (float)zipInfo.lng);
-                } else
+                }
+                else
                 {
                     currentPos = new LatLng(0, 0);
                 }
@@ -78,28 +86,58 @@ else
             {
                 repeaters = await RepeaterService.GetRepeaterListByLocation(currentPos.Lat, currentPos.Lng, range);
             }
-        } 
+        }
         else if (searchData.activeType == "State")
         {
             repeaters = await RepeaterService.GetRepeaterListByState(searchData.state);
         }
 
         repeaters = Utility.FilterRepeaters(repeaters, searchData);
-        
+
     }
-    
-    async Task DownloadText()
+
+    async Task DownloadCSV()
     {
         string data = "Callsign, RxFreq, TxFreq, Tone, Tone Type, State,  Location\n";
         foreach (var repeater in repeaters)
         {
-            data += repeater.CallSign + ", " + repeater.RxFreq + ", " + repeater.TxFreq + ", " +repeater.CTCSS+"," + repeater.Tone + ", " + repeater.State + ", "+repeater.LocationInfo + "\n";
+            data += repeater.CallSign + "," + repeater.RxFreq + "," + repeater.TxFreq + "," + repeater.CTCSS + "," + repeater.Tone + "," + repeater.State + "," + repeater.LocationInfo + "\n";
         }
 
         byte[] file = System.Text.Encoding.UTF8.GetBytes(data);
-        var fileName = "rqth" + DateTime.Now.ToString("yyyyMMddHHmm")+".csv";
+        var fileName = "rqth-" + DateTime.Now.ToString("yyyyMMddHHmm") + ".csv";
         await jsRuntime.InvokeVoidAsync("BlazorDownloadFile", fileName, "text/csv", file);
     }
-    
+
+    async Task DownloadChirp()
+    {
+        string data = "Location,Name,Frequency,Duplex,Offset,Tone,rToneFreq,cToneFreq\n";
+    //DtcsCode,DtcsPolarity,Mode,TStep,Skip,Comment,URCALL,RPT1CALL,RPT2CALL,DVCODE
+        var count = 0;
+        foreach (var repeater in repeaters)
+        {
+            var duplex = "+";
+            var offSet = Math.Round(repeater.TxFreq - repeater.RxFreq, 2);
+            if (offSet < 0)
+            {
+                duplex = "-";
+                offSet = Math.Abs(offSet);
+            }
+            var tone = repeater.Tone;
+            if (tone is "T-SQL" or "T SQL") tone = "TSQL";
+            if (tone == "CSQ") tone = "";
+            var rxCTSSS = repeater.RxCTCSS;
+            if (rxCTSSS is null or < 67) rxCTSSS = 67.0;
+            var CTSSS = repeater.CTCSS;
+            if (CTSSS is null or < 67) CTSSS = 67.0;
+            data += count + "," + repeater.CallSign + "," + repeater.RxFreq + "," + duplex + "," + offSet + "," + tone + "," + rxCTSSS + "," + CTSSS + "\n";
+            count += 1;
+        }
+        byte[] file = System.Text.Encoding.UTF8.GetBytes(data);
+        var fileName = "rqth-Chirp-" + DateTime.Now.ToString("yyyyMMddHHmm") + ".csv";
+        await jsRuntime.InvokeVoidAsync("BlazorDownloadFile", fileName, "text/csv", file);
+
+    }
+
 }
 
