@@ -209,7 +209,7 @@
                 .ConfigureAwait(true);
             return ipAddress;
         }
-        catch(Exception e)
+        catch
         {
     //If your request was blocked by CORS or some extension like uBlock Origin then you will get an exception.
             return string.Empty;

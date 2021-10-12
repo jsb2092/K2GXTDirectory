@@ -20,8 +20,8 @@
 <div style="float: right; margin-top: 20px">
     <select>
         <option>Export</option>
-        <option @onclick="@DownloadCSV">Export CSV</option>
-        <option @onclick="@DownloadChirp">Export Chirp</option>
+        <option @onclick="@(() => Download("csv"))">Export CSV</option>
+        <option @onclick="@(() => Download("chirp"))">Export Chirp</option>
     </select>
 </div>
 
@@ -96,47 +96,18 @@ else
 
     }
 
-    async Task DownloadCSV()
+    async Task Download(string type)
     {
-        string data = "Callsign, RxFreq, TxFreq, Tone, Tone Type, State,  Location\n";
-        foreach (var repeater in repeaters)
+        var export = new Export();
+        switch (type)
         {
-            data += repeater.CallSign + "," + repeater.RxFreq + "," + repeater.TxFreq + "," + repeater.CTCSS + "," + repeater.Tone + "," + repeater.State + "," + repeater.LocationInfo + "\n";
+            case "csv":
+                await export.DownloadCSV(repeaters, jsRuntime);
+                break;
+            case "chirp":
+                await export.DownloadChirp(repeaters, jsRuntime);
+                break;
         }
-
-        byte[] file = System.Text.Encoding.UTF8.GetBytes(data);
-        var fileName = "rqth-" + DateTime.Now.ToString("yyyyMMddHHmm") + ".csv";
-        await jsRuntime.InvokeVoidAsync("BlazorDownloadFile", fileName, "text/csv", file);
-    }
-
-    async Task DownloadChirp()
-    {
-        string data = "Location,Name,Frequency,Duplex,Offset,Tone,rToneFreq,cToneFreq\n";
-    //DtcsCode,DtcsPolarity,Mode,TStep,Skip,Comment,URCALL,RPT1CALL,RPT2CALL,DVCODE
-        var count = 0;
-        foreach (var repeater in repeaters)
-        {
-            var duplex = "+";
-            var offSet = Math.Round(repeater.TxFreq - repeater.RxFreq, 2);
-            if (offSet < 0)
-            {
-                duplex = "-";
-                offSet = Math.Abs(offSet);
-            }
-            var tone = repeater.Tone;
-            if (tone is "T-SQL" or "T SQL") tone = "TSQL";
-            if (tone == "CSQ") tone = "";
-            var rxCTSSS = repeater.RxCTCSS;
-            if (rxCTSSS is null or < 67) rxCTSSS = 67.0;
-            var CTSSS = repeater.CTCSS;
-            if (CTSSS is null or < 67) CTSSS = 67.0;
-            data += count + "," + repeater.CallSign + "," + repeater.RxFreq + "," + duplex + "," + offSet + "," + tone + "," + rxCTSSS + "," + CTSSS + "\n";
-            count += 1;
-        }
-        byte[] file = System.Text.Encoding.UTF8.GetBytes(data);
-        var fileName = "rqth-Chirp-" + DateTime.Now.ToString("yyyyMMddHHmm") + ".csv";
-        await jsRuntime.InvokeVoidAsync("BlazorDownloadFile", fileName, "text/csv", file);
-
     }
 
 }
