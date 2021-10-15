@@ -1,4 +1,4 @@
-# RepeaterQTH
+# RepeaterQTH [![Build ASP.Net Core without deploy - repeaterqth](https://github.com/jsb2092/RepeaterQTH/actions/workflows/build_repeaterqth.yml/badge.svg)](https://github.com/jsb2092/RepeaterQTH/actions/workflows/build_repeaterqth.yml)
 
 RepeaterQTH is a web site that is designed to keep track of Amateur Radio Repeaters.  This is an 
 open source project that anyone can contribute to.  The site is also designed to be wiki-like, 
@@ -10,14 +10,14 @@ Searching by location, feature and mode are also available options.
 Currently, an alpha production version of the site is running at <https://repeaterqth.com>.  Bug should
 be reported on the issue tracker on github.
 
-## Installing
+## Building
 
 This is built with dotnet 5.0.  You can get dotnet 5.0 from <https://dotnet.microsoft.com/download>.  
 Once dotnet 5.0 is installed you can go to the directory you downloaded the code into and run
 "dotnet build" to build the code.  All dependencies are managed with nuget packages, and the build 
 should simply work.
 
-## Running
+## Configuring
 
 In order to successfully run the application you will need to setup several services and databases.
 While the code will build without these, it will not run successfully.  The connections to services
