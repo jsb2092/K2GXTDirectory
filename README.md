@@ -32,8 +32,6 @@ here:
 - "connectionString": "mongodb+srv:// < connection string >"
   - This is your mongo connection string.  Details for the collection to be defined in Mongo 
         are below
-
-
 - "geolite-user": "",
 - "geolite-key": "",
   - Geolite is used for location services.  
