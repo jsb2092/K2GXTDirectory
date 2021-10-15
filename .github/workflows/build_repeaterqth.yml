@@ -1,6 +1,6 @@
 
 
-name: Build ASP.Net Core without deploy - repeaterqth
+name: Build Only
 
 on:
   push:
