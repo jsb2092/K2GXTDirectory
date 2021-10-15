@@ -49,8 +49,11 @@ else
             {
                 <tr><td>Grid Square: </td><td>@repeater.GridSquare</td></tr>
             }
-            <tr><td style="vertical-align: top">Located Info: </td><td style="width:75px">@repeater.LocationInfo</td></tr>
-            <tr><td style="vertical-align: top">More Info: </td><td>@repeater.Details</td></tr>
+            <tr><td style="vertical-align: top">Located Info: </td><td style="width:200px">@repeater.LocationInfo</td></tr>
+              @if (!string.IsNullOrEmpty(repeater.Details))
+              {
+                  <tr><td style="vertical-align: top">More Info: </td><td>@repeater.Details</td></tr>
+              }
             @if (repeater.FMEnabled)
             {
                 <tr><td>FM Analog Mode:</td><td>@repeater.FMEnabledString</td></tr>

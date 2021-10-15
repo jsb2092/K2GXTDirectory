@@ -3,5 +3,6 @@
     "geolite-user": "",
     "geolite-key": "",
     "Google-clientID": "",
-    "Google-clientSecret": ""
+    "Google-clientSecret": "",
+    "SendGridKey": ""
 }
