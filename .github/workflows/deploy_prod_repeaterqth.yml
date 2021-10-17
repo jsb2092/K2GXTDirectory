@@ -4,6 +4,9 @@
 name: Build and Deploy Prod
 
 on:
+  push:
+    tags:
+      - '*'
   workflow_dispatch:
     inputs:
       reason:
