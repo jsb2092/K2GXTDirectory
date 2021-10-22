@@ -26,7 +26,7 @@
 else
 {
 
-    if (logs.RepeaterHistory?.Count <= 1)
+    if (logs.RepeaterHistory?.Count < 1)
     {
         <p>This repeater has no revisions</p>
     }
@@ -123,7 +123,7 @@ else
     }
     private void goCompare()
     {
-        
+        NavManager.NavigateTo("diffRepeaters/"+fromID+"/"+toID);
     }
     private void GoBack()
     {

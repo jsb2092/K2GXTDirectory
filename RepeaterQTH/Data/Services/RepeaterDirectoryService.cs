@@ -15,6 +15,7 @@ namespace RepeaterQTH.Data.Services
     public class RepeaterDirectoryService
     {
         private Repeater[] repeaters;
+        private History RepeaterLogs;
         private IMongoDatabase database;
         private IMongoCollection<Repeater> collection;
         private IMongoCollection<History> repeaterHistory;
@@ -189,19 +190,26 @@ namespace RepeaterQTH.Data.Services
         
         public async Task<History> GetRepeaterHistory(string id)
         {
-            var filter = new BsonDocument()
-                .Add("_id", ObjectId.Parse(id));
-            History data;
-            try
+            if (RepeaterLogs?._id != id)
             {
-                data = await repeaterHistory.Find(filter).Limit(1).FirstAsync();
-            } catch {
-                data = new History{ _id = id, RepeaterHistory = new List<Repeater>()};
+                var filter = new BsonDocument()
+                    .Add("_id", ObjectId.Parse(id));
+                History data;
+                try
+                {
+                    data = await repeaterHistory.Find(filter).Limit(1).FirstAsync();
+                }
+                catch
+                {
+                    data = new History { _id = id, RepeaterHistory = new List<Repeater>() };
+                }
+
+                var currentRev = await GetRepeaterAsync(id);
+                data.RepeaterHistory.Add(currentRev);
+                RepeaterLogs = data;
             }
 
-            var currentRev = await GetRepeaterAsync(id);
-            data.RepeaterHistory.Add(currentRev);
-            return data;
+            return RepeaterLogs;
         }
      
     }
