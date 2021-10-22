@@ -163,7 +163,7 @@ namespace RepeaterQTH.Data.Services
         
             try
             {
-                previousState.Date = DateTime.Now;
+                repeater.Date = DateTime.Now;
                 var pushRepeaterDefinition = Builders<History>
                     .Update.Push(h => h.RepeaterHistory, previousState);
                 var updateOptions = new UpdateOptions { IsUpsert = true};
@@ -185,6 +185,23 @@ namespace RepeaterQTH.Data.Services
             {
                 return false;
             }
+        }
+        
+        public async Task<History> GetRepeaterHistory(string id)
+        {
+            var filter = new BsonDocument()
+                .Add("_id", ObjectId.Parse(id));
+            History data;
+            try
+            {
+                data = await repeaterHistory.Find(filter).Limit(1).FirstAsync();
+            } catch {
+                data = new History{ _id = id, RepeaterHistory = new List<Repeater>()};
+            }
+
+            var currentRev = await GetRepeaterAsync(id);
+            data.RepeaterHistory.Add(currentRev);
+            return data;
         }
      
     }

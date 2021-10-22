@@ -14,7 +14,7 @@ namespace RepeaterQTH.Components
         public void AddPageToHistory(string pageName)
         {
             previousPages.Add(pageName);
-            if (previousPages.Count > 10)
+            if (previousPages.Count > 50)
             {
                 previousPages.RemoveAt(0);
             }
@@ -24,8 +24,12 @@ namespace RepeaterQTH.Components
         {
             if (previousPages.Count > 1)
             {
-                // You add a page on initialization, so you need to return the 2nd from the last
-                return previousPages.ElementAt(previousPages.Count - 2);
+                // remove the current page we are coming from
+                previousPages.RemoveAt(previousPages.Count-1);
+                var toReturn = previousPages.ElementAt(previousPages.Count - 1);
+                // now remove the page we are going to, because it's about to be added again.
+                previousPages.RemoveAt(previousPages.Count-1);
+                return toReturn;
             }
 
             // Can't go back because you didn't navigate enough

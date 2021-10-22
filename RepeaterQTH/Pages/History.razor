@@ -1,0 +1,138 @@
+﻿@page "/history/{id}"
+@inherits BasePageComponent
+
+@using RepeaterQTH.Data
+@using BlazorLeaflet.Models
+@using RepeaterQTH.Support;
+
+@inject RepeaterDirectoryService RepeaterService
+@inject LocationService LocationService
+@inject IJSRuntime jsRuntime
+@inject NavigationManager MyNavigationManager
+@inject SearchData searchData
+@inject NavigationManager NavManager;
+
+@using RepeaterQTH.Data.Services
+
+
+
+
+<a href="#" @onclick="@GoBack"> <img width="16" src="/images/back.png"/> Back</a>
+
+@if (logs == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+
+    if (logs.RepeaterHistory?.Count <= 1)
+    {
+        <p>This repeater has no revisions</p>
+    }
+    else
+    {
+        <br/>
+
+        <table class="table table-dark">
+            <thead>
+            <tr>
+                <th colspan="2"><a href="#" @onclick="@goCompare">Compare</a></th>
+                <th style="width: 200px">
+                    Date
+                </th>
+                <th style="width: 175px">
+                    Revised By
+                </th>
+                <th>
+                    Changes
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            @for (var c = 0; c < logs.RepeaterHistory.Count; c++)
+            {
+                var rev = logs.RepeaterHistory[c];
+                var revid = rev._id + "-" + c;
+                var toChecked = c == 1;
+                var fromChecked = c == 0;
+                <tr>
+                    <td style="width: 30px"><input type="radio" checked="@fromChecked" disabled="@isFromDisabled(revid)" value="@revid" name="from" @onchange="@fromChange"/></td>
+                    <td style="width: 30px"><input type="radio" checked="@toChecked" disabled="@isToDisabled(revid)" value="@revid" name="to" @onchange="@toChange"/></td>
+                    <td>@rev.Date</td>
+                    <td>@rev.ChangedBy</td>
+                    <td>@rev.ChangeComments</td>
+                </tr>
+
+            }
+            </tbody>
+        </table>
+    }
+
+}
+
+
+@code {
+
+    [Parameter]
+#nullable enable
+        public string? id { get; set; }
+#nullable disable
+
+    private Data.History logs;
+    private string fromID;
+    private string toID;
+    
+    private bool isFromDisabled(string id)
+    {
+        if (toID == null) return false;
+        return toID == id;
+    }
+    
+    private bool isToDisabled(string id)
+    {
+        if (fromID == null) return false;
+        return fromID == id;
+    }
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            logs = await RepeaterService.GetRepeaterHistory(id);
+            logs.RepeaterHistory = logs.RepeaterHistory.OrderByDescending(r => r.Date).ToList();
+            fromID = id + "-0";
+            toID = id + "-1";
+            StateHasChanged();
+        } catch (Exception e) {
+            Console.WriteLine(e);
+        }
+    }
+
+    private void fromChange(ChangeEventArgs args)
+    {
+        fromID = args.Value.ToString();
+        StateHasChanged();
+    }
+
+    private void toChange(ChangeEventArgs args)
+    {
+        toID = args.Value.ToString(); 
+        StateHasChanged();
+    }
+    private void goCompare()
+    {
+        
+    }
+    private void GoBack()
+    {
+        var pg = _pageState.GetGoBackPage();
+
+   
+        NavManager.NavigateTo(pg);
+    }
+ 
+
+}
+
