@@ -4,5 +4,9 @@
     "geolite-key": "",
     "Google-clientID": "",
     "Google-clientSecret": "",
-    "SendGridKey": ""
+    "SendGridKey": "",
+    "TwitterAPIKey": "",
+    "TwitterAPISecret": "",
+    "MicrosoftClientID": "",
+    "MicrosoftSecret: ""
 }

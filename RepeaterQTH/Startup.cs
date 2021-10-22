@@ -54,11 +54,22 @@ namespace RepeaterQTH
             services.AddAuthentication()
                 .AddGoogle(options =>
                 {
-                    IConfigurationSection googleAuthNSection =
+                    var googleAuthNSection =
                         Configuration.GetSection("Authentication:Google");
 
                     options.ClientId = items["Google-clientID"];
                     options.ClientSecret = items["Google-clientSecret"];
+                })
+                .AddTwitter(options =>
+                {
+                    options.ConsumerKey = items["TwitterAPIKey"];
+                    options.ConsumerSecret = items["TwitterAPISecret"];
+                    options.RetrieveUserDetails = true;
+                })
+                .AddMicrosoftAccount(options =>
+                {
+                    options.ClientId = items["MicrosoftClientID"];
+                    options.ClientSecret = items["MicrosoftSecret"];
                 });
             services.AddSingleton<RepeaterDirectoryService>();
             services.AddSingleton<LocationService>();
