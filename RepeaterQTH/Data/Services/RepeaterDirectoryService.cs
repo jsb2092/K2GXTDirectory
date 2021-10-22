@@ -1,7 +1,10 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+
+using Microsoft.AspNetCore.Identity;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
@@ -14,6 +17,7 @@ namespace RepeaterQTH.Data.Services
         private Repeater[] repeaters;
         private IMongoDatabase database;
         private IMongoCollection<Repeater> collection;
+        private IMongoCollection<History> repeaterHistory;
         public List<double> Tones = new()
         {
             67, 97.4, 141.3, 177.3, 213.8,
@@ -63,6 +67,7 @@ namespace RepeaterQTH.Data.Services
                     new MongoClient(items["connectionString"]);
                  database = dbClient.GetDatabase("directory");
                  collection = database.GetCollection<Repeater>("repeater");
+                 repeaterHistory = database.GetCollection<History>("repeater_history");
 
             }
         }
@@ -153,10 +158,18 @@ namespace RepeaterQTH.Data.Services
         }
         
       
-        public async Task<bool> SaveRepeater(Repeater repeater)
+        public async Task<bool> SaveRepeater(Repeater previousState, Repeater repeater)
         {
+        
             try
             {
+                previousState.Date = DateTime.Now;
+                var pushRepeaterDefinition = Builders<History>
+                    .Update.Push(h => h.RepeaterHistory, previousState);
+                var updateOptions = new UpdateOptions { IsUpsert = true};
+                await repeaterHistory.UpdateOneAsync(h => h._id == previousState._id, pushRepeaterDefinition, updateOptions); 
+                    
+
                 if (repeater._id != null)
                 {
                     await collection.ReplaceOneAsync(r => r._id == repeater._id, repeater);

@@ -10,6 +10,16 @@ using RepeaterQTH.Support;
 namespace RepeaterQTH.Data
 {
     [BsonIgnoreExtraElements]
+    public class History
+    {
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string _id { get; set; }
+
+        public List<Repeater> RepeaterHistory { get; set; }
+    }
+    
+    
+    [BsonIgnoreExtraElements]
     public class LocationInfo: IEquatable<LocationInfo>
     {
      
@@ -195,13 +205,16 @@ namespace RepeaterQTH.Data
             set => _isOpenString = value ?? "Open"; }
 
         public bool Active { get; set; }
+        
+        public string ChangedBy { get; set; }
+        
+        [Required]
+        public string ChangeComments { get; set; }
 
         
         public bool Equals(Repeater other)
         {
-            if (other == null) return false;
-            //return (Location.Equals(other.Location) && CallSign.Equals(other.CallSign) && (RxFreq.Equals(other.RxFreq)));
-            return (_id.Equals(other._id));
+            return other != null && _id.Equals(other._id);
         }
         public Repeater()
         {
@@ -240,6 +253,9 @@ namespace RepeaterQTH.Data
 
             RuleFor(r => r.State)
                 .NotEmpty().WithMessage("Please select a state");
+            
+            RuleFor(r => r.ChangeComments)
+                .NotEmpty().WithMessage("Please enter brief comments explaining what you changed.");
 
 
         }

@@ -76,6 +76,7 @@ namespace RepeaterQTH.Data.Services
         {   
             var filter = new BsonDocument()
                 .Add("ip", ipLocation.ip);
+
             var updateOptions = new FindOneAndReplaceOptions<IPLocation>() { IsUpsert = true };
             await ipCacheCollection.FindOneAndReplaceAsync(filter, ipLocation, updateOptions);
 

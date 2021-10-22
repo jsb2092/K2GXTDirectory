@@ -3,13 +3,22 @@
 @inherits BasePageComponent
 @using RepeaterQTH.Data
 @using Blazored.FluentValidation
+@using Microsoft.AspNetCore.Identity
 @using RepeaterQTH.Data.Services
+@using System.Security.Claims
 @inject RepeaterDirectoryService RepeaterService
 @inject LocationService LocationService
 @inject NavigationManager NavManager
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
 <AuthorizeView Context="editPage">
+  
 <Authorized>
+
     <a href="/getRepeaters"> <img width="16" src="/images/back.png"/> Back</a>
+
+           
 
     @if (repeater == null)
     {
@@ -17,7 +26,10 @@
     }
     else
     {
+        User = editPage.User;
+        
 
+        
         <EditForm Model="@repeater" OnValidSubmit="@HandleValidSubmit">
             <FluentValidationValidator/>
             <ValidationSummary/>
@@ -106,9 +118,10 @@
                                 }
                             </select></td></tr>
                     <tr><td>Coverage (KM): </td><td><input class="editInput" @bind=@repeater.CoverageRadiusKM/></td></tr>
-                     <tr><td>Location Info: </td><td><input class="editInput" @bind=@repeater.LocationInfo/></td></tr>
+                    <tr><td>Location Info: </td><td><input class="editInput" @bind=@repeater.LocationInfo/></td></tr>
 
                     <tr><td style="vertical-align: top">Description: </td><td><textarea rows="4" class="editInput" @bind=@repeater.Details></textarea></td></tr>
+                    <tr><td style="vertical-align: top">Change Notes: </td><td><textarea rows="2" class="editInput" @bind=@repeater.ChangeComments></textarea></td></tr>
                 </table>
             </div>
             <div style="float: left; margin-top: 15px">
@@ -214,7 +227,8 @@
 
             </div>
             <div style="clear:both; padding-top: 15px">
-                <button type="submit">Save</button><button type="submit" @onclick="@(async () => ResetForm())">Cancel</button>
+                <input type="hidden" @bind=@changedBy>
+                 <button type="submit">Save</button><button type="submit" @onclick="@(async () => ResetForm())">Cancel</button>
             </div>
 
         </EditForm>
@@ -236,10 +250,13 @@
 #nullable disable
     private Counties[] counties;
 
+    private string changedBy;
 
+    private ClaimsPrincipal User;
 
    protected override async Task OnInitializedAsync()
     {
+
        if (id != null)
        {
            repeater = await RepeaterService.GetRepeaterAsync(id);
@@ -249,17 +266,33 @@
        {
            repeater = new Repeater();
        }
+       repeater.ChangeComments = string.Empty;
        
        counties = await LocationService.getCounties();
 
 
     }
 
+    protected override async Task OnAfterRenderAsync(bool first)
+    {
+        if (User != null && string.IsNullOrEmpty(changedBy))
+        {
+            changedBy = User.Identity.Name;
+            ApplicationUser currentUser = null;
+            if (User != null) currentUser = await UserManager.GetUserAsync(User);
+            if (currentUser is {Callsign: { } })
+            {
+                changedBy = currentUser.Callsign;
+            }
+            StateHasChanged();
+        }
+    }
+
     private async Task HandleValidSubmit()
     {
-        
+        repeater.ChangedBy = changedBy;
        
-        if (await RepeaterService.SaveRepeater(repeater))
+        if (await RepeaterService.SaveRepeater(previousState, repeater))
         {
             previousState = null;
             NavManager.NavigateTo(_pageState.GetGoBackPage());
