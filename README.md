@@ -23,7 +23,7 @@ In order to successfully run the application you will need to setup several serv
 While the code will build without these, it will not run successfully.  The connections to services
 are configured in the connection.json file.
 
-### Config.json
+### connection.json
 
 In order to use this, copy connection.json.sample to connection.json and fill in the blanks, detailed
 here:
