@@ -19,151 +19,157 @@
 }
 else
 {
-    <div style="float: left; margin-right: 30px">
+    <div>
         <span class="clickable" @onclick="@GoBack"> <img width="16" src="/images/back.png"/> Back</span>
 
-            <table id="repeaterDetails">
-               <tr style="font-weight: bold;"><td style="width:200px;">Property</td><td style="width:150px">@col1Label</td>
-                                    <td>@col2Label</td></tr>
+            <table id="repeaterDetails" class="table table-dark" style="text-align: center">
+              
                 @{
-                    <tr><td style="width:150px">Revised By: </td><td>@repeater1.ChangedBy</td>
-                        <td>@repeater2.ChangedBy</td></tr>
-                    <tr><td style="width:150px">ChangeLog: </td><td>@repeater1.ChangeComments</td>
-                        <td>@repeater2.ChangeComments</td></tr>    
-                    <tr><td colspan="3"><hr/></td></tr>
+                    <tr><td></td><td  style="width: 40%; padding: 20px;">Revision as of @repeater1.Date.ToString("dd MMM yyyy, HH:mm:ss")<br/>
+                            by: @repeater1.ChangedBy<br/>
+                            <span style="font-style:italic">@repeater1.ChangeComments</span></td>
+           
+                   <td style="width: 40%; padding:20px">Revision as of @repeater2.Date.ToString("dd MMM yyyy, HH:mm:ss")<br/>
+                            by: @repeater2.ChangedBy <br/>
+                            <span style="font-style: italic">@repeater2.ChangeComments</span>
+                            </td>
+                      </tr>  
+                    <tr><td class="label "style="font-weight: bold; border-top: 0px;">Property</td></tr>
+                                                  
+                                                  
                     if (repeater1.CallSign != repeater2.CallSign)
                     {
-                        <tr><td style="width:150px">Callsign: </td><td>@repeater1.CallSign</td>
+                        <tr><td class="label">Callsign: </td><td>@repeater1.CallSign</td>
                         <td>@repeater2.CallSign</td></tr>
                     }
                     if (repeater1.isOpenString != repeater2.isOpenString)
                     {
-                        <tr><td>Use: </td> <td>@(repeater1.isOpenString)</td>
+                        <tr><td class="label">Use: </td> <td>@(repeater1.isOpenString)</td>
                             <td>@(repeater2.isOpenString)</td></tr>
                     }
                     if (Math.Abs(repeater1.RxFreq - repeater2.RxFreq) > 0.1)
                     {
-                        <tr><td>Rx Frequency: </td> <td>@repeater1.RxFreq</td>
+                        <tr><td class="label"> Rx Frequency: </td> <td>@repeater1.RxFreq</td>
                             <td>@repeater2.RxFreq</td></tr>
                     }
                     if (Math.Abs(repeater1.TxFreq - repeater2.TxFreq) > 0.1)
                     {
-                        <tr><td>Tx Frequency: </td><td>@repeater1.TxFreq</td>
+                        <tr><td class="label">Tx Frequency: </td><td>@repeater1.TxFreq</td>
                             <td>@repeater2.TxFreq</td></tr>
                     }
                     if (repeater1.Offset != repeater2.Offset)
                     {
-                        <tr><td>Offset: </td><td>@repeater1.Offset</td>
+                        <tr><td class="label">Offset: </td><td>@repeater1.Offset</td>
                             <td>@repeater2.Offset</td></tr>
                     }
                     if (repeater1.Tone != repeater2.Tone)
                     {
-                        <tr><td>Tone: </td><td>@repeater1.Tone</td>
+                        <tr><td class="label">Tone: </td><td>@repeater1.Tone</td>
                             <td>@repeater2.Tone</td></tr>
                     }
                     if (repeater1.CTCSS != repeater2.CTCSS)
                     {
 
-                        <tr><td>Tx Tone: </td><td>@repeater1.CTCSS</td>
+                        <tr><td class="label">Tx Tone: </td><td>@repeater1.CTCSS</td>
                             <td>@repeater2.CTCSS</td></tr>
                     }
                     if (repeater1.RxCTCSS != repeater2.RxCTCSS)
                     {
 
-                        <tr><td>Rx Tone: </td><td>@repeater1.RxCTCSS</td>
+                        <tr><td class="label">Rx Tone: </td><td>@repeater1.RxCTCSS</td>
                             <td>@repeater2.RxCTCSS</td></tr>
                     }
 
                     if (repeater1.State != repeater2.State)
                     {
-                        <tr><td>State: </td><td>@repeater1.State</td>
+                        <tr><td class="label">State: </td><td>@repeater1.State</td>
                             <td>@repeater2.State</td></tr>
                     }
                     if (repeater1.County != repeater2.County)
                     {
-                        <tr><td>County: </td><td>@repeater1.County</td>
+                        <tr><td class="label">County: </td><td>@repeater1.County</td>
                             <td>@repeater2.County</td></tr>
                     }
                     if (repeater1.GridSquare != repeater2.GridSquare)
                     {
-                        <tr><td>Grid Square: </td><td>@repeater1.GridSquare</td>
+                        <tr><td class="label">Grid Square: </td><td>@repeater1.GridSquare</td>
                             <td>@repeater2.GridSquare</td></tr>
                     }
 
                     if (repeater1.LocationInfo != repeater2.LocationInfo)
                     {
-                        <tr><td style="vertical-align: top">Location Info: </td><td style="width:200px">@repeater1.LocationInfo</td>
+                        <tr><td class="label" style="vertical-align: top">Location Info: </td><td style="width:200px">@repeater1.LocationInfo</td>
                             <td style="width:200px">@repeater2.LocationInfo</td></tr>
                     }
                     if (repeater1.Details != repeater2.Details)
                     {
 
-                        <tr><td style="vertical-align: top">More Info: </td><td>@repeater1.Details</td>
+                        <tr><td class="label" style="vertical-align: top">More Info: </td><td>@repeater1.Details</td>
                             <td>@repeater2.Details</td></tr>
                     }
                     if (repeater1.FMEnabledString != repeater2.FMEnabledString)
                     {
-                        <tr><td>FM Analog Mode:</td><td>@repeater1.FMEnabledString</td>
+                        <tr><td class="label">FM Analog Mode:</td><td>@repeater1.FMEnabledString</td>
                             <td>@repeater1.FMEnabledString</td></tr>
                     }
                     if (repeater1.AllStarId != repeater2.AllStarId)
                     {
-                        <tr><td>AllStar ID:</td>
+                        <tr><td class="label"> AllStar ID:</td>
                             <td><a target="_blank" href="http://stats.allstarlink.org/nodeinfo.cgi?node=@repeater1.AllStarId">@repeater1.AllStarId</a> </td>
                             <td><a target="_blank" href="http://stats.allstarlink.org/nodeinfo.cgi?node=@repeater2.AllStarId">@repeater2.AllStarId</a> </td></tr>
                     }
                     if (repeater1.EcholinkNum != repeater2.EcholinkNum)
                     {
-                        <tr><td>Echolink #: </td> <td>@repeater1.EcholinkNum</td>
+                        <tr><td class="label">Echolink #: </td> <td>@repeater1.EcholinkNum</td>
                             <td>@repeater2.EcholinkNum</td></tr>
                     }
                     if (repeater1.EcholinkCall != repeater2.EcholinkCall)
                     {
-                        <tr><td>Echolink Call: </td><td>@repeater1.EcholinkCall></td>
+                        <tr><td class="label">Echolink Call: </td><td>@repeater1.EcholinkCall></td>
                             <td>@repeater2.EcholinkCall></td></tr>
                     }
                     if (repeater1.IRLPNum != repeater2.IRLPNum)
                     {
-                        <tr><td>IRLP #: </td> <td><a target="_blank" href="http://status.irlp.net/?nodeid=@repeater1.IRLPNum">@repeater1.IRLPNum></a></td>
+                        <tr><td class="label">IRLP #: </td> <td><a target="_blank" href="http://status.irlp.net/?nodeid=@repeater1.IRLPNum">@repeater1.IRLPNum></a></td>
                             <td><a target="_blank" href="http://status.irlp.net/?nodeid=@repeater2.IRLPNum">@repeater2.IRLPNum></a></td></tr>
                     }
 
                     if (repeater1.DStarEnabledString != repeater2.DStarEnabledString)
                     {
-                        <tr><td>D-Star Mode:</td><td>@repeater1.DStarEnabledString</td>
+                        <tr><td class="label">D-Star Mode:</td><td>@repeater1.DStarEnabledString</td>
                             <td>@repeater2.DStarEnabledString</td></tr>
                     }
                     if (repeater1.DStarType != repeater2.DStarType)
                     {
-                        <tr><td>D-Star Type:</td><td>@repeater1.DStarType</td>
+                        <tr><td class="label">D-Star Type:</td><td>@repeater1.DStarType</td>
                             <td>@repeater2.DStarType</td></tr>
 
                     }
                     if (repeater1.DMREnabledString != repeater2.DMREnabledString)
                     {
-                        <tr><td>DMR Mode:</td><td>@repeater1.DMREnabledString</td>
+                        <tr><td class="label">DMR Mode:</td><td>@repeater1.DMREnabledString</td>
                             <td>@repeater2.DMREnabledString</td></tr>
                     }
                     if (repeater1.DMRId != repeater2.DMRId)
                     {
-                        <tr><td>DMR Id:</td><td>@repeater1.DMRId</td><td>@repeater2.DMRId</td></tr>
+                        <tr><td class="label">DMR Id:</td><td>@repeater1.DMRId</td><td>@repeater2.DMRId</td></tr>
                     }
                     if (repeater1.DMRColorCode != repeater2.DMRColorCode)
                     {
-                        <tr><td>DMR Color Code:</td><td>@repeater1.DMRColorCode</td><td>@repeater2.DMRColorCode</td></tr>
+                        <tr><td class="label">DMR Color Code:</td><td>@repeater1.DMRColorCode</td><td>@repeater2.DMRColorCode</td></tr>
                     }
                     if (repeater1.DMRStaticTG1 != repeater2.DMRStaticTG1)
                     {
-                        <tr><td>DMR Static TG1:</td><td>@repeater1.DMRStaticTG1</td><td>@repeater2.DMRStaticTG1</td></tr>
+                        <tr><td class="label">DMR Static TG1:</td><td>@repeater1.DMRStaticTG1</td><td>@repeater2.DMRStaticTG1</td></tr>
                     }
                     if (repeater1.DMRStaticTG2 != repeater2.DMRStaticTG2)
                     {
-                        <tr><td>DMR Static TG2:</td><td>@repeater1.DMRStaticTG2</td><td>@repeater2.DMRStaticTG2</td></tr>
+                        <tr><td class="label">DMR Static TG2:</td><td>@repeater1.DMRStaticTG2</td><td>@repeater2.DMRStaticTG2</td></tr>
                     }
 
                     if (repeater1.NXDNEnabledString != repeater2.NXDNEnabledString)
                     {
-                        <tr><td>NXDM Mode:</td><td>@repeater1.NXDNEnabledString</td>
+                        <tr><td class="label">NXDM Mode:</td><td>@repeater1.NXDNEnabledString</td>
                             <td>@repeater2.NXDNEnabledString</td></tr>
                     }
                     if (repeater1.NXDNRAN != repeater2.NXDNRAN)
@@ -173,34 +179,34 @@ else
                     }
                     if (repeater1.NXDNBandwidth != repeater2.NXDNBandwidth)
                     {
-                        <tr><td>NXDM Mode:</td><td>@repeater1.NXDNBandwidth</td>
+                        <tr><td class="label">NXDM Mode:</td><td>@repeater1.NXDNBandwidth</td>
                             <td>@repeater1.NXDNBandwidth</td></tr>
                     }
 
                     if (repeater1.P25EnabledString != repeater2.P25EnabledString)
                     {
-                        <tr><td>P25 Mode:</td><td>@repeater1.P25EnabledString</td><td>@repeater2.P25EnabledString</td></tr>
+                        <tr><td class="label">P25 Mode:</td><td>@repeater1.P25EnabledString</td><td>@repeater2.P25EnabledString</td></tr>
                     }
                     if (repeater1.P25Nac != repeater2.P25Nac)
                     {
-                        <tr><td>P25 NAC $:</td><td>@repeater1.P25Nac</td><td>@repeater2.P25Nac</td></tr>
+                        <tr><td class="label">P25 NAC $:</td><td>@repeater1.P25Nac</td><td>@repeater2.P25Nac</td></tr>
                     }
 
                     if (repeater1.YSFEnabledString != repeater2.YSFEnabledString)
                     {
-                        <tr><td>YSR Mode:</td><td>@repeater1.YSFEnabledString</td><td>@repeater2.YSFEnabledString</td></tr>
+                        <tr><td class="label">YSR Mode:</td><td>@repeater1.YSFEnabledString</td><td>@repeater2.YSFEnabledString</td></tr>
                     }
                     if (repeater1.YSFBandwidth != repeater2.YSFBandwidth)
                     {
-                        <tr><td>YSR Bandwidth:</td><td>@repeater1.YSFBandwidth</td><td>@repeater2.YSFBandwidth</td></tr>
+                        <tr><td class="label">YSR Bandwidth:</td><td>@repeater1.YSFBandwidth</td><td>@repeater2.YSFBandwidth</td></tr>
                     }
                     if (repeater1.YSFDGUp != repeater2.YSFDGUp)
                     {
-                        <tr><td>YSF DG Up:</td><td>@repeater1.YSFDGUp</td><td>@repeater2.YSFDGUp</td></tr>
+                        <tr><td class="label">YSF DG Up:</td><td>@repeater1.YSFDGUp</td><td>@repeater2.YSFDGUp</td></tr>
                     }
                     if (repeater1.YSFDGUp != repeater2.YSFDGUp)
                     {
-                        <tr><td>YSF DG Down:</td><td>@repeater1.YSFDGDown</td><td>@repeater2.YSFDGDown</td></tr>
+                        <tr><td class="label">YSF DG Down:</td><td>@repeater1.YSFDGDown</td><td>@repeater2.YSFDGDown</td></tr>
                                                                               
                     }
                 }       
