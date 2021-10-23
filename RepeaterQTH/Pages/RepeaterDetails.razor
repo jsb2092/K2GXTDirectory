@@ -21,8 +21,8 @@
 else
 {
     <div style="float: left; margin-right: 30px">
-        <a href="#" @onclick="@GoBack"> <img width="16" src="/images/back.png"/> Back</a>
-        <div ><p>Repeater Details for: @repeater.CallSign &nbsp;(<a @onclick="@GoHistory" href="#">View History</a>)</p></div>
+        <span class="clickable" @onclick="@GoBack"> <img width="16" src="/images/back.png"/> Back</span>
+        <div ><p>Repeater Details for: @repeater.CallSign &nbsp;(<span class="clickable" @onclick="@GoHistory" href="">View History</span>)</p></div>
         <table id="repeaterDetails">
             <tr><td style="width:150px">Callsign: </td><td>@repeater.CallSign</td></tr>
             <tr><td>Use: </td> <td>@(repeater.isOpenString)</td></tr>

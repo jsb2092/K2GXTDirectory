@@ -139,4 +139,9 @@ th {
 
 .clickable {
     cursor: pointer;
+    color: #e0a800;
+}
+.clickable:hover {
+    cursor: pointer;
+    color: #2057ad;
 }
